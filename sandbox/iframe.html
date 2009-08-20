@@ -1,0 +1,18 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+<head>
+<script type="text/javascript">
+	window.addEventListener("load", postSize, false);
+	function postSize(e){
+		var target = parent.postMessage ? parent : (parent.document.postMessage ? parent.document : undefined);
+		if (typeof target != "undefined" && document.body.scrollHeight)
+			target.postMessage(document.getElementById("foo").scrollHeight, "*");
+	}
+
+</script>
+</head>
+<body>
+	<div id="foo" style="height: 1500px; background:red;"></div>
+</body>
+</html>
+
