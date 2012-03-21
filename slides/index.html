@@ -1,0 +1,507 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
+    <link href="css/impress.css" rel="stylesheet" />
+</head>
+<body>
+<div id="impress" class="impress-not-supported">
+    <div class="fallback-message">
+        <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+        <p>For the best experience please use the latest <b>Chrome</b> or <b>Safari</b> browser. Firefox 10 (to be released soon) will also handle it.</p>
+    </div>
+
+<div id="title" class="step" data-rotate-y="90" data-y="-1500" data-x="-18000">
+<h1>RSpec::Expectations</h1>
+
+<p><br />
+<address>Kohei Hasegawa@banyan<br />paperboy&amp;co.<br />20120321</address>
+<!-- data-x="-18000" -->
+<!-- data-y="-1500" -->
+<!-- data-rotate-y="90" --></p>
+
+</div>
+<div id="title" class="step" data-rotate-y="90" data-y="-1500" data-x="-9000">
+<h2>RSpec 四天王</h2>
+
+<!-- data-x="-9000" -->
+<!-- data-y="-1500" -->
+<!-- data-rotate-y="90" -->
+
+<p>Rspec が構成される module (rspec-rails は rails に関するライブラリ）</p>
+
+<ul>
+<li>rspec-core</li>
+<li>rspec-expectations</li>
+<li>rspec-mocks</li>
+<li>rspec-rails</li>
+</ul>
+
+</div>
+<div id="title" class="step" data-y="0" data-x="0">
+<h2>ドキュメント</h2>
+
+<p><a href="https://www.relishapp.com/rspec">https://www.relishapp.com/rspec</a> に詳細があります。</p>
+
+</div>
+<div class="step" data-y="0" data-x="1200">
+<h2>今日は rspec-expectations について調べてみました</h2>
+
+<p><br />
+「ククク... 奴は四天王の中でも最弱...」</p>
+
+</div>
+<div class="step" data-y="0" data-x="2400">
+<h2>動機</h2>
+
+<ul>
+<li>rspec-expectations は使い方がすぐ出てくるけど、obj.should be_nil とか、obj.should == 1 とか色々ありすぎて覚えきれない</li>
+<li>rspec-expectations は分かった気になるけど、ちゃんと理解してない感が強かったので発表して覚えるメソッド</li>
+</ul>
+
+</div>
+<div class="step" data-y="0" data-x="3600">
+<h2>まずエクスペクテーションとは?</h2>
+
+<p>サブジェクトコードに期待される振る舞いを指定するコード</p>
+
+</div>
+<div class="step" data-y="0" data-x="4800">
+<h2>こんな感じ</h2>
+
+<pre><code>result.should == 37
+false.should_not be_nil
+</code></pre>
+
+</div>
+<div class="step" data-y="800" data-x="0">
+<h2>当然のように should, should_not が出てきてますがこれはどこで定義しているのでしょうか?</h2>
+
+</div>
+<div class="step" data-y="800" data-x="1200">
+<h2>まずディレクトリ構成を見てみます</h2>
+
+<pre><code>rspec-expectations/lib
+└── rspec
+    ├── expectations
+    │   └── extensions
+    └── matchers
+        ├── built_in
+        └── extensions
+</code></pre>
+
+</div>
+<div class="step" data-y="800" data-x="2400">
+<h2>rspec-expectations は呼び出されると</h2>
+
+<p>rspec-expectations/lib/rspec/expectations.rb</p>
+
+<pre><code>  1 require 'rspec/expectations/extensions'
+</code></pre>
+
+<p>一番最初に extensions 以下のファイルを require して、
+Ruby の動的な特徴であるオープンクラス(モンキーパッチ）を利用してオブジェクトを拡張します</p>
+
+</div>
+<div class="step" data-y="800" data-x="3600">
+<h2>extensions.rb では kernel, array, object の拡張をしますが、</h2>
+
+<p>rspec-expectations/lib/rspec/expectations/extensions.rb</p>
+
+<pre><code>  1 require 'rspec/expectations/extensions/kernel'
+  2 require 'rspec/expectations/extensions/array'
+  3 require 'rspec/expectations/extensions/object'
+</code></pre>
+
+</div>
+<div class="step" data-y="800" data-x="4800">
+<h2>should の定義は kernel で定義されている</h2>
+
+<pre><code>module Kernel は全てのクラスから参照できるメソッドを定義しているモジュール。 Object クラスはこのモジュールをインクルードしています。
+Object クラスのメソッドは実際にはこのモジュールで定義されています。これはトップレベルでのメソッドの再定義に対応するためです。
+</code></pre>
+
+<p>should/should_not は、Object に対する拡張なので、Class を含めたあらゆるオブジェクトで利用できます。</p>
+
+</div>
+<div class="step" data-y="1600" data-x="0">
+<h2>should の定義は kernel で定義されている2</h2>
+
+<pre><code>module Kernel
+  def foo
+    1
+  end
+end
+
+class Bar
+  def hoge
+    3
+  end
+end
+
+bar = Bar.new
+p bar.hoge # =&gt; 3
+p bar.hoge.foo # =&gt; 1
+p bar.foo # =&gt; 1
+</code></pre>
+
+</div>
+<div class="step" data-y="1600" data-x="1200">
+<h2>should の定義は kernel で定義されている3</h2>
+
+<p>もしテストをするクラスに should というメソッドが定義されている場合、
+obj.should == 3 などは動かない。</p>
+
+<pre><code># def should が obj に定義されてない
+p obj.should # =&gt; &lt;RSpec::Matchers::BuiltIn::PositiveOperatorMatcher:0x007f87f136c5b0 @actual=#&lt;Bowling:0x007f87f136c5d8&gt;
+
+def should # が定義されていると、
+  3
+end
+
+p obj.should # 単純に3が実行されるだけ
+</code></pre>
+
+</div>
+<div class="step" data-y="1600" data-x="2400">
+<h2>should の実体</h2>
+
+<p>lib/rspec/expectations/extensions/kernel.rb</p>
+
+<pre><code>def should(matcher=nil, message=nil, &amp;block)
+  RSpec::Expectations::PositiveExpectationHandler.handle_matcher(self, matcher, message, &amp;block)
+end
+</code></pre>
+
+</div>
+<div class="step" data-y="1600" data-x="3600">
+<h2>should の実体2</h2>
+
+<p>should は RSpec::Expectations::PositiveExpectationHandler、
+should_not は RSpec::Expectations::NegativeExpectationHandler に渡しているだけ</p>
+
+</div>
+<div class="step" data-y="1600" data-x="4800">
+<h2>should の実体3</h2>
+
+<p>lib/rspec/expectations/handler.rb</p>
+
+<pre><code>  1 module RSpec
+  2   module Expectations
+  3     class PositiveExpectationHandler
+  4       def self.handle_matcher(actual, matcher, message=nil, &amp;block)
+  5         ::RSpec::Matchers.last_should = :should
+  6         ::RSpec::Matchers.last_matcher = matcher
+  7         return ::RSpec::Matchers::BuiltIn::PositiveOperatorMatcher.new(actual) if matcher.nil?
+  8
+  9         match = matcher.matches?(actual, &amp;block)
+ 10         return match if match
+</code></pre>
+
+</div>
+<div class="step" data-y="2400" data-x="0">
+<h2>should の実体4</h2>
+
+<p>もし matcher がなければ ::RSpec::Matchers::BuiltIn::PositiveOperatorMatcher.new(actual)
+を実行して、matcher が存在すれば、matcher の持つ、matches? メソッドを呼び出すというところまで分かりました</p>
+
+</div>
+<div class="step" data-y="2400" data-x="1200">
+<h2>matcher とは何か</h2>
+
+<p>A Matcher is any object that responds to the following methods:</p>
+
+<pre><code>    matches?(actual)
+    failure_message_for_should
+</code></pre>
+
+<p>この2個のメソッドに応答する object であればそれが matcher</p>
+
+</div>
+<div class="step" data-y="2400" data-x="2400">
+<h2>built_in matcher</h2>
+
+<pre><code>lib/rspec/matchers/
+├── built_in
+│   ├── base_matcher.rb
+│   ├── be.rb
+│   ├── be_instance_of.rb
+│   ├── be_kind_of.rb
+│   ├── be_within.rb
+│   ├── change.rb
+│   ├── cover.rb
+│   ├── eq.rb
+│   ├── eql.rb
+│   ├── equal.rb
+│   ├── exist.rb
+│   ├── has.rb
+│   ├── have.rb
+│   ├── include.rb
+│   ├── match.rb
+│   ├── match_array.rb
+│   ├── raise_error.rb
+│   ├── respond_to.rb
+│   ├── satisfy.rb
+│   └── throw_symbol.rb
+</code></pre>
+
+</div>
+<div class="step" data-y="2400" data-x="3600">
+<h2>should の流れ</h2>
+
+<pre><code>result.should equal(5)
+</code></pre>
+
+<p>この場合、equal が matcher に当たる。Ruby インタープリタは equal(5) を先に評価して(マッチャオブジェクト）を返し、result.should の引数となります</p>
+
+<p>(equal の定義は rspec-expectations/lib/rspec/matcher.rb で Factory Method で返す)</p>
+
+<pre><code>390     def equal(expected)
+391       BuiltIn::Equal.new(expected)
+392     end
+</code></pre>
+
+<p>マッチャオブジェクトが matches? メソッドを actual (self) を引数にして実行する!!</p>
+
+<pre><code>match = matcher.matches?(actual, &amp;block)
+</code></pre>
+
+</div>
+<div class="step" data-y="2400" data-x="4800">
+<h2>したがって基本的なエクスペクテーションの記述は以下のようになる</h2>
+
+<pre><code>actual.should matcher(expected)
+actual.should_not matcher(expected)
+</code></pre>
+
+<p>※例外として expected に加えて補助的な引数を渡すものや、メソッドチェインするものが存在するのでこれが全てではないがこの形が基本</p>
+
+</div>
+<div class="step" data-y="3200" data-x="0">
+<h2>matchers について細かくみていきます</h2>
+
+</div>
+<div class="step" data-y="3200" data-x="1200">
+<h2>演算子マッチャ1</h2>
+
+<p>RSpec では次の演算子をマッチャとして利用できます。</p>
+
+<ul>
+<li>&lt;</li>
+<li>&lt;=</li>
+<li>==</li>
+<li>===</li>
+<li>=~</li>
+<li>></li>
+<li>>=</li>
+</ul>
+
+</div>
+<div class="step" data-y="3200" data-x="2400">
+<h2>演算子マッチャ2</h2>
+
+<p>こういう風に使う</p>
+
+<pre><code>obj.should &gt; 5
+obj.should == "hoge"
+</code></pre>
+
+</div>
+<div class="step" data-y="3200" data-x="3600">
+<h2>演算子マッチャ3</h2>
+
+<p>否定演算子 (!=, !~) がサポートされてないのは、</p>
+
+<pre><code>obj.should == 5
+obj.should.==(5) # == がメソッドで実際はこう解釈されてるが
+obj.should != 5
+!(obj.should.==(5)) # こう解釈されてしまうから使えなくなるとのこと
+
+obj.should_not == 5 # 否定をしたい場合は should_not を使う
+</code></pre>
+
+</div>
+<div class="step" data-y="3200" data-x="4800">
+<h2>演算子マッチャ4</h2>
+
+<p>演算子マッチャは "be" matcher をつけても動く</p>
+
+<pre><code>37.should be &lt; 100
+37.should be &lt;= 38
+37.should be &gt;= 2
+37.should be &gt; 7
+</code></pre>
+
+</div>
+<div class="step" data-y="4000" data-x="0">
+<h2>述語マッチャ1</h2>
+
+<p>配列が空であることをテストする</p>
+
+<p>Ruby に直接組み込まれているメソッドは array.empty?<br /></p>
+
+<pre><code>[].empty?.should == true
+</code></pre>
+
+<p>分かりにくい</p>
+
+</div>
+<div class="step" data-y="4000" data-x="1200">
+<h2>述語マッチャ2</h2>
+
+<p>こう書ける</p>
+
+<pre><code>[].should be_empty
+</code></pre>
+
+<ul>
+<li>array に empty? メソッドが存在する場合に、成功する</li>
+</ul>
+
+</div>
+<div class="step" data-y="4000" data-x="2400">
+<h2>述語マッチャ3</h2>
+
+<ul>
+<li>でもどこで定義されてるの？</li>
+<li>method_missing をオーバーライドして、マッチャが be_ からはじまっていたら BePredicate に渡し、"be_" を取り除き、"?" を付け足し、その結果のメッセージを指定されたオブジェクトに渡す</li>
+</ul>
+
+</div>
+<div class="step" data-y="4000" data-x="3600">
+<h2>述語マッチャ4</h2>
+
+<p>lib/rspec/matchers/built_in/be.rb</p>
+
+<pre><code>122       class BePredicate &lt; Be
+123         def initialize(*args, &amp;block)
+124           @expected = parse_expected(args.shift)
+...
+166         def parse_expected(expected)
+167           @prefix, expected = prefix_and_expected(expected)
+168           expected
+169         end
+170
+171         def prefix_and_expected(symbol)
+172           symbol.to_s =~ /^(be_(an?_)?)(.*)/
+173           return $1, $3
+174         end
+</code></pre>
+
+</div>
+<div class="step" data-y="4000" data-x="4800">
+<h2>述語マッチャ5</h2>
+
+<pre><code>user.should be_in_role("admin")
+</code></pre>
+
+<p>このサンプルは、user.in_role?("admin") が true を返す限り成功する</p>
+
+</div>
+<div class="step" data-y="4800" data-x="0">
+<h2>述語マッチャ6</h2>
+
+<pre><code>be_a_kind_of(*args)
+be_an_instance_of(*args)
+
+"foo".should be_an_instance_of(String)     # Exact class
+"foo".should_not be_an_instance_of(Object) #
+
+"foo".should be_a_kind_of(Object)          # Match subclasses
+"foo".should be_an(Object)                 #
+</code></pre>
+
+</div>
+<div class="step" data-y="4800" data-x="1200">
+<h2>値が変化したことをテストしたい - change</h2>
+
+<pre><code>expect{ array &lt;&lt; 42 }.to change{ array.size }.from(0).to(1)
+expect{ array &lt;&lt; 42 }.to change{ array.size }.by(1)
+</code></pre>
+
+</div>
+<div class="step" data-y="4800" data-x="2400">
+<h2>例外が発生することを確認したい - raise_error</h2>
+
+<pre><code>expect{ subject.bad_method }.to raise_error(NoMethodError)
+</code></pre>
+
+</div>
+<div class="step" data-y="4800" data-x="3600">
+<h2>ついでにシンボルが throw されるかも - throw_symbol</h2>
+
+<pre><code>expect{ subject.bad_method }.to throw_symbol
+</code></pre>
+
+</div>
+<div class="step" data-y="4800" data-x="4800">
+<h2>いくつ存在してるかを確かめたい - have</h2>
+
+<pre><code>[1,2,3].should have(3).items
+[1,2,3].should have_exactly(3).items # have_exactly は have の alias
+[1,2,3].should have_at_least(2).items # 少なくとも n 個は持ってるはず
+[1,2,3].should have_at_most(4).items # 多くとも n 個だろう
+</code></pre>
+
+</div>
+<div class="step" data-y="5600" data-x="0">
+<h2>まだありますが今日はこのへんで...</h2>
+
+<ul>
+<li>matcher 自体は16個が relish では載っている。全部覚える必要はないが、とりあえず目を通すとよさげ</li>
+</ul>
+
+</div>
+<div class="step" data-y="5600" data-x="1200">
+<h2>まとめ</h2>
+
+<ul>
+<li>RSpec は 全てのオブジェクトに should と should_not を足す
+<ul>
+<li>rspec-expectations の根幹</li>
+</ul></li>
+<li>actual.should mathers(expected) という基本形を覚えておけば、matchers さえ覚えていけば対応できる</li>
+<li>mathcer はカスタムマッチャが簡単に作れるようになってるので、自分でも作ることが可能</li>
+</ul>
+
+</div>
+<div class="step" data-rotate-y="90" data-y="-12000" data-x="0">
+<h2>ご清聴ありがとうございました</h2>
+
+<!-- data-x="0" -->
+<!-- data-y="-12000" -->
+<!-- data-rotate-y="90" -->
+
+</div>
+<div class="step" data-y="5600" data-x="2400">
+<h2>参考</h2>
+
+<ul>
+<li>The RSpec Book</li>
+<li>http://www.slideshare.net/Sixeight/introduce-rspecs-matchers</li>
+<li>http://kerryb.github.com/iprug-rspec-presentation</li>
+</ul>
+
+</div>
+
+
+    <div id="overview" class="step" data-x="3000" data-y="1500" data-scale="10">
+    </div>
+
+</div>
+
+<div class="hint">
+    <p>Use a spacebar or arrow keys to navigate</p>
+</div>
+<script>
+if ("ontouchstart" in document.documentElement) { 
+    document.querySelector(".hint").innerHTML = "<p>Tap on the left or right to navigate</p>";
+}
+</script>
+<script src="js/impress.js"></script>
+
+</body>
+</html>
+

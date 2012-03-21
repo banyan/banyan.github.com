@@ -1,0 +1,12 @@
+# A sample Guardfile
+# More info at https://github.com/guard/guard#readme
+
+# Add files and command option to this file, like the example:
+#  watch(/README.md/i) {|m| `markdown2impress.pl --width=1000 #{m[0]}` }
+# See more detail:
+#  https://github.com/yoshiki/markdown2impress
+#
+guard 'markdown2impress' do
+  extensions = %w(md markdown mkd mdown mkdn mark).join("|")
+  watch(/.+\.(#{extensions})/i) {|m| `markdown2impress.pl #{m[0]}` }
+end
