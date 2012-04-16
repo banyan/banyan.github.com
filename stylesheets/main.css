@@ -1,0 +1,26 @@
+body {
+  font-family: Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal, monospace;
+}
+
+hr {
+  border: #ffff00 solid 5px;
+}
+
+span {
+  font-family: Georgia,"Times New Roman",Times,serif;
+  font-size: 32px;
+  font-style: italic;
+}
+
+a {
+  text-decoration: none;
+}
+
+.inner {
+  padding: 30px;
+}
+
+.entry-title {
+  margin: 12px 0 32px;
+  font-size: 32px;
+}
