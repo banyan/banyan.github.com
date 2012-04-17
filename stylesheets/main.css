@@ -3,13 +3,48 @@ body {
 }
 
 hr {
-  border: #ffff00 solid 5px;
+  border: #9de088 double 30px;
+}
+
+h1 {
+  font-size: 40px;
+  font-family: "reenie-beanie",sans-serif;
+}
+
+h1 a {
+  color: #f4d907;
 }
 
 span {
   font-family: Georgia,"Times New Roman",Times,serif;
-  font-size: 32px;
+  font-size: 24px;
   font-style: italic;
+  text-shadow: 0 3px 0 cyan;
+  display: inline-block;
+  max-width: 100%;
+  color: #fff;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  background: #f785bc;
+  padding: 2px;
+}
+
+.entry-title {
+  font-size: 36px;
+  display: inline-block;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  margin: 0 0 32px;
+  background: #b6d0ea;
+  padding: 5px 30px;
+  font-family: menlo,'andale mono',consolas,"Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", "Meiryo", "メイリオ", "Osaka", "MS PGothic", 'ＭＳ Ｐゴシック', sans-serif;
+}
+
+.entry-title a {
+  color: #fff;
 }
 
 a {
@@ -17,10 +52,6 @@ a {
 }
 
 .inner {
-  padding: 30px;
-}
-
-.entry-title {
-  margin: 12px 0 32px;
-  font-size: 32px;
+  padding: 24px;
+  font-size: 16px;
 }

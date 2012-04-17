@@ -14,12 +14,22 @@
 
 
   <entry>
-    <title type="html"><![CDATA[Hello Stellar]]></title>
+    <title type="html"><![CDATA[Stellar & Skelton を使ってみる]]></title>
     <link href="http://banyan.github.com/"/>
     <updated>2012-04-17T03:23:00+09:00</updated>
     <id>http://banyan.github.com/ </id>
     <content type="html"><![CDATA[
-<p>I start with Stellar (A static site generator) and Skelton (CSS framework).</p>
+<p><a href="http://github.com/mizzy/stellar/">Stellar</a> (A static site generator) と Skelton (CSS framework) を使ってブログじゃないけど始めてみる。</p>
+
+<p><a href="http://higelog.brassworks.jp/?p=2076">Nanoc以外の静的サイト生成ツールを調べてみた</a></p>
+
+<p>色々種類がありすぎて、どれを使うか悩みますけど、Stellar は機能がすごい削いであるのでとりあえずこれで始めて慣れてみたい。</p>
+
+<p>しかしながら MT とか WordPress とかあって、一周して、ここまで削がれた感をすごい感じます。</p>
+
+<p>もうちょっとデザインを調整したいのと、それでもはてなよりはすでに書きやすいなぁ。</p>
+
+<p>英語でもちょこちょこエントリを書いていきたい</p>
 
 ]]></content>
   </entry>
