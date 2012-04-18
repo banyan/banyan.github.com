@@ -6,6 +6,10 @@ hr {
   border: #9de088 double 30px;
 }
 
+hr.autopagerize_page_separator {
+  border: #9de088 double 4px;
+}
+
 h1 {
   font-size: 40px;
   font-family: "reenie-beanie",sans-serif;
@@ -51,11 +55,35 @@ span.time {
   color: #fff;
 }
 
+div.content a {
+  text-shadow: 0 2px 7px cyan;
+  display: inline-block;
+  max-width: 100%;
+  color: #111;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+div.content a:hover {
+  background: yellow;
+  color: #000;
+  text-shadow: none;
+}
+
 a {
   text-decoration: none;
 }
 
-.inner {
+div.inner {
   padding: 24px;
   font-size: 16px;
+}
+
+#main-content {
+  margin-bottom: 48px;
+}
+
+.pagination {
+  margin: 24px 0 36px;
 }

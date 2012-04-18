@@ -4,7 +4,7 @@
   <title><![CDATA[banyan.github.com]]></title>
   <link href="http://banyan.github.com/atom.xml" rel="self"/>
   <link href="http://banyan.github.com/"/>
-  <updated>2012-04-17T03:23:00+09:00</updated>
+  <updated>2012-04-19T02:19:00+09:00</updated>
   <id>http://banyan.github.com/</id>
   <author>
     <name><![CDATA[banyan.github.com]]></name>
@@ -12,6 +12,16 @@
   </author>
   <generator uri="https://github.com/mizzy/stellar/">Stellar</generator>
 
+
+  <entry>
+    <title type="html"><![CDATA[はてなスターを導入した]]></title>
+    <link href="http://banyan.github.com/"/>
+    <updated>2012-04-19T02:19:00+09:00</updated>
+    <id>http://banyan.github.com/ </id>
+    <content type="html"><![CDATA[
+
+]]></content>
+  </entry>
 
   <entry>
     <title type="html"><![CDATA[Stellar & Skelton を使ってみる]]></title>
