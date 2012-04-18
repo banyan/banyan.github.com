@@ -15,7 +15,11 @@ h1 a {
   color: #f4d907;
 }
 
-span {
+span.hatena-star-star-container {
+  vertical-align: super;
+}
+
+span.time {
   font-family: Georgia,"Times New Roman",Times,serif;
   font-size: 24px;
   font-style: italic;

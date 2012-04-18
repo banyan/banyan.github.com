@@ -32,10 +32,10 @@
   Hatena.Star.Token = '9b66193df72b5c6405b965ec102b302e392330bc';
   Hatena.Star.SiteConfig = {
     entryNodes: {
-      'div.section': {
-        uri: 'h1 a',
-        title: 'h1',
-        container: 'h1'
+      'div.container': {
+        uri: 'h1.entry-title a',
+        title: 'h1.entry-title',
+        container: 'div.entry-title-container'
       }
     }
   };
@@ -50,27 +50,26 @@
 <body>
   <a href="http://github.com/banyan"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/4c7dc970b89fd04b81c8e221ba88ff99a06c6b61/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f77686974655f6666666666662e706e67" alt="Fork me on GitHub"></a>
 	<div class="container">
-    <section>
-      <div class="sixteen columns">
-        <h1 class="remove-bottom" style="margin-top: 40px;"><a href="/">banyan.github.com</a></h1>
-        <hr />
+    <div class="sixteen columns">
+      <h1 class="remove-bottom" style="margin-top: 40px;"><a href="/">banyan.github.com</a></h1>
+      <hr />
+    </div>
+
+    <div class="sixteen columns autopagerize_page_element">
+
+      <div class="sixteen columns entry-title-container">
+        <h1 class="entry-title"><a href="/2012/04/17/1">Stellar & Skelton を使ってみる</a></h1>
       </div>
 
-      <div class="sixteen columns autopagerize_page_element">
-
-        <div class="sixteen columns">
-          <h1 class="entry-title"><a href="/2012/04/17/1">Stellar & Skelton を使ってみる</a></h1>
+      <div class="sixteen columns">
+        <div class="three columns alpha">
+          <span class="time">
+            <time>Apr 17<span>th</span>, 2012</time>
+          </span>
         </div>
-
-        <div class="sixteen columns">
-          <div class="three columns alpha">
-            <span class="time">
-              <time>Apr 17<span>th</span>, 2012</time>
-            </span>
-          </div>
-          <div id="main-content" class="thirteen columns omega" style="background-color: #adedd7">
-            <div class="content inner">
-              <p><a href="http://github.com/mizzy/stellar/">Stellar</a> (A static site generator) と Skelton (CSS framework) を使ってブログじゃないけど始めてみる。</p>
+        <div id="main-content" class="thirteen columns omega" style="background-color: #adedd7">
+          <div class="content inner">
+            <p><a href="http://github.com/mizzy/stellar/">Stellar</a> (A static site generator) と Skelton (CSS framework) を使ってブログじゃないけど始めてみる。</p>
 
 <p><a href="http://higelog.brassworks.jp/?p=2076">Nanoc以外の静的サイト生成ツールを調べてみた</a></p>
 
@@ -82,20 +81,19 @@
 
 <p>英語でもちょこちょこエントリを書いていきたい</p>
 
-            </div>
           </div>
         </div>
-
-        <div class="pagination">
-          
-
-          
-        </div>
-
       </div>
 
-      <div class="autopagerize_insert_before"></div>
-    </section>
+      <div class="pagination">
+        
+
+        
+      </div>
+
+    </div>
+
+    <div class="autopagerize_insert_before"></div>
   </div>
 </body>
 </html>
