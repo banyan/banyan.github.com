@@ -4,7 +4,7 @@
   <title><![CDATA[banyan.github.com]]></title>
   <link href="http://banyan.github.com/atom.xml" rel="self"/>
   <link href="http://banyan.github.com/"/>
-  <updated>2012-04-19T02:19:00+09:00</updated>
+  <updated>2012-04-19T18:47:00+09:00</updated>
   <id>http://banyan.github.com/</id>
   <author>
     <name><![CDATA[banyan.github.com]]></name>
@@ -12,6 +12,28 @@
   </author>
   <generator uri="https://github.com/mizzy/stellar/">Stellar</generator>
 
+
+  <entry>
+    <title type="html"><![CDATA[pow + tunnels + launchd]]></title>
+    <link href="http://banyan.github.com/"/>
+    <updated>2012-04-19T18:47:00+09:00</updated>
+    <id>http://banyan.github.com/ </id>
+    <content type="html"><![CDATA[
+<p><a href="https://github.com/jugyo/tunnels">tunnels</a> is awesome which enables us runnning pow over SSL.</p>
+
+<pre><code>$ gem install tunnels
+$ sudo tunnels (just to use)
+</code></pre>
+
+<p>And it&#39;s better to work in the background by launchd.</p>
+
+<pre><code>$ sudo vi /Library/LaunchDaemons/org.rubygems.tunnels.plist
+</code></pre>
+
+<script src="https://gist.github.com/2420053.js"> </script>
+
+]]></content>
+  </entry>
 
   <entry>
     <title type="html"><![CDATA[はてなスターを導入した]]></title>

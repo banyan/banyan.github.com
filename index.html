@@ -58,7 +58,7 @@
     <div class="sixteen columns autopagerize_page_element">
 
       <div class="sixteen columns entry-title-container">
-        <h1 class="entry-title"><a href="/2012/04/19/1">はてなスターを導入した</a></h1>
+        <h1 class="entry-title"><a href="/2012/04/19/2">pow + tunnels + launchd</a></h1>
       </div>
 
       <div class="sixteen columns">
@@ -69,14 +69,26 @@
         </div>
         <div id="main-content" class="thirteen columns omega" style="background-color: #adedd7">
           <div class="content inner">
-            
+            <p><a href="https://github.com/jugyo/tunnels">tunnels</a> is awesome which enables us runnning pow over SSL.</p>
+
+<pre><code>$ gem install tunnels
+$ sudo tunnels (just to use)
+</code></pre>
+
+<p>And it&#39;s better to work in the background by launchd.</p>
+
+<pre><code>$ sudo vi /Library/LaunchDaemons/org.rubygems.tunnels.plist
+</code></pre>
+
+<script src="https://gist.github.com/2420053.js"> </script>
+
           </div>
         </div>
       </div>
 
       <div class="pagination">
         
-        <a href="/2012/04/17/1" rel="next">next post</a>
+        <a href="/2012/04/19/1" rel="next">next post</a>
         
 
         
