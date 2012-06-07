@@ -5,7 +5,7 @@
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <head>
 	<meta charset="utf-8">
-	<title>Github の Deploy Keys の公開鍵のメモ - banyan.github.com</title>
+	<title>Working with Unix Processes の Daemon Processes を社内勉強会で読んだメモ - banyan.github.com</title>
 	<meta name="description" content="">
 	<meta name="author" content="Kohei Hasegawa">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -58,7 +58,7 @@
     <div class="sixteen columns autopagerize_page_element">
 
       <div class="sixteen columns entry-title-container">
-        <h1 class="entry-title"><a href="/2012/06/07/1">Github の Deploy Keys の公開鍵のメモ</a></h1>
+        <h1 class="entry-title"><a href="/2012/06/07/2">Working with Unix Processes の Daemon Processes を社内勉強会で読んだメモ</a></h1>
       </div>
 
       <div class="sixteen columns">
@@ -69,22 +69,14 @@
         </div>
         <div id="main-content" class="thirteen columns omega" style="background-color: #adedd7">
           <div class="content inner">
-            <p>Github を会社で使っています。とても快適です。</p>
+            <p>Working with Unix Processes の Daemon Processes を社内勉強会で読んだ。
+以前さらっと読んだ時はふんふん...なるほどーとか読みながら読めたけど
+すごい忘れてるし、そもそもじっくり話しながら読んだら自分は全然理解できてないことが分かった。</p>
 
-<p>Github を会社で使えますよー、というのは求人条件とかに書いてもいいと思う。</p>
+<p>ので改めて読んでメモしとく。
+まだ理解曖昧な部分はアップデートしていきたい</p>
 
-<p>それはさておき、今は Business Plans の Bronze の Plan を使っています。</p>
-
-<p>Bronze Plan では 10個の Private Repository を作成することができますが、
-そのひとつのリポジトリに対して、デプロイキー (公開鍵) を設定することができますが、
-Github は公開鍵は全体で一意のものしか登録ができません。</p>
-
-<p>したがって、リポジトリAを例えば CI サーバから取得するみたいな時に、
-CI サーバの鍵を登録してしまうと、リポジトリBには同じ鍵を登録することができません。</p>
-
-<p>もっといい方法があるかもしれませんが、今はデプロイだけをするユーザを新規作成して、
-そのユーザを organization に追加して (Pull Only の権限)、そのユーザ自身の公開鍵を普通に SSH Keys から設定しておくことでこの問題を回避しています。
-(秘密鍵を新しく作るサーバに配置する必要はあります)</p>
+<script src="https://gist.github.com/2889128.js"> </script>
 
           </div>
         </div>
@@ -92,11 +84,9 @@ CI サーバの鍵を登録してしまうと、リポジトリBには同じ鍵�
 
       <div class="pagination">
         
-        <a href="/2012/04/19/3" rel="next">next post</a>
+        <a href="/2012/06/07/1" rel="next">next post</a>
         
 
-        
-        <a href="/2012/06/07/2">previous post</a>
         
       </div>
     </div>

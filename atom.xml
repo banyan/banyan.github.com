@@ -4,7 +4,7 @@
   <title><![CDATA[banyan.github.com]]></title>
   <link href="http://banyan.github.com/atom.xml" rel="self"/>
   <link href="http://banyan.github.com/"/>
-  <updated>2012-06-07T10:57:00+09:00</updated>
+  <updated>2012-06-07T23:00:00+09:00</updated>
   <id>http://banyan.github.com/</id>
   <author>
     <name><![CDATA[banyan.github.com]]></name>
@@ -12,6 +12,24 @@
   </author>
   <generator uri="https://github.com/mizzy/stellar/">Stellar</generator>
 
+
+  <entry>
+    <title type="html"><![CDATA[Working with Unix Processes の Daemon Processes を社内勉強会で読んだメモ]]></title>
+    <link href="http://banyan.github.com/"/>
+    <updated>2012-06-07T23:00:00+09:00</updated>
+    <id>http://banyan.github.com/ </id>
+    <content type="html"><![CDATA[
+<p>Working with Unix Processes の Daemon Processes を社内勉強会で読んだ。
+以前さらっと読んだ時はふんふん...なるほどーとか読みながら読めたけど
+すごい忘れてるし、そもそもじっくり話しながら読んだら自分は全然理解できてないことが分かった。</p>
+
+<p>ので改めて読んでメモしとく。
+まだ理解曖昧な部分はアップデートしていきたい</p>
+
+<script src="https://gist.github.com/2889128.js"> </script>
+
+]]></content>
+  </entry>
 
   <entry>
     <title type="html"><![CDATA[Github の Deploy Keys の公開鍵のメモ]]></title>
