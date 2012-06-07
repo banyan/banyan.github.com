@@ -58,29 +58,33 @@
     <div class="sixteen columns autopagerize_page_element">
 
       <div class="sixteen columns entry-title-container">
-        <h1 class="entry-title"><a href="/2012/04/19/2">pow + tunnels + launchd</a></h1>
+        <h1 class="entry-title"><a href="/2012/06/07/1">Github の Deploy Keys の公開鍵のメモ</a></h1>
       </div>
 
       <div class="sixteen columns">
         <div class="three columns alpha">
           <span class="time">
-            <time>Apr 19<span>th</span>, 2012</time>
+            <time>Jun 7<span>th</span>, 2012</time>
           </span>
         </div>
         <div id="main-content" class="thirteen columns omega" style="background-color: #adedd7">
           <div class="content inner">
-            <p><a href="https://github.com/jugyo/tunnels">tunnels</a> is awesome which enables us runnning pow over SSL.</p>
+            <p>Github を会社で使っています。とても快適です。</p>
 
-<pre><code>$ gem install tunnels
-$ sudo tunnels (just to use)
-</code></pre>
+<p>Github を会社で使えますよー、というのは求人条件とかに書いてもいいと思う。</p>
 
-<p>And it&#39;s better to work in the background by launchd.</p>
+<p>それはさておき、今は Business Plans の Bronze の Plan を使っています。</p>
 
-<pre><code>$ sudo vi /Library/LaunchDaemons/org.rubygems.tunnels.plist
-</code></pre>
+<p>Bronze Plan では 10個の Private Repository を作成することができますが、
+そのひとつのリポジトリに対して、デプロイキー (公開鍵) を設定することができますが、
+Github は公開鍵は全体で一意のものしか登録ができません。</p>
 
-<script src="https://gist.github.com/2420053.js"> </script>
+<p>したがって、リポジトリAを例えば CI サーバから取得するみたいな時に、
+CI サーバの鍵を登録してしまうと、リポジトリBには同じ鍵を登録することができません。</p>
+
+<p>もっといい方法があるかもしれませんが、今はデプロイだけをするユーザを新規作成して、
+そのユーザを organization に追加して (Pull Only の権限)、そのユーザ自身の公開鍵を普通に SSH Keys から設定しておくことでこの問題を回避しています。
+(秘密鍵を新しく作るサーバに配置する必要はあります)</p>
 
           </div>
         </div>
@@ -88,7 +92,7 @@ $ sudo tunnels (just to use)
 
       <div class="pagination">
         
-        <a href="/2012/04/19/1" rel="next">next post</a>
+        <a href="/2012/04/19/3" rel="next">next post</a>
         
 
         
