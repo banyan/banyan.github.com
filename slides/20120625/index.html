@@ -1,0 +1,413 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
+    <link href="css/impress.css" rel="stylesheet" />
+</head>
+<body>
+<div id="impress" class="impress-not-supported">
+    <div class="fallback-message">
+        <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+        <p>For the best experience please use the latest <b>Chrome</b> or <b>Safari</b> browser. Firefox 10 (to be released soon) will also handle it.</p>
+    </div>
+
+<div id="title" class="step" data-rotate-y="90" data-y="-1500" data-x="-18000">
+<h1>Part 1. How Does Developing with Git at Paperboy&amp;co.</h1>
+
+<p><br />
+<address>Kohei Hasegawa@banyan<br />paperboy&amp;co.<br />20120619</address>
+<!-- data-x="-18000" -->
+<!-- data-y="-1500" -->
+<!-- data-rotate-y="90" --></p>
+
+</div>
+<div id="title" class="step" data-y="0" data-x="0">
+<h2>最初にすごく簡単にペパボと Git の自分の考える特徴を振り返ります。</h2>
+
+</div>
+<div class="step" data-rotate-y="90" data-y="-1500" data-x="-9000">
+<h2>ペパボたくさんの事業部がある。</h2>
+
+<!-- data-x="-9000" -->
+<!-- data-y="-1500" -->
+<!-- data-rotate-y="90" -->
+
+<ul>
+<li>lolipop</li>
+<li>muumuu-domain</li>
+<li>heteml</li>
+<li>colorme</li>
+<li>etc...</li>
+</ul>
+
+</div>
+<div class="step" data-rotate-y="100" data-y="-1000" data-x="-3000">
+<h2>特徴として全てのチームにデザイナがアサインされる</h2>
+
+<!-- data-x="-3000" -->
+<!-- data-y="-1000" -->
+<!-- data-rotate-y="100" -->
+
+<p>最近の某プロジェクトの最初の構成</p>
+
+<ul>
+<li>ディレクタ1人</li>
+<li>プログラマ1人</li>
+<li>デザイナ1人</li>
+</ul>
+
+</div>
+<div class="step" data-y="0" data-x="1200">
+<h2>なのでデザイナとどう協業するか考える必要がある</h2>
+
+<ul>
+<li>この会社が Webistrano をこんなに使ってるわけもそこに理由があると思う
+<ul>
+<li>Webistrano なんかだるい、Capistrano でいいじゃんという意見に対して思うこと</li>
+<li>例えば hsbt さんが作った rake-confirm とかは不便にするもの</li>
+<li>不便にすることで安心できる、デプロイ作業においてはワンクリックで全部デプロイできます！という利便性よりも本質的に慎重なものだから意図的に不便にしたほうがいい箇所がある</li>
+<li>ログ見れたり、ロールバックいつしたか、とか最新のバージョンとか見れて便利</li>
+</ul></li>
+</ul>
+
+</div>
+<div class="step" data-y="0" data-x="2400">
+<h2>A Case of heteml</h2>
+
+</div>
+<div class="step" data-y="0" data-x="3600">
+<h2>Windows ユーザのデザイナには</h2>
+
+<ul>
+<li>GUI を使ってもらうよりもターミナルにログインしてもらって、CUI で操作してもらう
+<ul>
+<li>Samba 経由で Git を操作すると時間がすごいかかった (社内のファイルサーバの問題もあるだろうし、プロジェクトが長くてリポジトリ自体も巨大)</li>
+</ul></li>
+<li>同じ API で覚えてもらうことができる</li>
+<li>Linux の簡単な操作を覚えるくらいなら学習コスト低い (1h くらい)</li>
+</ul>
+
+</div>
+<div class="step" data-y="0" data-x="4800">
+<h2>git-flow 使った</h2>
+
+<ul>
+<li>git-flow でも git-daily でも何かラッパーツールはあったほうがいい。</li>
+<li>本質的に全てのプロジェクトに合うラッパーツールはなくて、git-flow の哲学が悪いのではなくて git-flow 自体は正しいし、最終的には自分達で作る感じになると思う</li>
+<li>git-flow を使うのはデザイナのためだと思う
+<ul>
+<li>全くの0からなら git-flow のほうが説明しやすいのでは、と思う</li>
+<li>API 分かりやすい</li>
+</ul></li>
+<li>プログラマやインフラしかいない開発の場合は、適当にルール作ってやればいいと思う</li>
+</ul>
+
+</div>
+<div class="step" data-y="800" data-x="0">
+<h2>実際の導入を振り返って</h2>
+
+<ul>
+<li>Git 自体の説明 + Linux (1h)</li>
+<li>git-flow での複数人での開発 (1h)</li>
+</ul>
+
+<p>で理解できてもらった気がする。問題も起きてないと思う</p>
+
+</div>
+<div class="step" data-y="800" data-x="1200">
+<h2>もっとうまくやれた部分とか</h2>
+
+<ul>
+<li>sqale で今試してる部分もあるので、heteml とかにもうまくいく部分は共有していきたい</li>
+<li>antipop さんが作ってる new webistrano との連携で更にペパボの開発にあった感じのものができて便利になりそう</li>
+</ul>
+
+</div>
+<div class="step" data-y="800" data-x="2400">
+<h2>Part2. Some Tips for Git User</h2>
+
+<ul>
+<li>あんまり Git の使い方についてみんなで話す機会ない</li>
+<li>Git どうですか？といってもぱっとは出てこないのでひとつずつコマンド見たりする</li>
+<li>それぞれについて説明・実演をしつつ、みんなが「こんなことも知らないのか」とあきれて、いろいろ教えてくれる<a href="http://kentaro.hatenablog.com/entry/2012/05/29/230254">第1回Ruby開発環境勉強会</a> あんちぽさんメソッドでいきたいと思います。</li>
+<li>途中でつっこみ Welcome です。（終わってからでも OK です)</li>
+</ul>
+
+</div>
+<div class="step" data-y="800" data-x="3600">
+<h2>1. コミットメッセージ</h2>
+
+<ul>
+<li>何をしたかは見ればわかるけど、どうしてそうしたかを書く</li>
+<li>英語でコミットメッセージ書けば適当に書いて免責されるわけじゃない
+<ul>
+<li>社内でも英語でコミットメッセージを書くのは全然いいと思うけど、そのコミットを英語で表現できない時は素直に日本語使ったほうがいい</li>
+</ul></li>
+<li>コミットメッセージは未来のあなたと、誰かに対する愛</li>
+</ul>
+
+</div>
+<div class="step" data-y="800" data-x="4800">
+<h2>2. コミットメッセージの書き方</h2>
+
+<pre><code>Gemfile がなくても open エラーにならないようにする # ←タイトル
+                                                   # ←空行
+ワーキングディレクトリ (リポジトリのルート) に Gemfile という名前のファイルがないと、書き換え前に中身を読むところで例外が発生してしまう。
+いろいろやりかたはありそうだけど、空ファイルでも存在すれば ok なので touch で作ってしまう。
+</code></pre>
+
+<ul>
+<li>慣習的にこういう風に書く</li>
+<li>1行目に何をするものか完結にタイトルを書く</li>
+<li>一行空けて本文を書く</li>
+<li><a href="http://stopwritingramblingcommitmessages.com/">tpope さんのタイトルは50文字、段落は72文字までに折り返しましょうサイト</a></li>
+<li><a href="http://keijinsonyaban.blogspot.jp/2011/01/git.html">Gitのコミットメッセージに関する注意点</a></li>
+</ul>
+
+</div>
+<div class="step" data-y="1600" data-x="0">
+<h2>3. コミットの粒度</h2>
+
+<ul>
+<li>刺身先生による <a href="http://d.hatena.ne.jp/a666666/20110910/1315761292">明日からできる！バージョン管理システムへのコミット粒度を最適化するトレーニング方法</a></li>
+<li>Git だとブランチを作れば後で参照できるので、ある種ネームスペースがあるというか、よりコミットの粒度意識しなくてもいいですね</li>
+<li>刺身さんの粒度すごい。1時間に20個くらいコミットしてる時もある。そこまでみんながする必要はないけど、ちょっと見てみると色々参考になります。</li>
+</ul>
+
+</div>
+<div class="step" data-y="1600" data-x="1200">
+<h2>4. git config (.gitconfig)</h2>
+
+<pre><code>$ git config --global core.editor vim
+$ vi ~/.gitconfig
+</code></pre>
+
+<ul>
+<li>alias とか設定したりすると便利</li>
+<li>なにかおすすめの設定ありますか?</li>
+</ul>
+
+</div>
+<div class="step" data-y="1600" data-x="2400">
+<h2>5. git status</h2>
+
+<pre><code>$ git status -sb # のほうが慣れると見やすい
+
+# .gitconfig
+[alias]
+    st = status -sb
+</code></pre>
+
+</div>
+<div class="step" data-y="1600" data-x="3600">
+<h2>6. git stash</h2>
+
+<p>現在作業中のbranchでまだコミットはしたくないけど、trunkで直さないといけないバグとかが見つかったときに、今の変更を横にどけておくコマンド。</p>
+
+<pre><code>$ git stash
+$ git stash pop
+</code></pre>
+
+<p>若者の git stash 忘れが多発</p>
+
+<ul>
+<li>zsh で git stash を表示する</li>
+<li>http://less.carbonfairy.org/post/17714419750</li>
+<li>bash の人も「bash git stash」とかで検索したりして表示する</li>
+</ul>
+
+</div>
+<div class="step" data-y="1600" data-x="4800">
+<h2>7. git rebase</h2>
+
+<ul>
+<li><a href="http://labs.timedia.co.jp/2010/11/git-squash-commits.html">gitで複数のコミットを1つにまとめる</a>
+<ul>
+<li>分かりやすい</li>
+</ul></li>
+<li>コミットの順序を変える
+<ul>
+<li>デモ</li>
+</ul></li>
+<li>今したコミットと2つ前のコミットと merge する
+<ul>
+<li>デモ</li>
+</ul></li>
+<li>公開リポジトリにプッシュしたコミットをリベースしてはいけない</li>
+</ul>
+
+</div>
+<div class="step" data-y="2400" data-x="0">
+<h2>8. git grep</h2>
+
+<pre><code>$ git grep hoge
+$ git grep -i Hoge (Ignore case differences between the patterns and the files.)
+</code></pre>
+
+<ul>
+<li>個人的には全然使ってないです (ack 使ってる)</li>
+</ul>
+
+</div>
+<div class="step" data-y="2400" data-x="1200">
+<h2>9. git reset</h2>
+
+<p>ローカルリポジトリ、インデックスを元に戻す</p>
+
+<pre><code>$ git reset HEAD^
+$ git reset --hard HEAD^^
+</code></pre>
+
+</div>
+<div class="step" data-y="2400" data-x="2400">
+<h2>10. git reflog</h2>
+
+<ul>
+<li>Git では一度でもコミットするか、インデックスにいれれば、歴史に入るので、データが消えることはない
+ $ git reflog</li>
+</ul>
+
+</div>
+<div class="step" data-y="2400" data-x="3600">
+<h2>11. git blame</h2>
+
+<p>$ tig blame のほうが便利</p>
+
+</div>
+<div class="step" data-y="2400" data-x="4800">
+<h2>12. git clean</h2>
+
+<p>ワーキングツリーを掃除する</p>
+
+<ul>
+<li>削除されるファイルを確認する / -n, --dry-run</li>
+<li>実際にファイルを削除する / -f, --force</li>
+<li>ディレクトリを削除する / -d</li>
+</ul>
+
+</div>
+<div class="step" data-y="3200" data-x="0">
+<h2>12. git now</h2>
+
+<ul>
+<li><p>git-now は native なコマンドではないです。</p>
+
+<p>$ brew install git-now</p></li>
+</ul>
+
+</div>
+<div class="step" data-y="3200" data-x="1200">
+<h2>13. git slave</h2>
+
+<ul>
+<li>a great alternative to git-submodules when forming superprojects out of repositories you control.</li>
+<li>まだ使ったことないけど、git submodule の代用として使えるケースがあるらしい</li>
+<li>http://gitslave.sourceforge.net/</li>
+</ul>
+
+</div>
+<div class="step" data-y="3200" data-x="2400">
+<h2>14. tig</h2>
+
+<ul>
+<li>tig かわいいよ tig</li>
+<li>git log の代用として使ってます
+<ul>
+<li>git log もたまに使う</li>
+</ul></li>
+<li>.tigrc とかで設定できる</li>
+<li>vimmer は Shift-G で git gc が走らないように設定しておく</li>
+</ul>
+
+</div>
+<div class="step" data-y="3200" data-x="3600">
+<h2>15. 必要ない記述を消したけど、そこに書かれていた記述を参照したい</h2>
+
+<blockquote>
+  <p>コメントアウトするくらいなら消してください。 そして、これを消すコミットでなぜ消したのかを説明してください。 バージョン管理システムはそのためにあります。</p>
+</blockquote>
+
+<p>って永和さんの研修でレビューされてた。個人的にはコメントアウトしてもいいケースはあるとは思うけど、必要ない箇所はばっさり消すべきだとは思う。
+で消したけど、その記述がほしい場合</p>
+
+</div>
+<div class="step" data-y="3200" data-x="4800">
+<h2>15. 必要ない記述を消したけど、そこに書かれていた記述を参照したいの続き</h2>
+
+<pre><code># どっかのタイミングで hoge.html を削除したとする。
+# その hoge.html がほしい
+$ git log # git log でみると、そのコミットのひとつ前の hash なので注意
+$ git checkout &lt;hash&gt; hoge.html # で戻せる
+</code></pre>
+
+</div>
+<div class="step" data-y="4000" data-x="0">
+<h2>16. git add -p で分割できるより更にコミットの粒度を下げるには？</h2>
+
+<p>s をタイプすると、より細かく分割できる。
+s でもダメな場合は、e(edit)</p>
+
+</div>
+<div class="step" data-y="4000" data-x="1200">
+<h2>17. ブランチ作ったけど、ブランチ作ったときと意味が変わってきたので、ブランチ名変えたい</h2>
+
+<pre><code>$ git branch -m old-branch-name new-branch-name
+</code></pre>
+
+</div>
+<div class="step" data-y="4000" data-x="2400">
+<h2>18. 1つ前のコミットに含めてコミットしたい</h2>
+
+<pre><code>$ git commit --amend -m "foo"
+</code></pre>
+
+<ul>
+<li>コミットするものがなくても、コミットメッセージだけを変更する場合も同じ操作でいけます</li>
+</ul>
+
+</div>
+<div class="step" data-y="4000" data-x="3600">
+<h2>19. 1つ前のコミットに含めてコミットするが、コミットメッセージは1つ前のコミットのものを使う</h2>
+
+<pre><code>$ git commit --amend -C HEAD
+$ git amend
+
+[alias]
+    amend = commit --amend -C HEAD
+</code></pre>
+
+</div>
+<div class="step" data-y="4000" data-x="4800">
+<h2>ご清聴ありがとうございました</h2>
+
+<ul>
+<li>参考
+<ul>
+<li>入門 Git</li>
+<li>Git によるバージョン管理</li>
+</ul></li>
+</ul>
+
+</div>
+
+
+    <div id="overview" class="step" data-x="3000" data-y="1500" data-scale="10">
+    </div>
+
+</div>
+
+<div class="hint">
+    <p>Use a spacebar or arrow keys to navigate</p>
+</div>
+<script>
+if ("ontouchstart" in document.documentElement) { 
+    document.querySelector(".hint").innerHTML = "<p>Tap on the left or right to navigate</p>";
+}
+</script>
+<script src="js/impress.js"></script>
+
+</body>
+</html>
+
