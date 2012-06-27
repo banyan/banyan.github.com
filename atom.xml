@@ -4,7 +4,7 @@
   <title><![CDATA[banyan.github.com]]></title>
   <link href="http://banyan.github.com/atom.xml" rel="self"/>
   <link href="http://banyan.github.com/"/>
-  <updated>2012-06-07T23:00:00+09:00</updated>
+  <updated>2012-06-23T10:37:13+09:00</updated>
   <id>http://banyan.github.com/</id>
   <author>
     <name><![CDATA[banyan.github.com]]></name>
@@ -12,6 +12,114 @@
   </author>
   <generator uri="https://github.com/mizzy/stellar/">Stellar</generator>
 
+
+  <entry>
+    <title type="html"><![CDATA[]]></title>
+    <link href="http://banyan.github.com/"/>
+    <updated>2012-06-23T10:37:13+09:00</updated>
+    <id>http://banyan.github.com/ </id>
+    <content type="html"><![CDATA[
+<p>2012-06-23 現在のものなので、
+また仕様がすぐに変わるかもしれないですがメモとして書いとく。</p>
+
+<p>(仕様が変わったら更新する予定なのと、間違えてたら教えて頂けるとありがたいです。)</p>
+
+<p>Organization を作ると Team を作ることが可能。
+Team には今のところ3つの権限がある。</p>
+
+<ul>
+<li>Pull Only</li>
+<li>Push &amp; Pull</li>
+<li>Push Pull &amp; Administrative</li>
+</ul>
+
+<p>この他に実質的な管理者である</p>
+
+<ul>
+<li>Owner</li>
+</ul>
+
+<p>がある。</p>
+
+<table>
+  <tr>
+    <th>権限</th>
+    <th>issue を作るとメールが飛んでくるか</th>
+    <th>Pull Request ができるか</th>
+    <th>Organization の設定を管理画面からできるか</th>
+  </tr>
+  <tr>
+    <th>Pull Only</th>
+    <td>no</td>
+    <td>no</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <th>Push & Pull</th>
+    <td>yes</td>
+    <td>no</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <th>Push Pull & Administrative</th>
+    <td>yes</td>
+    <td>yes</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <th>Owner</th>
+    <td>yes</td>
+    <td>yes</td>
+    <td>yes</td>
+  </tr>
+</table>
+
+]]></content>
+  </entry>
+
+  <entry>
+    <title type="html"><![CDATA[]]></title>
+    <link href="http://banyan.github.com/"/>
+    <updated>2012-06-15T01:12:43+09:00</updated>
+    <id>http://banyan.github.com/ </id>
+    <content type="html"><![CDATA[
+<p>社内の勉強会のようなもので、Rails 写経会というものがあって、そこでチューター的なことをした。
+10人くらいの参加者のうち、8人が Mac、2人が Windows でまず開発環境を作りに取り掛かり、
+僕は主に Windows の人と一緒に作業してた。</p>
+
+<p>通常はプログラマやデザイナに何か伝えることはあっても
+2人ともプログラマでもなくデザイナでもなかったので、どう伝えようかとか迷った。</p>
+
+<p>気づいたこととして、</p>
+
+<ul>
+<li>とにかく typo が多い
+
+<ul>
+<li>typo をしない方法を伝えることが重要</li>
+<li>なるべくコンソール上の作業では Tab キーを使うようにするとか</li>
+<li>コピペを推奨
+
+<ul>
+<li>Windows のコマンドプロンプトはコピペも大変だったりする</li>
+</ul></li>
+<li>bundle と打ってください、と言っても 「bundle」という単語自体に馴染みがないので簡単には打てない</li>
+<li>rails でも lails と typo したりする</li>
+</ul></li>
+</ul>
+
+<p>このあたりの問題にある種新鮮な衝撃を覚えた。</p>
+
+<p>僕自身プログラムを始めた時は、typo に苦しんでた気がする。
+本を写経して、ドンとプログラムを実行して、エラーが出る時に、
+一文字一文字確認するけど、間違ってないように見える。</p>
+
+<p>間違ってないように見えるけど、それはどこかが間違っていて、
+そうして、少しずつプログラムを入力しては実行して、ということを
+経験から学んできた気がするけど、それにしても typo が多かったことにびっくりした。</p>
+
+]]></content>
+  </entry>
 
   <entry>
     <title type="html"><![CDATA[]]></title>
@@ -53,28 +161,6 @@ CI サーバの鍵を登録してしまうと、リポジトリBには同じ鍵�
 <p>もっといい方法があるかもしれませんが、今はデプロイだけをするユーザを新規作成して、
 そのユーザを organization に追加して (Pull Only の権限)、そのユーザ自身の公開鍵を普通に SSH Keys から設定しておくことでこの問題を回避しています。
 (秘密鍵を新しく作るサーバに配置する必要はあります)</p>
-
-]]></content>
-  </entry>
-
-  <entry>
-    <title type="html"><![CDATA[]]></title>
-    <link href="http://banyan.github.com/"/>
-    <updated>2012-04-19T18:47:00+09:00</updated>
-    <id>http://banyan.github.com/ </id>
-    <content type="html"><![CDATA[
-<p><a href="https://github.com/jugyo/tunnels">tunnels</a> is awesome which enables us runnning pow over SSL.</p>
-
-<pre><code>$ gem install tunnels
-$ sudo tunnels (just to use)
-</code></pre>
-
-<p>And it&#39;s better to work in the background by launchd.</p>
-
-<pre><code>$ sudo vi /Library/LaunchDaemons/org.rubygems.tunnels.plist
-</code></pre>
-
-<script src="https://gist.github.com/2420053.js"> </script>
 
 ]]></content>
   </entry>

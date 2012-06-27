@@ -5,7 +5,7 @@
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <head>
 	<meta charset="utf-8">
-	<title>Stellar & Skelton を使ってみる - banyan.github.com</title>
+	<title>GitHub の Organization の権限についてのメモ - banyan.github.com</title>
 	<meta name="description" content="">
 	<meta name="author" content="Kohei Hasegawa">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -59,28 +59,71 @@
     <div class="sixteen columns autopagerize_page_element">
 
       <div class="sixteen columns entry-title-container">
-        <h1 class="entry-title"><a href="/2012/04/17/1">Stellar & Skelton を使ってみる</a></h1>
+        <h1 class="entry-title"><a href="/2012/06/23/1">GitHub の Organization の権限についてのメモ</a></h1>
       </div>
 
       <div class="sixteen columns">
         <div class="three columns alpha">
           <span class="time">
-            <time>Apr 17<span>th</span>, 2012</time>
+            <time>Jun 23<span>rd</span>, 2012</time>
           </span>
         </div>
         <div id="main-content" class="twelve columns offset-by-one omega">
           <div class="content inner">
-            <p><a href="http://github.com/mizzy/stellar/">Stellar</a> (A static site generator) と Skelton (CSS framework) を使ってブログじゃないけど始めてみる。</p>
+            <p>2012-06-23 現在のものなので、
+また仕様がすぐに変わるかもしれないですがメモとして書いとく。</p>
 
-<p><a href="http://higelog.brassworks.jp/?p=2076">Nanoc以外の静的サイト生成ツールを調べてみた</a></p>
+<p>(仕様が変わったら更新する予定なのと、間違えてたら教えて頂けるとありがたいです。)</p>
 
-<p>色々種類がありすぎて、どれを使うか悩みますけど、Stellar は機能がすごい削いであるのでとりあえずこれで始めて慣れてみたい。</p>
+<p>Organization を作ると Team を作ることが可能。
+Team には今のところ3つの権限がある。</p>
 
-<p>しかしながら MT とか WordPress とかあって、一周して、ここまで削がれた感をすごい感じます。</p>
+<ul>
+<li>Pull Only</li>
+<li>Push &amp; Pull</li>
+<li>Push Pull &amp; Administrative</li>
+</ul>
 
-<p>もうちょっとデザインを調整したいのと、それでもはてなよりはすでに書きやすいなぁ。</p>
+<p>この他に実質的な管理者である</p>
 
-<p>英語でもちょこちょこエントリを書いていきたい</p>
+<ul>
+<li>Owner</li>
+</ul>
+
+<p>がある。</p>
+
+<table>
+  <tr>
+    <th>権限</th>
+    <th>issue を作るとメールが飛んでくるか</th>
+    <th>Pull Request ができるか</th>
+    <th>Organization の設定を管理画面からできるか</th>
+  </tr>
+  <tr>
+    <th>Pull Only</th>
+    <td>no</td>
+    <td>no</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <th>Push & Pull</th>
+    <td>yes</td>
+    <td>no</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <th>Push Pull & Administrative</th>
+    <td>yes</td>
+    <td>yes</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <th>Owner</th>
+    <td>yes</td>
+    <td>yes</td>
+    <td>yes</td>
+  </tr>
+</table>
 
           </div>
         </div>
@@ -89,9 +132,9 @@
       <div class="sixteen columns">
         <div class="pagination">
           
-
+          <a href="/2012/06/15/1" rel="next">« earlier</a>
           
-          <a href="/2012/04/19/1">later »</a>
+
           
         </div>
       </div>

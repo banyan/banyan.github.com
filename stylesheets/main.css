@@ -1,9 +1,8 @@
 body {
-  font-family: Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal, monospace;
-}
-
-hr {
-  border: #9de088 double 30px;
+  font-family: menlo, 'andale mono', 'courier new', sans-serif;
+  font-size: 13px;
+  font-style: normal;
+  color: #333;
 }
 
 hr.autopagerize_page_separator {
@@ -13,10 +12,6 @@ hr.autopagerize_page_separator {
 h1 {
   font-size: 40px;
   font-family: "reenie-beanie",sans-serif;
-}
-
-h1 a {
-  color: #f4d907;
 }
 
 span.hatena-star-star-container {
@@ -38,21 +33,19 @@ span.time {
   padding: 2px;
 }
 
+.blog-title {
+  margin: 50px 0 30px;
+}
+
 .entry-title {
-  font-size: 36px;
+  font-size: 16px;
   display: inline-block;
   max-width: 100%;
   text-overflow: ellipsis;
   overflow: hidden;
-  white-space: nowrap;
-  margin: 0 0 32px;
-  background: #b6d0ea;
-  padding: 5px 30px;
   font-family: menlo,'andale mono',consolas,"Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", "Meiryo", "メイリオ", "Osaka", "MS PGothic", 'ＭＳ Ｐゴシック', sans-serif;
-}
-
-.entry-title a {
-  color: #fff;
+  line-height: 1.25em;
+  margin-bottom: 60px;
 }
 
 div.content a {
@@ -66,7 +59,7 @@ div.content a {
 }
 
 div.content a:hover {
-  background: yellow;
+  background: cyan;
   color: #000;
   text-shadow: none;
 }
@@ -76,14 +69,54 @@ a {
 }
 
 div.inner {
-  padding: 24px;
   font-size: 16px;
 }
 
 #main-content {
-  margin-bottom: 48px;
+  margin-bottom: 24px;
 }
 
 .pagination {
   margin: 24px 0 36px;
+}
+
+div.content code {
+  font-family: menlo, 'andale mono', monospace;
+  background-color:
+  rgba(240, 240, 240, 0.2);
+  border: 1px solid
+  rgba(220, 220, 220, 0.8);
+  display: block;
+  overflow: auto;
+  padding: 1.5em;
+  margin-bottom: 1em;
+}
+
+ul li {
+  margin-left: 18px;
+  list-style-type: disc;
+  list-style-position: outside;
+  line-height: 32px;
+  font-size: 102%;
+}
+
+table {
+  width: 100%;
+  background: #fff;
+  border: 1px solid #eceef4;
+}
+
+th {
+  padding:9px 0;
+  border: 1px solid #eceef4;
+  background-color:#f7f8fb;
+}
+
+td {
+  padding: 10px;
+  border: 1px solid #eceef4;
+}
+
+tr:hover td {
+  background-color: #fff9e2;
 }

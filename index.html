@@ -48,46 +48,95 @@
   <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 </head>
 <body>
-  <a href="http://github.com/banyan"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/4c7dc970b89fd04b81c8e221ba88ff99a06c6b61/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f77686974655f6666666666662e706e67" alt="Fork me on GitHub"></a>
+  <a href="http://github.com/banyan">
+    <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/4c7dc970b89fd04b81c8e221ba88ff99a06c6b61/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f77686974655f6666666666662e706e67" alt="Fork me on GitHub">
+  </a>
 	<div class="container">
-    <div class="sixteen columns">
-      <h1 class="remove-bottom" style="margin-top: 40px;"><a href="/">banyan.github.com</a></h1>
-      <hr />
+    <div class="sixteen columns blog-title">
+      <h1 class="remove-bottom"><a href="/">banyan.github.com</a></h1>
     </div>
 
     <div class="sixteen columns autopagerize_page_element">
 
       <div class="sixteen columns entry-title-container">
-        <h1 class="entry-title"><a href="/2012/06/07/2">Working with Unix Processes の Daemon Processes を社内勉強会で読んだメモ</a></h1>
+        <h1 class="entry-title"><a href="/2012/06/23/1">GitHub の Organization の権限についてのメモ</a></h1>
       </div>
 
       <div class="sixteen columns">
         <div class="three columns alpha">
           <span class="time">
-            <time>Jun 7<span>th</span>, 2012</time>
+            <time>Jun 23<span>rd</span>, 2012</time>
           </span>
         </div>
-        <div id="main-content" class="thirteen columns omega" style="background-color: #adedd7">
+        <div id="main-content" class="twelve columns offset-by-one omega">
           <div class="content inner">
-            <p>Working with Unix Processes の Daemon Processes を社内勉強会で読んだ。
-以前さらっと読んだ時はふんふん...なるほどーとか読みながら読めたけど
-すごい忘れてるし、そもそもじっくり話しながら読んだら自分は全然理解できてないことが分かった。</p>
+            <p>2012-06-23 現在のものなので、
+また仕様がすぐに変わるかもしれないですがメモとして書いとく。</p>
 
-<p>ので改めて読んでメモしとく。
-まだ理解曖昧な部分はアップデートしていきたい</p>
+<p>(仕様が変わったら更新する予定なのと、間違えてたら教えて頂けるとありがたいです。)</p>
 
-<script src="https://gist.github.com/2889128.js"> </script>
+<p>Organization を作ると Team を作ることが可能。
+Team には今のところ3つの権限がある。</p>
+
+<ul>
+<li>Pull Only</li>
+<li>Push &amp; Pull</li>
+<li>Push Pull &amp; Administrative</li>
+</ul>
+
+<p>この他に実質的な管理者である</p>
+
+<ul>
+<li>Owner</li>
+</ul>
+
+<p>がある。</p>
+
+<table>
+  <tr>
+    <th>権限</th>
+    <th>issue を作るとメールが飛んでくるか</th>
+    <th>Pull Request ができるか</th>
+    <th>Organization の設定を管理画面からできるか</th>
+  </tr>
+  <tr>
+    <th>Pull Only</th>
+    <td>no</td>
+    <td>no</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <th>Push & Pull</th>
+    <td>yes</td>
+    <td>no</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <th>Push Pull & Administrative</th>
+    <td>yes</td>
+    <td>yes</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <th>Owner</th>
+    <td>yes</td>
+    <td>yes</td>
+    <td>yes</td>
+  </tr>
+</table>
 
           </div>
         </div>
       </div>
 
-      <div class="pagination">
-        
-        <a href="/2012/06/07/1" rel="next">next post</a>
-        
+      <div class="sixteen columns">
+        <div class="pagination">
+          
+          <a href="/2012/06/15/1" rel="next">« earlier</a>
+          
 
-        
+          
+        </div>
       </div>
     </div>
     <div class="autopagerize_insert_before"></div>
