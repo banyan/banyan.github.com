@@ -41,11 +41,6 @@ paperboy&co. が新しく始めたホスティングサービス - Sqale
 * SLA を明示的に謳うかどうかは検討中
 * AWS 自体に SLA があるとはいえ、冗長化を考える必要があり、リージョンを変えたバックアッププランなどの提供も検討している。
 
-Archtecture
-----------
-![sqale-archtecture](/images/archtecture.png)
-
-
 初めて使う時の流れ - お試し or 無料アカウント
 ----------
 
@@ -83,6 +78,11 @@ Archtecture
 * Web アプリケーションとして必要なミドルウェアなどひと通り提供できるようにする
 * Ruby 以外の言語に対応
 * 国際化等
+
+Archtecture
+----------
+* [Archtecture](images/archtecture.png)
+* 詳細は Sapporo RubyKaigi 2012 などで話す予定です
 
 Any question or request?
 ----------
