@@ -8,16 +8,15 @@
   <id>http://banyan.github.com/</id>
   <author>
     <name><![CDATA[banyan.github.com]]></name>
-
   </author>
   <generator uri="https://github.com/mizzy/stellar/">Stellar</generator>
 
 
   <entry>
-    <title type="html"><![CDATA[]]></title>
-    <link href="http://banyan.github.com/"/>
+    <title type="html"><![CDATA[GitHub の Organization の権限についてのメモ]]></title>
+    <link href="http://banyan.github.com/2012/06/23/1" />
     <updated>2012-06-23T10:37:13+09:00</updated>
-    <id>http://banyan.github.com/ </id>
+    <id>http://banyan.github.com/2012/06/23/1</id>
     <content type="html"><![CDATA[
 <p>2012-06-23 現在のものなので、
 また仕様がすぐに変わるかもしれないですがメモとして書いとく。</p>
@@ -78,10 +77,10 @@ Team には今のところ3つの権限がある。</p>
   </entry>
 
   <entry>
-    <title type="html"><![CDATA[]]></title>
-    <link href="http://banyan.github.com/"/>
+    <title type="html"><![CDATA[tutor-for-non-programmer-and-non-designer]]></title>
+    <link href="http://banyan.github.com/2012/06/15/1" />
     <updated>2012-06-15T01:12:43+09:00</updated>
-    <id>http://banyan.github.com/ </id>
+    <id>http://banyan.github.com/2012/06/15/1</id>
     <content type="html"><![CDATA[
 <p>社内の勉強会のようなもので、Rails 写経会というものがあって、そこでチューター的なことをした。
 10人くらいの参加者のうち、8人が Mac、2人が Windows でまず開発環境を作りに取り掛かり、
@@ -122,10 +121,10 @@ Team には今のところ3つの権限がある。</p>
   </entry>
 
   <entry>
-    <title type="html"><![CDATA[]]></title>
-    <link href="http://banyan.github.com/"/>
+    <title type="html"><![CDATA[Working with Unix Processes の Daemon Processes を社内勉強会で読んだメモ]]></title>
+    <link href="http://banyan.github.com/2012/06/07/2" />
     <updated>2012-06-07T23:00:00+09:00</updated>
-    <id>http://banyan.github.com/ </id>
+    <id>http://banyan.github.com/2012/06/07/2</id>
     <content type="html"><![CDATA[
 <p>Working with Unix Processes の Daemon Processes を社内勉強会で読んだ。
 以前さらっと読んだ時はふんふん...なるほどーとか読みながら読めたけど
@@ -140,10 +139,10 @@ Team には今のところ3つの権限がある。</p>
   </entry>
 
   <entry>
-    <title type="html"><![CDATA[]]></title>
-    <link href="http://banyan.github.com/"/>
+    <title type="html"><![CDATA[Github の Deploy Keys の公開鍵のメモ]]></title>
+    <link href="http://banyan.github.com/2012/06/07/1" />
     <updated>2012-06-07T10:57:00+09:00</updated>
-    <id>http://banyan.github.com/ </id>
+    <id>http://banyan.github.com/2012/06/07/1</id>
     <content type="html"><![CDATA[
 <p>Github を会社で使っています。とても快適です。</p>
 
@@ -166,10 +165,10 @@ CI サーバの鍵を登録してしまうと、リポジトリBには同じ鍵�
   </entry>
 
   <entry>
-    <title type="html"><![CDATA[]]></title>
-    <link href="http://banyan.github.com/"/>
+    <title type="html"><![CDATA[pow + tunnels + launchd]]></title>
+    <link href="http://banyan.github.com/2012/04/19/2" />
     <updated>2012-04-19T18:47:00+09:00</updated>
-    <id>http://banyan.github.com/ </id>
+    <id>http://banyan.github.com/2012/04/19/2</id>
     <content type="html"><![CDATA[
 <p><a href="https://github.com/jugyo/tunnels">tunnels</a> is awesome which enables us runnning pow over SSL.</p>
 
@@ -188,20 +187,20 @@ $ sudo tunnels (just to use)
   </entry>
 
   <entry>
-    <title type="html"><![CDATA[]]></title>
-    <link href="http://banyan.github.com/"/>
+    <title type="html"><![CDATA[はてなスターを導入した]]></title>
+    <link href="http://banyan.github.com/2012/04/19/1" />
     <updated>2012-04-19T02:19:00+09:00</updated>
-    <id>http://banyan.github.com/ </id>
+    <id>http://banyan.github.com/2012/04/19/1</id>
     <content type="html"><![CDATA[
 
 ]]></content>
   </entry>
 
   <entry>
-    <title type="html"><![CDATA[]]></title>
-    <link href="http://banyan.github.com/"/>
+    <title type="html"><![CDATA[Stellar & Skelton を使ってみる]]></title>
+    <link href="http://banyan.github.com/2012/04/17/1" />
     <updated>2012-04-17T03:23:00+09:00</updated>
-    <id>http://banyan.github.com/ </id>
+    <id>http://banyan.github.com/2012/04/17/1</id>
     <content type="html"><![CDATA[
 <p><a href="http://github.com/mizzy/stellar/">Stellar</a> (A static site generator) と Skelton (CSS framework) を使ってブログじゃないけど始めてみる。</p>
 
