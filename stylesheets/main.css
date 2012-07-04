@@ -6,7 +6,8 @@ body {
 }
 
 hr.autopagerize_page_separator {
-  border: #9de088 double 4px;
+  border: cyan solid 1px;
+  box-shadow: 0px 5px 0px #f785bc;
 }
 
 h1 {
