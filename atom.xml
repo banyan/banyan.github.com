@@ -4,13 +4,88 @@
   <title><![CDATA[banyan.github.com]]></title>
   <link href="http://banyan.github.com/atom.xml" rel="self"/>
   <link href="http://banyan.github.com/"/>
-  <updated>2012-06-23T10:37:13+09:00</updated>
+  <updated>2012-07-09T02:04:00+09:00</updated>
   <id>http://banyan.github.com/</id>
   <author>
     <name><![CDATA[banyan.github.com]]></name>
   </author>
   <generator uri="https://github.com/mizzy/stellar/">Stellar</generator>
 
+
+  <entry>
+    <title type="html"><![CDATA[My Chef Solo]]></title>
+    <link href="http://banyan.github.com/2012/07/09/1" />
+    <updated>2012-07-09T02:04:00+09:00</updated>
+    <id>http://banyan.github.com/2012/07/09/1</id>
+    <content type="html"><![CDATA[
+<p>僕の働いている<a href="http://paperboy.co.jp">会社</a>では、<a href="https://github.com/mizzy">mizzy</a> さんが <a href="https://github.com/mizzy/maglica">Maglica</a> という素晴らしいツール (Maglica の説明の<a href="http://mizzy.org/slides/maglica/">スライド</a>) を作られていて、VM が一瞬で構築できるようになってます。</p>
+
+<p>これは本当に life changing で時間も削減できるし、また VM を作ったり消したりが気軽にできるので開発には本当に便利になりました。</p>
+
+<p>しかしながら、先週チームに Windows を使うデザイナーがアサインしてきて (今までチームには Mac 使いしかいなかった) 、Maglica で VM を作って手作業で Linux の Rails 環境を一緒に構築してたけど、
+せっかく VM の箇所が自動化できてるのにこういうことをやっちゃいけないなーと思いました。</p>
+
+<p>ちょうど新卒の教育向けに <a href="https://github.com/hiboma">@hiboma</a> が Chef Solo Tutorial をしていたのもあったし、
+僕もそれを見ててちょっと意識が高まったので少しでも自動化してみようと思いちょっとやってました。</p>
+
+<p>Chef Solo 自体はちょうど1年半くらい前にさくらの VPS を構築する時にちょっとだけ触ったことある程度です。
+その時の recipe、cookbook を見ると、なんというか色々入りすぎてて、もう使う気もしない感じでした。</p>
+
+<p>ちなみに1年半前よりも GitHub で検索しても情報がすごい増えた気がしました。</p>
+
+<p>ということで新しく作り直して、GitHub にあげてみました。</p>
+
+<p><a href="https://github.com/banyan/chef">https://github.com/banyan/chef</a></p>
+
+<p>こうしたほうがもっと幸せになれるとかあったら教えて頂けるとありがたいです。</p>
+
+<p>サーバはさくらの VPS を契約して放置したままだったので、
+それを使いながらと、あと EC2 で一個 VM 作ってそれと同時に試してました。</p>
+
+<p>とりあえずの方針としては</p>
+
+<ul>
+<li>必ずいれるソフトウェアのパッケージを管理する
+
+<ul>
+<li>なるべくミニマムにする。本当に必要なものだけ。</li>
+</ul></li>
+<li>rbenv, ruby-build</li>
+<li>ufw, ssh の設定をする</li>
+<li>role をいい感じにわける</li>
+</ul>
+
+<p>というところでそれくらいまではできた感じです。</p>
+
+<p>これからやることとしては、</p>
+
+<ul>
+<li>最初にいれる Ruby + Chef + Git も Capistrano で操作する</li>
+<li>Unicorn</li>
+<li>Supervisor</li>
+<li>Mac (homebrew の管理)</li>
+<li>Redhat 系の対応</li>
+<li>Chef Solo + Capistrano</li>
+<li>Role とかもっといい感じにできそう</li>
+</ul>
+
+<p>などがうまくできるようになるといいなと思います。</p>
+
+<p>実際に改めて触ってみるとまだちょっとしかできてないけど、TDD 感覚でサーバを構築できるのは楽しい感じがしますね。</p>
+
+<p>いまいち分かってないことや確信を得れてないことはまだたくさんあるのですが、
+とりあえずまず晒しながら update していこうと思います。</p>
+
+<h5>参考</h5>
+
+<ul>
+<li><a href="https://github.com/cookbooks">https://github.com/cookbooks</a></li>
+<li><a href="http://d.hatena.ne.jp/sfujiwara/20120705/1341477250">chef-solo + capistrano で複数ホストを管理する</a></li>
+<li><a href="https://github.com/opscode/cookbooks">https://github.com/opscode/cookbooks</a></li>
+</ul>
+
+]]></content>
+  </entry>
 
   <entry>
     <title type="html"><![CDATA[GitHub の Organization の権限についてのメモ]]></title>
