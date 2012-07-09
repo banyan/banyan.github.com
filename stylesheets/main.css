@@ -35,7 +35,7 @@ span.time {
 }
 
 .blog-title {
-  margin: 50px 0 30px;
+  margin: 20px 0 42px;
 }
 
 .entry-title {
@@ -93,7 +93,26 @@ div.content code {
   margin-bottom: 1em;
 }
 
-ul li {
+#sidebar {
+  float: right;
+  margin: 0 0 0 0;
+  padding: 0 5px 0 0;
+  width: 170px;
+}
+
+nav.header ul {
+  font-size: 11px;
+  margin: 10px 0 0 0;
+  float: right;
+}
+
+nav.header ul li {
+  display: inline;
+  color: #0079AA;
+  margin-right: 10px;
+}
+
+div#main-content ul li {
   margin-left: 40px;
   list-style-type: disc;
   list-style-position: outside;
@@ -120,4 +139,10 @@ td {
 
 tr:hover td {
   background-color: #fff9e2;
+}
+
+div.archive ul li span.time {
+  margin-right: 20px;
+  width: 160px;
+  height: 24px;
 }
