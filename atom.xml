@@ -4,13 +4,67 @@
   <title><![CDATA[banyan.github.com]]></title>
   <link href="http://banyan.github.com/atom.xml" rel="self"/>
   <link href="http://banyan.github.com/"/>
-  <updated>2012-07-09T02:04:00+09:00</updated>
+  <updated>2012-08-01T01:15:08+09:00</updated>
   <id>http://banyan.github.com/</id>
   <author>
     <name><![CDATA[banyan.github.com]]></name>
   </author>
   <generator uri="https://github.com/mizzy/stellar/">Stellar</generator>
 
+
+  <entry>
+    <title type="html"><![CDATA[I18n.backend.store_translations のメモ]]></title>
+    <link href="http://banyan.github.com/2012/08/01/1" />
+    <updated>2012-08-01T01:15:08+09:00</updated>
+    <id>http://banyan.github.com/2012/08/01/1</id>
+    <content type="html"><![CDATA[
+<p>今日社内の Crafting Rails Applications 読書会でこういうコードがでてきた。</p>
+
+<pre><code>test &quot;model_name.human uses I18n&quot; do
+  begin
+    I18n.backend.store_translations :en,
+      :activemodel =&gt; { :models =&gt; { :sample_mail =&gt; &quot;My Sample Mail&quot; } }
+
+    assert_equal &quot;My Sample Mail&quot;, model.class.model_name.human
+  ensure
+    I18n.reload!
+  end
+end
+</code></pre>
+
+<p>I18n.backend.store_translations を使うことで I18n のテストをしたい時にいちいち fixture とか yaml とかで I18n の文言を用意しなくてもテストができるらしい。
+アプリケーションではなくライブラリなどで I18n のテストを書くときはこの方法がよさそうです。
+begin...ensure で囲んであるのはこのテストが終わったときに、reload して格納したデータをリセットするためとのこと。</p>
+
+<p>で今 <a href="https://github.com/brainspec/enumerize">Enumerize</a> のコード見てたら I18n.backend.store_translations のラッパーを用意していて便利げだった。
+テスト書いてて、begin...ensure でごちゃごちゃする時はこういう風に書いたりして
+block で渡したりするとキレイになって他でも使えそう。</p>
+
+<pre><code>module MiscHelpers
+  def store_translations(locale, translations, &amp;block)
+    begin
+      I18n.backend.store_translations locale, translations
+      yield
+    ensure
+      I18n.reload!
+    end
+  end
+end
+
+class MiniTest::Spec
+  include MiscHelpers
+end
+
+it &#39;returns nil as translation when value is nil&#39; do
+  store_translations(:en, :enumerize =&gt; {:foo =&gt; {:a =&gt; &#39;a text&#39;}}) do
+    klass.enumerize(:foo, :in =&gt; [:a, :b])
+    object.foo_text.must_equal nil
+  end
+end
+</code></pre>
+
+]]></content>
+  </entry>
 
   <entry>
     <title type="html"><![CDATA[My Chef Solo]]></title>
