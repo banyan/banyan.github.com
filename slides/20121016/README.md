@@ -84,7 +84,8 @@ paperboy&co. が新しく始めたホスティングサービス - Sqale
 Archtecture
 ----------
 * [Archtecture](images/archtecture.png)
-* talked at Sapporo Ruby Kaigi 2012 and YAPC::Asia Tokyo 2012 by mizzy: [Inside Sqale](http://yapcasia.org/2012/talk/show/048d468c-ab9e-11e1-a3b5-2a656aeab6a4)
+* Talked at Sapporo Ruby Kaigi 2012 and YAPC::Asia Tokyo 2012
+* [Inside Sqale](http://yapcasia.org/2012/talk/show/048d468c-ab9e-11e1-a3b5-2a656aeab6a4) by mizzy.
 
 Any question or request?
 ----------
