@@ -15,6 +15,11 @@ h1 {
   font-family: "reenie-beanie",sans-serif;
 }
 
+h2, h3, h4, h5, h6 {
+  font-size: 124%;
+  font-family: menlo,'andale mono',consolas,"Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", "Meiryo", "メイリオ", "Osaka", "MS PGothic", 'ＭＳ Ｐゴシック', sans-serif;
+}
+
 span.hatena-star-star-container {
   vertical-align: super;
 }
