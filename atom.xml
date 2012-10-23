@@ -25,7 +25,7 @@
 
 <h3>現象</h3>
 
-<h4>poltergeist を使っている場合</h4>
+<h4><a href="https://github.com/jonleighton/poltergeist">poltergeist</a> を使っている場合</h4>
 
 <ul>
 <li>js =&gt; true にしていると1つ目のテストは通るが js =&gt; true にしている2つ目のテストは落ちる</li>
@@ -46,7 +46,7 @@ PhantomJS has crashed. Please read the crash reporting guide at https://code.goo
 <li>poltergeist (1.0.1)</li>
 </ul>
 
-<h4>capybara-webkit を使っている場合</h4>
+<h4><a href="https://github.com/thoughtbot/capybara-webkit">capybara-webkit</a> を使っている場合</h4>
 
 <ul>
 <li>はじめに Capybara::Driver::Webkit::WebkitNoResponseError がでて以降は Errno::EPIPE: Broken pipe が出て全て死ぬ</li>
