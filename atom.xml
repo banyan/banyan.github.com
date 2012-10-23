@@ -49,7 +49,7 @@ PhantomJS has crashed. Please read the crash reporting guide at https://code.goo
 <h4><a href="https://github.com/thoughtbot/capybara-webkit">capybara-webkit</a> を使っている場合</h4>
 
 <ul>
-<li>はじめに Capybara::Driver::Webkit::WebkitNoResponseError がでて以降は Errno::EPIPE: Broken pipe が出て全て死ぬ</li>
+<li>js =&gt; true のテストがはじめに Capybara::Driver::Webkit::WebkitNoResponseError がでてそれ以降のテスト全て Errno::EPIPE: Broken pipe が出て死ぬ</li>
 </ul>
 
 <p><code>Capybara::Driver::Webkit::WebkitNoResponseError:
