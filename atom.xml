@@ -4,13 +4,61 @@
   <title><![CDATA[banyan.github.com]]></title>
   <link href="http://banyan.github.com/atom.xml" rel="self"/>
   <link href="http://banyan.github.com/"/>
-  <updated>2012-11-18T22:23:56+09:00</updated>
+  <updated>2012-11-21T01:05:27+09:00</updated>
   <id>http://banyan.github.com/</id>
   <author>
     <name><![CDATA[banyan.github.com]]></name>
   </author>
   <generator uri="https://github.com/mizzy/stellar/">Stellar</generator>
 
+
+  <entry>
+    <title type="html"><![CDATA[randomize rspec example order]]></title>
+    <link href="http://banyan.github.com/2012/11/21/1" />
+    <updated>2012-11-21T01:05:27+09:00</updated>
+    <id>http://banyan.github.com/2012/11/21/1</id>
+    <content type="html"><![CDATA[
+<p><a href="http://blog.davidchelimsky.net/2012/07/07/rspec-211-is-released/">rspec-rails-2.11.0</a> (July 7th, 2012) 以降</p>
+
+<pre><code>$ rails generate rspec:install
+</code></pre>
+
+<p>rails の generator を使って生成する spec_helper.rb には</p>
+
+<pre><code>config.order = &quot;random&quot;
+</code></pre>
+
+<p>という一行が追加されるようになっている。このことで examples のテストの順番がデフォルトでランダムになる。</p>
+
+<p><a href="https://github.com/rspec/rspec-core/issues/403">Feature idea: allow examples to be run in random order (like minitest)</a> を見ると、元々は minitest で実装されていたアイディアで、rspec-core 本体では 2.8.0 rc releases の時 (November 6th, 2011) にはすでにリリースされている。(結構前からあるんですね...)</p>
+
+<p>このランダムというのはファイル単位ではなくて example 単位で random になる。そうなることで起こる問題が</p>
+
+<ol>
+<li>The documentation and html formatters がランダムにテストが走ると機能しない</li>
+<li>before(:all) or after(:all) の hook の関係性</li>
+</ol>
+
+<p>を議論している。後者の before(:all) や after(:all) の問題はランダム化する時の実装で含めるようにすれば問題はない、ということになってて、前者のほうは互換性がないときは STDERR にメッセージを送ればいいんじゃないかとか、formatter の whitelist でなんとかなるみたいなことを詳細はちょっとよく分からない。</p>
+
+<p>テストを実行した後に、</p>
+
+<pre><code>Randomized with seed 37840
+</code></pre>
+
+<p>という seed が出力されるので、もし random order を再現させたい場合は</p>
+
+<pre><code>$ bundle exec rspec --order rand:37840
+</code></pre>
+
+<p>などとして順序を再現することが可能になる。</p>
+
+<p>テストを書いてて、example の間に依存性ができていて、その spec だけを走らせると、テストが通るけど、全体を通すとこける、みたいなことは割とあるし、Travis CI でだけ落ちるとか頭の痛くなる問題なので、
+このオプションをつけるようにしてちょっと運用してみよう。
+でも適当にライブラリ選んでテスト order = &quot;random&quot; で走らせるとテスト落ちまくるんだけど、なかなか途中からいれると最初大変そうな気もするな...</p>
+
+]]></content>
+  </entry>
 
   <entry>
     <title type="html"><![CDATA[living as a gem ソムリエ]]></title>
@@ -756,32 +804,6 @@ Team には今のところ3つの権限がある。</p>
 まだ理解曖昧な部分はアップデートしていきたい</p>
 
 <script src="https://gist.github.com/2889128.js"> </script>
-
-]]></content>
-  </entry>
-
-  <entry>
-    <title type="html"><![CDATA[Github の Deploy Keys の公開鍵のメモ]]></title>
-    <link href="http://banyan.github.com/2012/06/07/1" />
-    <updated>2012-06-07T10:57:00+09:00</updated>
-    <id>http://banyan.github.com/2012/06/07/1</id>
-    <content type="html"><![CDATA[
-<p>Github を会社で使っています。とても快適です。</p>
-
-<p>Github を会社で使えますよー、というのは求人条件とかに書いてもいいと思う。</p>
-
-<p>それはさておき、今は Business Plans の Bronze の Plan を使っています。</p>
-
-<p>Bronze Plan では 10個の Private Repository を作成することができますが、
-そのひとつのリポジトリに対して、デプロイキー (公開鍵) を設定することができますが、
-Github は公開鍵は全体で一意のものしか登録ができません。</p>
-
-<p>したがって、リポジトリAを例えば CI サーバから取得するみたいな時に、
-CI サーバの鍵を登録してしまうと、リポジトリBには同じ鍵を登録することができません。</p>
-
-<p>もっといい方法があるかもしれませんが、今はデプロイだけをするユーザを新規作成して、
-そのユーザを organization に追加して (Pull Only の権限)、そのユーザ自身の公開鍵を普通に SSH Keys から設定しておくことでこの問題を回避しています。
-(秘密鍵を新しく作るサーバに配置する必要はあります)</p>
 
 ]]></content>
   </entry>
