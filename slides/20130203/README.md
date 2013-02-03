@@ -6,16 +6,12 @@ iiirc - Qiita 2-day Hackathon
 <!-- data-y="-1500" -->
 <!-- data-rotate-y="90" -->
 
-私たちは毎日仕事をしています。
+IRC はすごくて便利です。
 ----------
 <!-- data-x="-9000" -->
 <!-- data-y="-1500" -->
 <!-- data-rotate-y="90" -->
-We work everyday.
-
-私たちは毎日忙しく働いてます。
-----------
-We work hard everyday.
+IRC is great.
 
 私たちは IRC でたくさんの話をします。
 ----------
