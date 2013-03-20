@@ -208,6 +208,11 @@ $ librarian-chef install # で bundle install のようにインストールで�
 <ul>
 <li>まだ現場じゃそんなにつかわれてないんじゃないかな？ <a href="https://github.com/rodjek/librarian-puppet">librarian-puppet</a> というのもあるよ</li>
 </ul></li>
+<li>今回のような開発環境としてだけ使いたいケースだと Vagrantfile に attributes を書いて vagrant provision で実行してもいいけど、通常はどこかにデプロイするわけで、そういう時は knife-solo で chef を適用するようにすることでインターフェースを共通にして適用できる
+
+<ul>
+<li><a href="https://github.com/CPAN-API/prepan-cookbooks">CPAN-API/prepan-cookbooks</a> が参考になる</li>
+</ul></li>
 </ul>
 
 <h3>WIP of chef-rails-dev-box</h3>
