@@ -1,0 +1,161 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
+    <link href="css/impress.css" rel="stylesheet" />
+</head>
+<body>
+<div id="impress" class="impress-not-supported">
+    <div class="fallback-message">
+        <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+        <p>For the best experience please use the latest <b>Chrome</b> or <b>Safari</b> browser. Firefox 10 (to be released soon) will also handle it.</p>
+    </div>
+
+<div id="title" class="step" data-rotate-y="90" data-y="-1500" data-x="-18000">
+<h1>vagrant-lxc を触ってみた</h1>
+
+<p><br />
+<address>Kohei Hasegawa / @banyan / paperboy&amp;co.</address>
+Chef Casual Talks Vol.1 / 20130415
+<!-- data-x="-18000" -->
+<!-- data-y="-1500" -->
+<!-- data-rotate-y="90" --></p>
+
+</div>
+<div id="title" class="step" data-rotate-y="90" data-y="-1500" data-x="-9000">
+<h2>普段はアプリケーション寄りの仕事がメインでインフラは専門の人がたくさんいるのであまり触ってません。</h2>
+
+<!-- data-x="-9000" -->
+<!-- data-y="-1500" -->
+<!-- data-rotate-y="90" -->
+
+<p>今日はアプリケーション寄りの視点からお話できればと思います。</p>
+
+</div>
+<div id="title" class="step" data-y="0" data-x="0">
+<h2>Vagrant + LXC</h2>
+
+<ul>
+<li><a href="https://github.com/fgrehm/vagrant-lxc">fgrehm/vagrant-lxc</a>
+<ul>
+<li>Vagrant の plugin として利用可能、API が Vagrant のままなので使いやすい</li>
+</ul></li>
+<li><a href="https://github.com/chrisroberts/vagabond">chrisroberts/vagabond</a>
+<ul>
+<li>vagabond は yet another vagrant for lxc みたいなもの。試したがうまく動かなかった...</li>
+</ul></li>
+</ul>
+
+</div>
+<div class="step" data-y="0" data-x="1200">
+<h2>vagabond の README の中に</h2>
+
+<ul>
+<li>Issue: VMs are slow.</li>
+<li>Discovery: Linux has LXC, which is pretty cool.</li>
+<li>Helpful: LXCs can run different distributions.</li>
+<li>Implementation: Vagabond</li>
+</ul>
+
+</div>
+<div class="step" data-y="0" data-x="2400">
+<h2>LXC とは?</h2>
+
+<ul>
+<li>LXC (Linux Container) は Linux カーネルの Control Group や Namespace という機能を使って，ホストOSとは隔離された環境を作るツール</li>
+<li>KVM や VirtualBox と比べてオーバーヘッドが小さく軽い仮想化ソフトウェアの一種が LXC</li>
+<li><a href="http://gihyo.jp/admin/column/01/vm/2011/lxc_container">参照: 仮想化ソフトウェアとchrootの“いいとこ取り”─LXCで実現するVPS</a></li>
+</ul>
+
+</div>
+<div class="step" data-y="0" data-x="3600">
+<h2>vagrant-lxc で vagrant/VB と速さを比較してみたい</h2>
+
+<ul>
+<li>普段 Rails のアプリケーションを書いていて、テストにとても時間がかかる</li>
+<li>最近の Rails のオープンソースのアプリケーションだと、プロジェクトに Vagrantfile が用意されているものも多い
+<ul>
+<li><a href="https://github.com/rails/rails-dev-box">rails/rails-dev-box</a></li>
+<li>rails 自体を開発する環境 (Puppet + Vagrant)</li>
+<li><a href="https://github.com/discourse/discourse">discourse/discourse</a></li>
+<li>掲示板みたいなサービス (Vagrant ファイル)</li>
+<li><a href="https://github.com/banyan/chef-rails-dev-box">banyan/chef-rails-dev-box</a></li>
+<li>rails-dev-box を chef で車輪の再発明してみました</li>
+</ul></li>
+<li>VirtualBox は windows/mac をカバーしていて lxc に比べれば便利だけど、lxc がどれくらい速いかどうかは試したい</li>
+<li>今回は rails-dev-box を使います</li>
+</ul>
+
+</div>
+<div class="step" data-y="0" data-x="4800">
+<h2>setup vagrant-lxc</h2>
+
+<pre><code>$ sudo apt-get -y install lxc redir
+$ wget "http://files.vagrantup.com/packages/64e360814c3ad960d810456add977fd4c7d47ce6/vagrant_`uname -m`.deb" -O /tmp/vagrant.deb
+$ sudo dpkg -i /tmp/vagrant.deb
+$ vagrant plugin install vagrant-lxc
+$ vagrant box add lxc-quantal64 http://dl.dropbox.com/u/13510779/lxc-quantal64-2013-04-10.box
+$ vagrant up --provider=lxc
+</code></pre>
+
+</div>
+<div class="step" data-y="800" data-x="0">
+<h2>Vagrant/VB on Mac</h2>
+
+<pre><code>real    134m21.753s
+user    24m7.230s
+sys     66m6.972s
+</code></pre>
+
+</div>
+<div class="step" data-y="800" data-x="1200">
+<h2>vagrant-lxc on Ubuntu (m1.small)</h2>
+
+<pre><code>real    68m20.202s
+user    50m21.161s
+sys     11m42.844s
+</code></pre>
+
+<ul>
+<li><a href="https://gist.github.com/banyan/5383379">used Vagrantfile</a></li>
+</ul>
+
+</div>
+<div class="step" data-y="800" data-x="2400">
+<h2>Vagrant/VB on Mac with NFS</h2>
+
+</div>
+<div class="step" data-y="800" data-x="3600">
+<h2>結論</h2>
+
+<ul>
+<li>lxc のパフォーマンスがよいことを期待したけど、NFS を有効にした VirtualBox とそんなに差がでなかった。</li>
+<li>vagrant-lxc の cgroups の settings を有効にすると vagrant up で止まってしまった。
+<ul>
+<li>まだ vagrant-lxc もバギーな挙動が多かった (一度 halt で止めると起動がうまくいかなかったりとか)</li>
+</ul></li>
+</ul>
+
+</div>
+
+
+    <div id="overview" class="step" data-x="3000" data-y="1500" data-scale="10">
+    </div>
+
+</div>
+
+<div class="hint">
+    <p>Use a spacebar or arrow keys to navigate</p>
+</div>
+<script>
+if ("ontouchstart" in document.documentElement) { 
+    document.querySelector(".hint").innerHTML = "<p>Tap on the left or right to navigate</p>";
+}
+</script>
+<script src="js/impress.js"></script>
+
+</body>
+</html>
+
