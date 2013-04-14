@@ -7,13 +7,12 @@ Chef Casual Talks Vol.1 / 20130415
 <!-- data-y="-1500" -->
 <!-- data-rotate-y="90" -->
 
-普段はアプリケーション寄りの仕事がメインでインフラは専門の人がたくさんいるのであまり触ってません。
+LXC とは?
 ----------
-<!-- data-x="-9000" -->
-<!-- data-y="-1500" -->
-<!-- data-rotate-y="90" -->
 
-今日はアプリケーション寄りの視点からお話できればと思います。
+* LXC (Linux Container) は Linux カーネルの Control Group や Namespace という機能を使って，ホストOSとは隔離された環境を作るツール
+* KVM や VirtualBox と比べてオーバーヘッドが小さく軽い仮想化ソフトウェアの一種が LXC
+* [参照: 仮想化ソフトウェアとchrootの“いいとこ取り”─LXCで実現するVPS](http://gihyo.jp/admin/column/01/vm/2011/lxc_container)
 
 Vagrant + LXC
 ----------
@@ -22,6 +21,7 @@ Vagrant + LXC
  * Vagrant の plugin として利用可能、API が Vagrant のままなので使いやすい
 * [chrisroberts/vagabond](https://github.com/chrisroberts/vagabond)
  * vagabond は yet another vagrant for lxc みたいなもの。試したがうまく動かなかった...
+* 普通に lxc + chef で構築すればいいじゃん、という話ですけど Vagrant みたいなインターフェースで統一されると便利そうだし、単純にどんなものか触ってみたかった
 
 vagabond の README の中に
 ----------
@@ -31,26 +31,24 @@ vagabond の README の中に
 * Helpful: LXCs can run different distributions.
 * Implementation: Vagabond
 
-LXC とは?
+最近の Rails アプリケーションの開発環境の傾向
 ----------
 
-* LXC (Linux Container) は Linux カーネルの Control Group や Namespace という機能を使って，ホストOSとは隔離された環境を作るツール
-* KVM や VirtualBox と比べてオーバーヘッドが小さく軽い仮想化ソフトウェアの一種が LXC
-* [参照: 仮想化ソフトウェアとchrootの“いいとこ取り”─LXCで実現するVPS](http://gihyo.jp/admin/column/01/vm/2011/lxc_container)
-
-vagrant-lxc で vagrant/VB と速さを比較してみたい
-----------
-
-* 普段 Rails のアプリケーションを書いていて、テストにとても時間がかかる
+* 普段 Rails のアプリケーションを書いていて、テストにとても時間がかかる (少しでも速くしたい)
+* Vagrant + Chef とかで開発環境もセットアップされることも多くなる?
 * 最近の Rails のオープンソースのアプリケーションだと、プロジェクトに Vagrantfile が用意されているものも多い
  * [rails/rails-dev-box](https://github.com/rails/rails-dev-box)
-  * rails 自体を開発する環境 (Puppet + Vagrant)
+  * rails 自体を開発する環境
  * [discourse/discourse](https://github.com/discourse/discourse)
-  * 掲示板みたいなサービス (Vagrant ファイル)
+  * 未来の掲示板みたいなサービス
  * [banyan/chef-rails-dev-box](https://github.com/banyan/chef-rails-dev-box)
   * rails-dev-box を chef で車輪の再発明してみました
-* VirtualBox は windows/mac をカバーしていて lxc に比べれば便利だけど、lxc がどれくらい速いかどうかは試したい
-* 今回は rails-dev-box を使います
+
+vagrant-lxc で Vagrant/VB と速さを比較してみたい
+----------
+
+* VirtualBox は windows/mac をカバーしていて LXC に比べれば便利だけど、もし LXC のほうが Vagrant/VB on Mac よりパフォーマンスがよいのであればそっちを使いたいというのが動機です
+* 今回は rails-dev-box を使って試してみます
 
 setup vagrant-lxc
 ----------
@@ -62,7 +60,22 @@ setup vagrant-lxc
     $ vagrant box add lxc-quantal64 http://dl.dropbox.com/u/13510779/lxc-quantal64-2013-04-10.box
     $ vagrant up --provider=lxc
 
-Vagrant/VB on Mac
+Spec for Mac
+----------
+
+* Processor  2.53 GHz Intel Core 2 Duo
+* Memory  8 GB 1067 MHz DDR3
+* Software  Mac OS X Lion 10.7.5 (11G63)
+* SSD
+
+Spec for Ubuntu
+----------
+
+* AMI: ubuntu/images/ebs/ubuntu-precise-12.04-amd64-server-20130124 (ami-9763e696)
+* Zone: ap-northeast-1a
+* Type: m1.small
+
+Vagrant/VB on Mac (memory は 2GB にした)
 ----------
 
     real    134m21.753s
@@ -82,9 +95,10 @@ Vagrant/VB on Mac with NFS
 ----------
 
 
-結論
+結論と所感
 ----------
 
 * lxc のパフォーマンスがよいことを期待したけど、NFS を有効にした VirtualBox とそんなに差がでなかった。
 * vagrant-lxc の cgroups の settings を有効にすると vagrant up で止まってしまった。
- * まだ vagrant-lxc もバギーな挙動が多かった (一度 halt で止めると起動がうまくいかなかったりとか)
+ * つまり今回は cgroups でメモリなどを制限できていない状態だった。(コンテナから見るとホストOSとリソースを共有してる状態)
+ * vagrant-lxc は活発に開発してるけどまだバギーな挙動も多かった (一度 halt で止めると起動がうまくいかなかったりとか)
