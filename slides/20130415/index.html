@@ -54,7 +54,7 @@ Chef Casual Talks Vol.1 / 20130415
 <h2>vagabond の README の中に</h2>
 
 <ul>
-<li>Issue: VMs are slow.</li>
+<li><font color="red">Issue: VMs are slow.</font></li>
 <li>Discovery: Linux has LXC, which is pretty cool.</li>
 <li>Helpful: LXCs can run different distributions.</li>
 <li>Implementation: Vagabond</li>
@@ -66,8 +66,7 @@ Chef Casual Talks Vol.1 / 20130415
 
 <ul>
 <li>普段 Rails のアプリケーションを書いていて、テストにとても時間がかかる (少しでも速くしたい)</li>
-<li>Vagrant + Chef とかで開発環境もセットアップされることも多くなる?</li>
-<li>最近の Rails のオープンソースのアプリケーションだと、プロジェクトに Vagrantfile が用意されているものも多い
+<li>最近の Rails のオープンソースのアプリケーションだと、Vagrantfile が用意されているものも多い。これからは開発環境とかも chef + vagrant とかになっていきそうな気がします
 <ul>
 <li><a href="https://github.com/rails/rails-dev-box">rails/rails-dev-box</a></li>
 <li>rails 自体を開発する環境</li>
@@ -148,16 +147,27 @@ sys     11m42.844s
 
 </div>
 <div class="step" data-y="1600" data-x="1200">
-<h2>結論と所感</h2>
+<h2>結論</h2>
 
 <ul>
-<li>lxc のパフォーマンスがよいことを期待したけど、NFS を有効にした VirtualBox とそんなに差がでなかった。</li>
+<li>lxc のパフォーマンスがよいことを期待したけど、NFS を有効にした VirtualBox とそんなに差がでなかったことが分かりました。</li>
+</ul>
+
+</div>
+<div class="step" data-y="1600" data-x="2400">
+<h2>所感</h2>
+
+<ul>
 <li>vagrant-lxc の cgroups の settings を有効にすると vagrant up で止まってしまった。
 <ul>
 <li>つまり今回は cgroups でメモリなどを制限できていない状態だった。(コンテナから見るとホストOSとリソースを共有してる状態)</li>
 <li>vagrant-lxc は活発に開発してるけどまだバギーな挙動も多かった (一度 halt で止めると起動がうまくいかなかったりとか)</li>
 </ul></li>
 </ul>
+
+</div>
+<div class="step" data-y="1600" data-x="3600">
+<h2>ありがとうございました :)</h2>
 
 </div>
 

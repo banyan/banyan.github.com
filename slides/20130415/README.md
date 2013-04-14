@@ -26,7 +26,7 @@ Vagrant + LXC
 vagabond の README の中に
 ----------
 
-* Issue: VMs are slow.
+* <font color="red">Issue: VMs are slow.</font>
 * Discovery: Linux has LXC, which is pretty cool.
 * Helpful: LXCs can run different distributions.
 * Implementation: Vagabond
@@ -35,8 +35,7 @@ vagabond の README の中に
 ----------
 
 * 普段 Rails のアプリケーションを書いていて、テストにとても時間がかかる (少しでも速くしたい)
-* Vagrant + Chef とかで開発環境もセットアップされることも多くなる?
-* 最近の Rails のオープンソースのアプリケーションだと、プロジェクトに Vagrantfile が用意されているものも多い
+* 最近の Rails のオープンソースのアプリケーションだと、Vagrantfile が用意されているものも多い。これからは開発環境とかも chef + vagrant とかになっていきそうな気がします
  * [rails/rails-dev-box](https://github.com/rails/rails-dev-box)
   * rails 自体を開発する環境
  * [discourse/discourse](https://github.com/discourse/discourse)
@@ -95,10 +94,16 @@ Vagrant/VB on Mac with NFS
 ----------
 
 
-結論と所感
+結論
 ----------
 
-* lxc のパフォーマンスがよいことを期待したけど、NFS を有効にした VirtualBox とそんなに差がでなかった。
+* lxc のパフォーマンスがよいことを期待したけど、NFS を有効にした VirtualBox とそんなに差がでなかったことが分かりました。
+
+所感
+----------
 * vagrant-lxc の cgroups の settings を有効にすると vagrant up で止まってしまった。
  * つまり今回は cgroups でメモリなどを制限できていない状態だった。(コンテナから見るとホストOSとリソースを共有してる状態)
  * vagrant-lxc は活発に開発してるけどまだバギーな挙動も多かった (一度 halt で止めると起動がうまくいかなかったりとか)
+
+ありがとうございました :)
+----------
