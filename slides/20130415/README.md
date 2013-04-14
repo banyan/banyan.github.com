@@ -93,6 +93,9 @@ vagrant-lxc on Ubuntu (m1.small)
 Vagrant/VB on Mac with NFS
 ----------
 
+    real    68m55.946s
+    user    25m44.357s
+    sys     23m32.856s
 
 結論
 ----------
