@@ -4,13 +4,34 @@
   <title><![CDATA[@banyan's blog]]></title>
   <link href="http://@banyan's blog/atom.xml" rel="self"/>
   <link href="http://@banyan's blog/"/>
-  <updated>2013-03-21T01:33:53+09:00</updated>
+  <updated>2013-05-26T19:30:18+09:00</updated>
   <id>http://@banyan's blog/</id>
   <author>
     <name><![CDATA[@banyan's blog]]></name>
   </author>
   <generator uri="https://github.com/mizzy/stellar/">Stellar</generator>
 
+
+  <entry>
+    <title type="html"><![CDATA[github.com から github.io に変わったのでドメインつけたりした]]></title>
+    <link href="http://@banyan's blog/2013/05/26/1" />
+    <updated>2013-05-26T19:30:18+09:00</updated>
+    <id>http://@banyan's blog/2013/05/26/1</id>
+    <content type="html"><![CDATA[
+<p>github.com というドメインは変わることはない!! そう考えていたことがわたしにもありました。</p>
+
+<p>ずっと banyan.github.com という GitHub Pages のドメインでやってたけど、
+セキュリティ対策ということで banyan.github.io に変更になったので、せっかくなので、banyan.me というドメインをつけた。</p>
+
+<p><blockquote class="twitter-tweet"><p>ブログ名に twitter アカウントいれておくとブクマされて URL 流れたとき mention 飛んできて便利</p>&mdash; Kensuke Nagae (@kyanny) <a href="https://twitter.com/kyanny/status/332446326312824832">May 9, 2013</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+
+<p>という便利情報も見てタイトルも @banyan&#39;s blog に変更しました。</p>
+
+<p>はてなスターもリセットされてしまったのか... うぅぅ、つらい</p>
+
+]]></content>
+  </entry>
 
   <entry>
     <title type="html"><![CDATA[社内で Chef 勉強会をして色々教えてもらった]]></title>
@@ -955,50 +976,6 @@ Team には今のところ3つの権限がある。</p>
     <td>yes</td>
   </tr>
 </table>
-
-]]></content>
-  </entry>
-
-  <entry>
-    <title type="html"><![CDATA[tutor-for-non-programmer-and-non-designer]]></title>
-    <link href="http://@banyan's blog/2012/06/15/1" />
-    <updated>2012-06-15T01:12:43+09:00</updated>
-    <id>http://@banyan's blog/2012/06/15/1</id>
-    <content type="html"><![CDATA[
-<p>社内の勉強会のようなもので、Rails 写経会というものがあって、そこでチューター的なことをした。
-10人くらいの参加者のうち、8人が Mac、2人が Windows でまず開発環境を作りに取り掛かり、
-僕は主に Windows の人と一緒に作業してた。</p>
-
-<p>通常はプログラマやデザイナに何か伝えることはあっても
-2人ともプログラマでもなくデザイナでもなかったので、どう伝えようかとか迷った。</p>
-
-<p>気づいたこととして、</p>
-
-<ul>
-<li>とにかく typo が多い
-
-<ul>
-<li>typo をしない方法を伝えることが重要</li>
-<li>なるべくコンソール上の作業では Tab キーを使うようにするとか</li>
-<li>コピペを推奨
-
-<ul>
-<li>Windows のコマンドプロンプトはコピペも大変だったりする</li>
-</ul></li>
-<li>bundle と打ってください、と言っても 「bundle」という単語自体に馴染みがないので簡単には打てない</li>
-<li>rails でも lails と typo したりする</li>
-</ul></li>
-</ul>
-
-<p>このあたりの問題にある種新鮮な衝撃を覚えた。</p>
-
-<p>僕自身プログラムを始めた時は、typo に苦しんでた気がする。
-本を写経して、ドンとプログラムを実行して、エラーが出る時に、
-一文字一文字確認するけど、間違ってないように見える。</p>
-
-<p>間違ってないように見えるけど、それはどこかが間違っていて、
-そうして、少しずつプログラムを入力しては実行して、ということを
-経験から学んできた気がするけど、それにしても typo が多かったことにびっくりした。</p>
 
 ]]></content>
   </entry>
