@@ -4,13 +4,37 @@
   <title><![CDATA[@banyan's blog]]></title>
   <link href="http://banyan.me/atom.xml" rel="self"/>
   <link href="http://banyan.me/"/>
-  <updated>2013-05-26T19:30:18+09:00</updated>
+  <updated>2013-05-27T22:45:24+09:00</updated>
   <id>http://banyan.me/</id>
   <author>
     <name><![CDATA[@banyan's blog]]></name>
   </author>
   <generator uri="https://github.com/mizzy/nebel/">nebel</generator>
 
+
+  <entry>
+    <title type="html"><![CDATA[Joining Quipper]]></title>
+    <link href="http://banyan.me/2013/05/27/1" />
+    <updated>2013-05-27T22:45:24+09:00</updated>
+    <id>http://banyan.me/2013/05/27/1</id>
+    <content type="html"><![CDATA[
+<p>5/24付で前職の <a href="http://www.paperboy.co.jp/">paperboy&amp;co.</a> を退職して、今日から <a href="http://www.quipper.com/">Quipper</a> に join しました。</p>
+
+<h3>paperboy&amp;co. について</h3>
+
+<p>paperboy&amp;co. では4年弱お世話になったことになります。Technical Manager である <a href="http://github.com/mizzy">mizzy</a> さんを始めとして多くの人に本当に色々教えていただきました。
+技術者の評価制度を Pull Request で行い、全社員がその評価結果を見ることのできる<a href="http://mizzy.org/blog/2012/02/29/1/">仕組み</a>や<a href="https://github.com/paperboy-all">全社員が GitHub を使ってやり取りをする</a>なんて、世界でもそうそうないんじゃないかと思います。
+そういう自由でオープンさのある環境で働けたことは自分にとってとても幸せなことでした。ありがとうございました。</p>
+
+<h3>Quipper について</h3>
+
+<p>たまたまご縁があって、入社させて頂くことになりました。ロンドンに本社があって (30人くらい)、日本はまだ5~6人くらいで、その日本のほうで働くのですが、すごい忙しくなりそうですが、スピード感とビジョンがあってとても楽しみです。</p>
+
+<p>paperboy&amp;co. で教えてもらったオープンネスとアウトプットをするという気持ちを忘れずにがんばっていきたいと思います。
+今後ともどうぞよろしくお願いします。</p>
+
+]]></content>
+  </entry>
 
   <entry>
     <title type="html"><![CDATA[github.com から github.io に変わったのでドメインつけたりした]]></title>
@@ -911,80 +935,6 @@ end
 <li><a href="https://github.com/cookbooks">https://github.com/cookbooks</a></li>
 <li><a href="http://d.hatena.ne.jp/sfujiwara/20120705/1341477250">chef-solo + capistrano で複数ホストを管理する</a></li>
 <li><a href="https://github.com/opscode/cookbooks">https://github.com/opscode/cookbooks</a></li>
-</ul>
-
-]]></content>
-  </entry>
-
-  <entry>
-    <title type="html"><![CDATA[GitHub の Organization の権限についてのメモ]]></title>
-    <link href="http://banyan.me/2012/06/23/1" />
-    <updated>2012-06-23T10:37:13+09:00</updated>
-    <id>http://banyan.me/2012/06/23/1</id>
-    <content type="html"><![CDATA[
-<p>2012-06-23 現在のものなので、
-また仕様がすぐに変わるかもしれないですがメモとして書いとく。</p>
-
-<p>(仕様が変わったら更新する予定なのと、間違えてたら教えて頂けるとありがたいです。)</p>
-
-<p>Organization を作ると Team を作ることが可能。
-Team には今のところ3つの権限がある。</p>
-
-<ul>
-<li>Pull Only</li>
-<li>Push &amp; Pull</li>
-<li>Push Pull &amp; Administrative</li>
-</ul>
-
-<p>この他に実質的な管理者である</p>
-
-<ul>
-<li>Owner</li>
-</ul>
-
-<p>がある。</p>
-
-<table>
-  <tr>
-    <th>権限</th>
-    <th>issue を作るとメールが飛んでくるか</th>
-    <th>Pull Request ができるか</th>
-    <th>Organization の設定を管理画面からできるか</th>
-  </tr>
-  <tr>
-    <th>Pull Only</th>
-    <td>no</td>
-    <td>no</td>
-    <td>no</td>
-  </tr>
-  <tr>
-    <th>Push & Pull</th>
-    <td>yes</td>
-    <td>yes</td>
-    <td>no</td>
-  </tr>
-  <tr>
-    <th>Push Pull & Administrative</th>
-    <td>yes</td>
-    <td>yes</td>
-    <td>no</td>
-  </tr>
-  <tr>
-    <th>Owner</th>
-    <td>yes</td>
-    <td>yes</td>
-    <td>yes</td>
-  </tr>
-</table>
-
-<hr>
-
-<p><blockquote class="twitter-tweet"><p>@<a href="https://twitter.com/banyan">banyan</a> <a href="http://t.co/Cr83XmsBb8" title="http://banyan.github.io/2012/06/23/1/">banyan.github.io/2012/06/23/1/</a> ですが、現在は Push &amp; Pull でも Pull Request できるみたいです。</p>&mdash; m4i (@m4i) <a href="https://twitter.com/m4i/status/325230152978161664">April 19, 2013</a></blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
-
-<ul>
-<li>以前は Push &amp; Pull で Pull Request できなかったのですが、@m4i さんに教えて頂いたのでできるように変更しました。(2013/05/26 updated)</li>
-<li>なお、自分のアカウントに対して fork すれば Pull Request は可能。プライベートリポジトリの場合でも fork してもカウントされない。</li>
 </ul>
 
 ]]></content>
