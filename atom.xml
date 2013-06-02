@@ -4,13 +4,133 @@
   <title><![CDATA[@banyan's blog]]></title>
   <link href="http://banyan.me/atom.xml" rel="self"/>
   <link href="http://banyan.me/"/>
-  <updated>2013-05-27T22:45:24+09:00</updated>
+  <updated>2013-06-02T18:47:31+09:00</updated>
   <id>http://banyan.me/</id>
   <author>
     <name><![CDATA[@banyan's blog]]></name>
   </author>
   <generator uri="https://github.com/mizzy/nebel/">nebel</generator>
 
+
+  <entry>
+    <title type="html"><![CDATA[Strong Parameters の action_on_unpermitted_parameters の振る舞いについて]]></title>
+    <link href="http://banyan.me/2013/06/02/1" />
+    <updated>2013-06-02T18:47:31+09:00</updated>
+    <id>http://banyan.me/2013/06/02/1</id>
+    <content type="html"><![CDATA[
+<p>Rails4 から Rails のコアに取り込まれた Strong Parameters は、それまでの Model 側で mass assignments 対策を attr_accessible / attr_protected を使って行なっていたことに比べると、Controller 側で制御することは利用する側から言えば、とてもわかりやすくなったと思う。</p>
+
+<p>Strong Parameters の詳細は <a href="http://edgeguides.rubyonrails.org/action_controller_overview.html#strong-parameters">edgeguides.rubyonrails.org の Strong Parameters の箇所</a>を見るといいと思います。</p>
+
+<p><code>
+$ rails g scaffold post title content:text published:boolean
+</code></p>
+
+<p>Rails 4.0.0.rc1 で scaffold してみると</p>
+
+<pre><code>class PostsController &lt; ApplicationController
+# ... (略)
+  def create
+      @post = Post.new(post_params)
+# ... (略)
+  private
+# ... (略)
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def post_params
+      params.require(:post).permit(:title, :content, :published)
+    end
+</code></pre>
+
+<p>こんな感じで生成される。</p>
+
+<p>require で指定されたキーがない場合は例外が起こる。</p>
+
+<pre><code>&gt; ActionController::Parameters.new(person: { name: &#39;Francesco&#39; }).require(:person)
+# =&gt; {&quot;name&quot;=&gt;&quot;Francesco&quot;}
+
+&gt; ActionController::Parameters.new(person: nil).require(:person)
+# =&gt; ActionController::ParameterMissing: param not found: person
+
+&gt; ActionController::Parameters.new(person: {}).require(:person)
+# =&gt; ActionController::ParameterMissing: param not found: person
+</code></pre>
+
+<p>一方 permit で指定したキー (カラム名に相当する) は configure option で設定しない限りログだけ吐かれて例外が起こらない。</p>
+
+<pre><code>&gt; ActionController::Parameters.new(person: { name: &#39;Francesco&#39; }).require(:person).permit(:foo)
+Unpermitted parameters: name
+=&gt; {}
+</code></pre>
+
+<p>該当のソースは <a href="https://github.com/rails/rails/blob/31219045ebde6acd26b0f023d006836fc2c10f88/actionpack/lib/action_controller/metal/strong_parameters.rb">actionpack/lib/action<em>controller/metal/strong</em>parameters.rb@3121904</a> で (SHA-1 は 2013/06/02 の HEAD)</p>
+
+<pre><code>247     def permit(*filters)
+248       params = self.class.new
+249
+250       filters.flatten.each do |filter|
+251         case filter
+252         when Symbol, String
+253           permitted_scalar_filter(params, filter)
+254         when Hash then
+255           hash_filter(params, filter)
+256         end
+257       end
+258
+259       unpermitted_parameters!(params) if self.class.action_on_unpermitted_parameters
+260
+261       params.permit!
+262     end
+...
+340       def unpermitted_parameters!(params)
+341         unpermitted_keys = unpermitted_keys(params)
+342         if unpermitted_keys.any?
+343           case self.class.action_on_unpermitted_parameters
+344           when :log
+345             name = &quot;unpermitted_parameters.action_controller&quot;
+346             ActiveSupport::Notifications.instrument(name, keys: unpermitted_keys)
+347           when :raise
+348             raise ActionController::UnpermittedParameters.new(unpermitted_keys)
+349           end
+350         end
+351       end
+</code></pre>
+
+<p>259行目に指定されている action_on_unpermitted_parameters は <a href="https://github.com/rails/rails/blob/31219045ebde6acd26b0f023d006836fc2c10f88/actionpack/lib/action_controller/railtie.rb">actionpack/lib/action_controller/railtie.rb@312190</a> でデフォルトの振る舞いが指定されている。</p>
+
+<pre><code>22     initializer &quot;action_controller.parameters_config&quot; do |app|
+23       options = app.config.action_controller
+24
+25       ActionController::Parameters.permit_all_parameters = options.delete(:permit_all_parameters) { false }
+26       ActionController::Parameters.action_on_unpermitted_parameters = options.delete(:action_on_unpermitted_parameters) do
+27         (Rails.env.test? || Rails.env.development?) ? :log : false
+28       end
+29     end
+</code></pre>
+
+<p>27行目にあるように Rails.env が test か development の時は log に &#39;Unpermitted parameters:&#39; というログが出るだけでその値は nil になる。一方で production でも nil になる。</p>
+
+<p>結論から先に書くべきだけど、なんでこんな振る舞いになっているかと思った。例えば Rails3 から Rails4 に upgrade して Strong Parameters に対応させる時 permit 忘れのバグがたくさん出そうだし、テストコードでそういうものをすべてカバーできるほどのテストはなかなか書いてないと思うのでデフォルトは :raise でいいのではないかと思いました。(実際自分の遊びのアプリケーションでもバグが出た)</p>
+
+<p>この振る舞い自体はこの <a href="https://github.com/rails/rails/commit/57126ee5e392a4dc2eed22963d25020a48a93413">commit</a> で変更されていて、そしてこのことが議論されているのがこの <a href="https://github.com/rails/strong_parameters/pull/75">PR</a> になる。rails/rails と rails/strong_parameters で議論が別れていて追いにくいけど多分以下のような流れになっていると思う。</p>
+
+<ol>
+<li>unpermitted parameters がそのまま nil になってしまうのでなんとかできないかという <a href="https://github.com/rails/strong_parameters/issues/66">issue</a> があがる</li>
+<li>それを受けて、configure option として raise できるようになった PR が<a href="https://github.com/rails/strong_parameters/pull/75">これ</a>。</li>
+<li>config/environments 以下の development.rb や test.rb のテンプレートに ActionController::Parameters.action_on_unpermitted_parameters の設定もできるようにしたほうがいいかどうかという話で DHH は「Because nobody is really ever want to change it」と<a href="https://github.com/rails/rails/pull/8752#issuecomment-11893845">言って</a>、デフォルトのテンプレートの設定するところには出さないようにしている。</li>
+</ol>
+
+<h3>まとめ</h3>
+
+<p>ということで非常に長くなってしまったけど、デフォルトで :raise したほうがいいかの議論はまだされてない気がする。これは PR したほうがいい気がするんだけどどうなんだろうか...</p>
+
+<p>とりあえずは config/application.rb や config/environments/*.rb で以下のようにすれば permit に許可してない値が入ってきた時に例外が起こるように設定はできるので、そうしたほうが検知できていいと思う。</p>
+
+<p><code>
+config.action_controller.action_on_unpermitted_parameters = :raise
+</code></p>
+
+]]></content>
+  </entry>
 
   <entry>
     <title type="html"><![CDATA[Joining Quipper]]></title>
@@ -860,82 +980,6 @@ it &#39;returns nil as translation when value is nil&#39; do
   end
 end
 </code></pre>
-
-]]></content>
-  </entry>
-
-  <entry>
-    <title type="html"><![CDATA[My Chef Solo]]></title>
-    <link href="http://banyan.me/2012/07/09/1" />
-    <updated>2012-07-09T02:04:00+09:00</updated>
-    <id>http://banyan.me/2012/07/09/1</id>
-    <content type="html"><![CDATA[
-<p>僕の働いている<a href="http://paperboy.co.jp">会社</a>では、<a href="https://github.com/mizzy">mizzy</a> さんが <a href="https://github.com/mizzy/maglica">Maglica</a> という素晴らしいツール (Maglica の説明の<a href="http://mizzy.org/slides/maglica/">スライド</a>) を作られていて、VM が一瞬で構築できるようになってます。</p>
-
-<p>これは本当に life changing で時間も削減できるし、また VM を作ったり消したりが気軽にできるので開発には本当に便利になりました。</p>
-
-<p>しかしながら、先週チームに Windows を使うデザイナーがアサインしてきて (今までチームには Mac 使いしかいなかった) 、Maglica で VM を作って手作業で Linux の Rails 環境を一緒に構築してたけど、
-せっかく VM の箇所が自動化できてるのにこういうことをやっちゃいけないなーと思いました。</p>
-
-<p>ちょうど新卒の教育向けに <a href="https://github.com/hiboma">@hiboma</a> が Chef Solo Tutorial をしていたのもあったし、
-僕もそれを見ててちょっと意識が高まったので少しでも自動化してみようと思いちょっとやってました。</p>
-
-<p>Chef Solo 自体はちょうど1年半くらい前にさくらの VPS を構築する時にちょっとだけ触ったことある程度です。
-その時の recipe、cookbook を見ると、なんというか色々入りすぎてて、もう使う気もしない感じでした。</p>
-
-<p>ちなみに1年半前よりも GitHub で検索しても情報がすごい増えた気がしました。</p>
-
-<p>ということで新しく作り直して、GitHub にあげてみました。</p>
-
-<p><a href="https://github.com/banyan/chef">https://github.com/banyan/chef</a></p>
-
-<p>こうしたほうがもっと幸せになれるとかあったら教えて頂けるとありがたいです。</p>
-
-<p>サーバはさくらの VPS を契約して放置したままだったので、
-それを使いながらと、あと EC2 で一個 VM 作ってそれと同時に試してました。</p>
-
-<p>とりあえずの方針としては</p>
-
-<ul>
-<li>必ずいれるソフトウェアのパッケージを管理する
-
-<ul>
-<li>なるべくミニマムにする。本当に必要なものだけ。</li>
-</ul></li>
-<li>package 単位で cookbook を作る</li>
-<li>rbenv, ruby-build</li>
-<li>ufw, ssh の設定をする</li>
-<li>role をいい感じにわける</li>
-</ul>
-
-<p>というところでそれくらいまではできた感じです。</p>
-
-<p>これからやることとしては、</p>
-
-<ul>
-<li>最初にいれる Ruby + Chef + Git も Capistrano で操作する</li>
-<li>Unicorn</li>
-<li>Supervisor</li>
-<li>Mac (homebrew の管理)</li>
-<li>Redhat 系の対応</li>
-<li>Chef Solo + Capistrano</li>
-<li>Role とかもっといい感じにできそう</li>
-</ul>
-
-<p>などがうまくできるようになるといいなと思います。</p>
-
-<p>実際に改めて触ってみるとまだちょっとしかできてないけど、TDD 感覚でサーバを構築できるのは楽しい感じがしますね。</p>
-
-<p>いまいち分かってないことや確信を得れてないことはまだたくさんあるのですが、
-とりあえずまず晒しながら update していこうと思います。</p>
-
-<h5>参考</h5>
-
-<ul>
-<li><a href="https://github.com/cookbooks">https://github.com/cookbooks</a></li>
-<li><a href="http://d.hatena.ne.jp/sfujiwara/20120705/1341477250">chef-solo + capistrano で複数ホストを管理する</a></li>
-<li><a href="https://github.com/opscode/cookbooks">https://github.com/opscode/cookbooks</a></li>
-</ul>
 
 ]]></content>
   </entry>
