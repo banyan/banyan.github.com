@@ -4,13 +4,58 @@
   <title><![CDATA[@banyan's blog]]></title>
   <link href="http://banyan.me/atom.xml" rel="self"/>
   <link href="http://banyan.me/"/>
-  <updated>2013-06-02T18:47:31+09:00</updated>
+  <updated>2013-06-06T19:45:05+09:00</updated>
   <id>http://banyan.me/</id>
   <author>
     <name><![CDATA[@banyan's blog]]></name>
   </author>
   <generator uri="https://github.com/mizzy/nebel/">nebel</generator>
 
+
+  <entry>
+    <title type="html"><![CDATA[PORO の model に自動で ActiveModel::ForbiddenAttributesProtection を include する]]></title>
+    <link href="http://banyan.me/2013/06/06/1" />
+    <updated>2013-06-06T19:45:05+09:00</updated>
+    <id>http://banyan.me/2013/06/06/1</id>
+    <content type="html"><![CDATA[
+<p>Strong Parametes を使うには、各 model で ActiveModel::ForbiddenAttributesProtection を include してあげる必要があります。</p>
+
+<p>ただ毎回手作業でやると忘れたりする可能性があるので config/initializers/strong_parameters.rb とかに</p>
+
+<pre><code>ActiveRecord::Base.send(:include,  ActiveModel::ForbiddenAttributesProtection)
+</code></pre>
+
+<p>としてあげると自動で include されます。(ということを <a href="http://railscasts.com/episodes/371-strong-parameters">railscasts で見ました</a>)</p>
+
+<p>今の自分のプロジェクトでは mongomapper を使っていて PORO (Plain Old Ruby Objects) の class なので</p>
+
+<pre><code>def class_exists?(class_name)
+  klass = Module.const_get(class_name)
+  return klass.is_a?(Class)
+rescue NameError
+  return false
+end
+
+Dir.foreach(&quot;#{Rails.root}/app/models&quot;) do |model_path|
+  class_name = File.basename(model_path, &quot;.rb&quot;).classify
+  next unless class_exists?(class_name)
+  klass = Object.const_get class_name
+  klass.class_eval { include ActiveModel::ForbiddenAttributesProtection }
+end
+</code></pre>
+
+<p>こんな感じで include するようにしました。</p>
+
+<pre><code>&gt; p Post.included_modules
+=&gt; [ActiveModel::ForbiddenAttributesProtection,
+...
+</code></pre>
+
+<p>include されていて、
+前回<a href="http://banyan.me/2013/06/02/1/">書いた設定</a>で ActionController::UnpermittedParameters が raise されることを確認できました。</p>
+
+]]></content>
+  </entry>
 
   <entry>
     <title type="html"><![CDATA[Strong Parameters の action_on_unpermitted_parameters の振る舞いについて]]></title>
@@ -926,60 +971,6 @@ No response received from the server.
 <li><a href="http://www.itscj.ipsj.or.jp/ISO-IR/202.pdf">http://www.itscj.ipsj.or.jp/ISO-IR/202.pdf</a> どれがそれに該当するのかよく分からない。</li>
 </ul></li>
 </ul>
-
-]]></content>
-  </entry>
-
-  <entry>
-    <title type="html"><![CDATA[I18n.backend.store_translations のメモ]]></title>
-    <link href="http://banyan.me/2012/08/01/1" />
-    <updated>2012-08-01T01:15:08+09:00</updated>
-    <id>http://banyan.me/2012/08/01/1</id>
-    <content type="html"><![CDATA[
-<p>今日社内の Crafting Rails Applications 読書会でこういうコードがでてきた。</p>
-
-<pre><code>test &quot;model_name.human uses I18n&quot; do
-  begin
-    I18n.backend.store_translations :en,
-      :activemodel =&gt; { :models =&gt; { :sample_mail =&gt; &quot;My Sample Mail&quot; } }
-
-    assert_equal &quot;My Sample Mail&quot;, model.class.model_name.human
-  ensure
-    I18n.reload!
-  end
-end
-</code></pre>
-
-<p>I18n.backend.store_translations を使うことで I18n のテストをしたい時にいちいち fixture とか yaml とかで I18n の文言を用意しなくてもテストができるらしい。
-アプリケーションではなくライブラリなどで I18n のテストを書くときはこの方法がよさそうです。
-begin...ensure で囲んであるのはこのテストが終わったときに、reload して格納したデータをリセットするためとのこと。</p>
-
-<p>で今 <a href="https://github.com/brainspec/enumerize">Enumerize</a> のコード見てたら I18n.backend.store_translations のラッパーを用意していて便利げだった。
-テスト書いてて、begin...ensure でごちゃごちゃする時はこういう風に書いたりして
-block で渡したりするとキレイになって他でも使えそう。</p>
-
-<pre><code>module MiscHelpers
-  def store_translations(locale, translations, &amp;block)
-    begin
-      I18n.backend.store_translations locale, translations
-      yield
-    ensure
-      I18n.reload!
-    end
-  end
-end
-
-class MiniTest::Spec
-  include MiscHelpers
-end
-
-it &#39;returns nil as translation when value is nil&#39; do
-  store_translations(:en, :enumerize =&gt; {:foo =&gt; {:a =&gt; &#39;a text&#39;}}) do
-    klass.enumerize(:foo, :in =&gt; [:a, :b])
-    object.foo_text.must_equal nil
-  end
-end
-</code></pre>
 
 ]]></content>
   </entry>
