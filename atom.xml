@@ -4,13 +4,46 @@
   <title><![CDATA[@banyan's blog]]></title>
   <link href="http://banyan.me/atom.xml" rel="self"/>
   <link href="http://banyan.me/"/>
-  <updated>2013-06-06T19:45:05+09:00</updated>
+  <updated>2013-06-07T02:43:47+09:00</updated>
   <id>http://banyan.me/</id>
   <author>
     <name><![CDATA[@banyan's blog]]></name>
   </author>
   <generator uri="https://github.com/mizzy/nebel/">nebel</generator>
 
+
+  <entry>
+    <title type="html"><![CDATA[vcr の結果はバージョン管理に含めるべきかどうか]]></title>
+    <link href="http://banyan.me/2013/06/07/1" />
+    <updated>2013-06-07T02:43:47+09:00</updated>
+    <id>http://banyan.me/2013/06/07/1</id>
+    <content type="html"><![CDATA[
+<p><a href="https://github.com/vcr/vcr">vcr</a> は便利な gem で、外部の API などと通信するときにレスポンスをキャッシュして、以降はそのキャッシュを利用してテストを書くことができる gem です。
+少し癖はありますが基本的には便利で、vcr 自体については <a href="http://railscasts.com/episodes/291-testing-with-vcr?view=comments">railscasts</a> とかに詳しいと思います。</p>
+
+<p>一方で使っていて、確信を持てなかったのが、その vcr を使ったキャッシュををバージョン管理してしまっていいかでした。
+自分は含めて使っていましたが、PR の差分も大きくなるし、いつも少し迷ってました。(言語化できない罪悪感があった)</p>
+
+<p>railscasts のコメントの中でメンテナの <a href="https://github.com/myronmarston">Myron Marston</a> さんがこのことについて書いていたのでこれを訳しておこうと思います。</p>
+
+<blockquote>
+<p>これはトレードオフの問題で、あなたがどうしたいのかで変わってきます。自分自身の使い方としては、VCR cassets をバージョン管理する傾向が多いです。
+その理由は、ある特定のタイミングでどんな HTTP response だったかの歴史を持つことができるのが好きだからです。git bisect をして、テストを通すことも可能です。
+もし cassets がコミットされていなければ、そして HTTP response が変わっていたら、古い状態でテストが通った時の commit しかないため大変になるでしょう。</p>
+
+<p>一方で cassets をコミットするということは、多くのファイルができるため git リポジトリが膨れ上がります。
+またレスポンスを手動で微調整してテストを通すことも簡単になります。
+私は cassets (vcr のキャッシュ) をコミットしないことはそれをただキャッシュとして扱うことだと思っていて好ましく思います。(訳が怪しい)</p>
+
+<p>最終的にはあなたがどう考えるか次第です - 今ここであげたメリット・デメリットがあなたにとってどちらが大切かということを考えてみてください。</p>
+
+<p><a href="http://railscasts.com/episodes/291-testing-with-vcr?view=comments#comment_162799">http://railscasts.com/episodes/291-testing-with-vcr?view=comments#comment_162799</a></p>
+</blockquote>
+
+<p>時として例えばバイナリファイルとか、キャッシュのようなファイルとか bower で管理する JS/CSS のファイルとかをバージョン管理しなければいけない状況は色々な理由でやってきたりすることはあると思うのですが、こういう指針があるのはありがたいなーと思いました。</p>
+
+]]></content>
+  </entry>
 
   <entry>
     <title type="html"><![CDATA[PORO の model に自動で ActiveModel::ForbiddenAttributesProtection を include する]]></title>
@@ -789,187 +822,6 @@ No response received from the server.
 <li>元々通ってたのが gem の update をして気づいたのならすぐ気づけたと思った。</li>
 </ul></li>
 <li>poltergeist(phantomjs) 諦めて capybara-webkit でも同じように死んだので気づけました。</li>
-</ul>
-
-]]></content>
-  </entry>
-
-  <entry>
-    <title type="html"><![CDATA[「プログラマのための文字コード技術入門」を読んだ]]></title>
-    <link href="http://banyan.me/2012/10/24/1" />
-    <updated>2012-10-24T01:43:42+09:00</updated>
-    <id>http://banyan.me/2012/10/24/1</id>
-    <content type="html"><![CDATA[
-<p>もう2年前に出版された本だけどずっと気になってたので買って読んでみた。すばらしく良書でかつ面白かった。文字コードの大きな流れが見えて理解しやすかった。</p>
-
-<p>長年ちゃんと理解してなかったことが書いてあったりすると喜びは格別なのだけど、
-もっと早く知っておけばよかったとも、やきもきしながら読んでた。</p>
-
-<p>全部理解できてるわけではないし、そして正直読んだ端から頭から抜けていくので以下気になったところの一部をメモしておく。</p>
-
-<h3>第1章 文字とコンピュータ</h3>
-
-<ul>
-<li>事物を符号で表現することを「符号化」と呼ぶ</li>
-<li>文字とそれに対応するビット組み合わせを対応付ける規則を「文字コード」と呼ぶ</li>
-<li>文字コードを初期に設計した人は世界中の文字を符号化することは考えずに自国の自分たちの用に足るだけの文字を扱うことを考えた</li>
-<li>文字を重複なく集めたものを「文字集合」と呼ぶ
-
-<ul>
-<li>ラテンアルファベットの大文字・小文字</li>
-<li>常用漢字の1945文字</li>
-</ul></li>
-<li>文字コードを決める際には、文字集合を定めることが必須</li>
-<li>文字集合を定義し、その集合の各文字に対応するビット組み合わせを「文字コード」もしくは「符号化文字集合」(coded character set) と呼ぶ
-
-<ul>
-<li>実用的な符号化文字集合の例 - ISO/IEC 646 国際基準 (ASCII と同様)</li>
-</ul></li>
-<li>文字表の中の位置のことを「符号位置」(code position) と呼ぶ</li>
-<li>文字は一意に符号化されることが文字コードの原則</li>
-<li>文字コードが複雑になる2つの理由
-
-<ul>
-<li>過去の資産との互換性や連続性を考慮する必要がある</li>
-<li>文字そのものの難しさ</li>
-</ul></li>
-</ul>
-
-<h3>第2章 文字コードの変遷</h3>
-
-<ul>
-<li>最も基本的な文字コード
-
-<ul>
-<li>1960 年代にアメリカの規格として開発された <a href="http://ja.wikipedia.org/wiki/ASCII">ASCII</a> (American Standard Code for Information Interchange)</li>
-<li>7ビットの1バイトコード</li>
-<li>全部で128の符号位置</li>
-<li>0x00 から 0x1F までの位置は制御文字に割り当てる</li>
-<li>ASCII はアメリカで開発されたので通貨記号として＄ (ドル記号) を含む</li>
-</ul></li>
-<li>ASCII の各国用の変種
-
-<ul>
-<li>各国語版の ISO/IEC 646 が作られることになる</li>
-<li>日本版の ISO/IEC 646 -&gt; 日本工業規格の <a href="http://ja.wikipedia.org/wiki/JIS_X_0201">JIS X 0201</a> として標準化</li>
-<li>符号位置 0x5C: ASCII では \ (バックスラッシュ) なのが ￥ (通貨の円記号に)</li>
-<li>符号位置 0x7E: ASCII では ~ (チルダ) なのが、¯ (オーバーライン)に</li>
-<li>ISO/IEC 646 には国際基準版 (International Reference Version) というどこの国でもないバージョンができたが、現在では ASCII と同じものになっている</li>
-<li>ISO/IEC 646 の問題 -&gt; 複数の言語を混在化させることができなかった</li>
-</ul></li>
-<li>文字コードを拡張するための枠組みとして <a href="http://ja.wikipedia.org/wiki/ISO/IEC_2022">ISO/IEC 2022</a> が登場
-
-<ul>
-<li>8ビットコード (第8ビットも用いる文字コード) や2バイトコード (2つのバイトで1文字を表す文字コード) が可能</li>
-<li>複数の符号化文字集合を組み合わせて用いることができるように</li>
-<li>CL/GL, CR/GR</li>
-<li>文字集合の切り替えのためにエスケープシーケンスを利用する</li>
-<li>ISO/IEC 2022 = エスケープシーケンスではない。(EUC-JP はエスケープシーケンスを使ってない）</li>
-</ul></li>
-<li>ISO/IEC 2022 に則った2バイト符号化文字集合 -&gt; 1978年に制定された日本の JIS X 0208
-
-<ul>
-<li>94 * 94 = 8836 の符号位置がある</li>
-<li>ちなみに常用漢字が 1945 文字</li>
-<li>漢字だけでなく、平仮名、片仮名、ラテン文字、ギリシャ文字、キリル文字など様々な文字を含む</li>
-<li>1バイトコードに2バイトコードを組み合わせたい</li>
-<li>JIS X 0208 を ASCII や JIS X 0201 といった1バイトコードと組み合わせて運用する方法が普及 -&gt; Shift_JIS や EUC-JP、ISO-2022-JP はそうした符号化方式</li>
-</ul></li>
-<li>ヨーロッパでは8ビットの1バイトコードが広く使用され代表格が ISO/IEC 8859-1。通称 Latin-1</li>
-<li>国際符号化文字集合
-
-<ul>
-<li>世界中の文字をひとつの表に収める</li>
-<li>ISO/IEC 10646 と Unicode の誕生</li>
-<li>ISO/IEC 10646 と Unicode は別個の規格でありながら、どちらかに文字が追加されればまた一方にも追加され、互いに同一の文字表として改訂されている</li>
-</ul></li>
-</ul>
-
-<h3>第3章 代表的な符号化文字集合</h3>
-
-<ul>
-<li>ASCII と ISO/IEC 646
-
-<ul>
-<li>最も基本的な1バイト文字集合</li>
-</ul></li>
-<li>JIS X 0201
-
-<ul>
-<li>ラテン文字と片仮名の1バイト文字集合</li>
-</ul></li>
-<li>JIS X 0208
-
-<ul>
-<li>日本の最も基本的な2バイト文字集合</li>
-<li>97 JIS 包摂基準。この概念はとても重要。</li>
-</ul></li>
-<li>JIS X 0212
-
-<ul>
-<li>補助漢字。あまり使われてない。</li>
-</ul></li>
-<li>JIS X 0213
-
-<ul>
-<li>第3、第4水準漢字への拡張</li>
-<li>アイヌ語表記用片仮名</li>
-<li>賈詡 (かく)、荀彧 (じゅんいく)、龐統 (ほうとう)、許褚 (きょちょ) といった三国志の登場人物は第3、第4水準漢字</li>
-</ul></li>
-<li>ISO/IEC 8859 シリーズ
-
-<ul>
-<li>欧米で広く使われる1バイト符号化文字集合</li>
-</ul></li>
-<li>Unicode と ISO/IEC 10646
-
-<ul>
-<li>国際符号化文字集合</li>
-<li>Universal Multiple Octet Coded Character Set (UCS) = ISO/IEC 10646 = Unicode</li>
-<li>基本多言語面 (BMP)</li>
-<li>Unicode は整数値で表される符号位置と文字とを対応付ける</li>
-<li>その整数である符号位置をバイト列の形で表現するための方式として UTF-8 や UTF-16, UTF-32 といった各種の符号化方式が定められている</li>
-</ul></li>
-</ul>
-
-<h3>第4章 代表的な文字符号化方式</h3>
-
-<ul>
-<li>後で書く</li>
-</ul>
-
-<h3>第5章 文字コードの変換と判別</h3>
-
-<ul>
-<li>後で書(ry</li>
-</ul>
-
-<h3>第6章 インターネットと文字コード</h3>
-
-<ul>
-<li>後で(ry</li>
-</ul>
-
-<h3>第7章 プログラミング言語と文字コード</h3>
-
-<ul>
-<li>Java, Ruby1.8, Ruby1.9 の文字コードの取り扱いを紹介。</li>
-</ul>
-
-<h3>第8章 はまりやすい落とし穴とその対処</h3>
-
-<ul>
-<li>後(ry</li>
-</ul>
-
-<h3>Appendix</h3>
-
-<ul>
-<li>北朝鮮で1990年代に作られた文字コード KPS 9566 では、「金日成」「金正日」という人名表記に相当するハングル6文字がこの順番に通常のハングルと独立した区点位置にあって、人名でソートした際必ず最初に現れるらしい。面白い。
-
-<ul>
-<li><a href="http://www.itscj.ipsj.or.jp/ISO-IR/202.pdf">http://www.itscj.ipsj.or.jp/ISO-IR/202.pdf</a> どれがそれに該当するのかよく分からない。</li>
-</ul></li>
 </ul>
 
 ]]></content>
