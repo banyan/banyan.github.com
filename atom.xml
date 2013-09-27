@@ -34,6 +34,8 @@ edit で今の default_event を全部適用させるようにしてみて届く
 <li><a href="https://gist.github.com/banyan/6718410">update-hipchat-hooks-event.rb</a></li>
 </ul>
 
+<p>(というか元から API 経由だったら適用できたっぽいことを知らなかった</p>
+
 ]]></content>
   </entry>
 
