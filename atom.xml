@@ -4,13 +4,38 @@
   <title><![CDATA[@banyan's blog]]></title>
   <link href="http://banyan.me/atom.xml" rel="self"/>
   <link href="http://banyan.me/"/>
-  <updated>2013-07-09T16:49:43+09:00</updated>
+  <updated>2013-09-27T10:01:37+09:00</updated>
   <id>http://banyan.me/</id>
   <author>
     <name><![CDATA[@banyan's blog]]></name>
   </author>
   <generator uri="https://github.com/mizzy/nebel/">nebel</generator>
 
+
+  <entry>
+    <title type="html"><![CDATA[HipChat の pull-request-review-comment を既存の hook に適用させる]]></title>
+    <link href="http://banyan.me/2013/09/27/1" />
+    <updated>2013-09-27T10:01:37+09:00</updated>
+    <id>http://banyan.me/2013/09/27/1</id>
+    <content type="html"><![CDATA[
+<p>HipChat の GitHub Integration はデフォルトの event が多くて便利だけど、
+pull-request-review-comment はサポートとされてなかったけどやっと最近デフォルトで入った。</p>
+
+<ul>
+<li><a href="https://github.com/github/github-services/pull/695">Send pull<em>request</em>review_comment events to HipChat</a></li>
+</ul>
+
+<p>自分もその前の <a href="https://github.com/github/github-services/pull/648">pr</a> に微力ながら +1 とかしてたので非常に嬉しいけど
+technoweenie さんが<a href="https://github.com/github/github-services/pull/695#issuecomment-24836222">ここ</a> で言ってるように
+既存の hook には適用されない。update でもダメで、octokit で delete して create してもうまく適用されなかった。
+edit で今の default_event を全部適用させるようにしてみて届くようにしました。</p>
+
+<ul>
+<li><a href="https://gist.github.com/banyan/6718410">update-hipchat-hooks-event.rb</a></li>
+</ul>
+
+]]></content>
+  </entry>
 
   <entry>
     <title type="html"><![CDATA[mocha-phantomjs@3.1.0 requires mocha.js@1.12.0 or later]]></title>
@@ -621,163 +646,6 @@ Ruby / Rails で開発をしている人なら誰でも大なり小なり gem �
 またその時引き継ぐ人が gem ソムリエかもしくは gem ソムリエになるやる気がある人ならいいけど、あんまり興味ないし適当にやりますー、みたいな感じの人だと
 こんなに色々使ってると bump version した時とかうまく upgrade できなくて、そうしたらやはり問題になるわけで、そういう意味でもやっぱその時の一番人気 (終わりかけになってない感じ)
 を見極めて寄せるのはやっぱり改めて大切なことなのかなーと思った。まぁでもみんな1年先くらいまでしか分かんない気もするけども &gt;&lt;</p>
-
-]]></content>
-  </entry>
-
-  <entry>
-    <title type="html"><![CDATA[pry の wtf のメモ]]></title>
-    <link href="http://banyan.me/2012/11/18/1" />
-    <updated>2012-11-18T15:06:52+09:00</updated>
-    <id>http://banyan.me/2012/11/18/1</id>
-    <content type="html"><![CDATA[
-<p>pry で例外の backtrace を見るにはどうすればいいのか。</p>
-
-<pre><code>Loading development environment (Rails 4.0.0.beta)
-[1] pry(main)&gt; Fabricate(:user)
-ArgumentError: wrong number of arguments (2 for 0..1)
-from /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/bundler/gems/rails-6c5bd10dc498/activerecord/lib/active_record/core.rb:158:in `initialize&#39;
-</code></pre>
-
-<p>例えばこんなエラーが出た時に、0 か 1 しか受け付けないメソッドに2つ渡しているために ArgumentError が出ているのは分かるが、
-こっちからどう渡しているのかを知りたい時は、<code>_ex_</code> という変数を参照すればよい。</p>
-
-<pre><code>[2] pry(main)&gt; _ex_.message
-=&gt; &quot;wrong number of arguments (2 for 0..1)&quot;
-
-[3] pry(main)&gt; _ex_.backtrace
-=&gt; [&quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/bundler/gems/rails-6c5bd10dc498/activerecord/lib/active_record/core.rb:158:in `initialize&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/active_record.rb:8:in `new&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/active_record.rb:8:in `build_instance&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/base.rb:13:in `build&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/base.rb:26:in `create&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/schematic/definition.rb:62:in `block in fabricate&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/schematic/definition.rb:61:in `instance_eval&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/schematic/definition.rb:61:in `fabricate&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/fabricator.rb:8:in `fabricate&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication.rb:52:in `Fabricate&#39;&quot;,
- &quot;(pry):1:in `__pry__&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:275:in `eval&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:275:in `re&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:251:in `rep&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:231:in `block (3 levels) in repl&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:232:in `loop&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:232:in `block (2 levels) in repl&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:229:in `catch&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:229:in `block in repl&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:228:in `catch&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:228:in `repl&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_class.rb:154:in `start&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/bundler/gems/rails-6c5bd10dc498/railties/lib/rails/commands/console.rb:78:in `start&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/bundler/gems/rails-6c5bd10dc498/railties/lib/rails/commands/console.rb:9:in `start&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/bundler/gems/rails-6c5bd10dc498/railties/lib/rails/commands.rb:71:in `&lt;top (required)&gt;&#39;&quot;,
- &quot;script/rails:6:in `require&#39;&quot;,
- &quot;script/rails:6:in `&lt;main&gt;&#39;&quot;]
-</code></pre>
-
-<p>とは言いながらも <em>ex</em> って覚えにくいので、wtf というコマンドが用意されている。</p>
-
-<p>ん？と思ったら wtf</p>
-
-<pre><code>[4] pry(main)&gt; wtf
-Exception: ArgumentError: wrong number of arguments (2 for 0..1)
---
-0: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/bundler/gems/rails-6c5bd10dc498/activerecord/lib/active_record/core.rb:158:in `initialize&#39;
-1: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/active_record.rb:8:in `new&#39;
-2: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/active_record.rb:8:in `build_instance&#39;
-3: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/base.rb:13:in `build&#39;
-4: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/base.rb:26:in `create&#39;
-</code></pre>
-
-<p>んんん？？と思ったら wtf?</p>
-
-<pre><code>[5] pry(main)&gt; wtf?
-Exception: ArgumentError: wrong number of arguments (2 for 0..1)
---
-0: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/bundler/gems/rails-6c5bd10dc498/activerecord/lib/active_record/core.rb:158:in `initialize&#39;
-1: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/active_record.rb:8:in `new&#39;
-2: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/active_record.rb:8:in `build_instance&#39;
-3: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/base.rb:13:in `build&#39;
-4: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/base.rb:26:in `create&#39;
-5: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/schematic/definition.rb:62:in `block in fabricate&#39;
-6: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/schematic/definition.rb:61:in `instance_eval&#39;
-7: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/schematic/definition.rb:61:in `fabricate&#39;
-8: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/fabricator.rb:8:in `fabricate&#39;
-9: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication.rb:52:in `Fabricate&#39;
-</code></pre>
-
-<p>ちっ！！！！なんなんだよ、くそがっ！！！！と思ったら <code>wtf????!?!!?!??!</code></p>
-
-<pre><code>[7] pry(main)&gt; wtf?!???!!!
-Exception: ArgumentError: wrong number of arguments (2 for 0..1)
---
- 0: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/bundler/gems/rails-6c5bd10dc498/activerecord/lib/active_record/core.rb:158:in `initialize&#39;
- 1: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/active_record.rb:8:in `new&#39;
- 2: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/active_record.rb:8:in `build_instance&#39;
- 3: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/base.rb:13:in `build&#39;
- 4: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/base.rb:26:in `create&#39;
- 5: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/schematic/definition.rb:62:in `block in fabricate&#39;
- 6: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/schematic/definition.rb:61:in `instance_eval&#39;
- 7: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/schematic/definition.rb:61:in `fabricate&#39;
- 8: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/fabricator.rb:8:in `fabricate&#39;
- 9: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication.rb:52:in `Fabricate&#39;
-10: (pry):1:in `__pry__&#39;
-11: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:275:in `eval&#39;
-12: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:275:in `re&#39;
-13: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:251:in `rep&#39;
-14: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:231:in `block (3 levels) in repl&#39;
-15: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:232:in `loop&#39;
-16: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:232:in `block (2 levels) in repl&#39;
-17: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:229:in `catch&#39;
-18: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:229:in `block in repl&#39;
-19: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:228:in `catch&#39;
-20: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:228:in `repl&#39;
-21: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_class.rb:154:in `start&#39;
-22: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/bundler/gems/rails-6c5bd10dc498/railties/lib/rails/commands/console.rb:78:in `start&#39;
-23: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/bundler/gems/rails-6c5bd10dc498/railties/lib/rails/commands/console.rb:9:in `start&#39;
-24: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/bundler/gems/rails-6c5bd10dc498/railties/lib/rails/commands.rb:71:in `&lt;top (required)&gt;&#39;
-25: script/rails:6:in `require&#39;
-26: script/rails:6:in `&lt;main&gt;&#39;
-</code></pre>
-
-<p>やってることは <em>ex</em> と同じなんだけど感情と同期するメソッド名みたいなの初めて見た。面白い。
-pry すごい便利だけど、コマンド覚えにくい。でも wtf だけ他のコマンドと比べて覚えやすすぎる。こういうこと重要な気がする。</p>
-
-<pre><code>[8] pry(main)&gt; cat --ex
-Exception: ArgumentError: wrong number of arguments (2 for 0..1)
---
-From: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/bundler/gems/rails-6c5bd10dc498/activerecord/lib/active_record/core.rb @ line 158 @ level: 0 of backtrace (of 26).
-
-    153:     # hence you can&#39;t have attributes that aren&#39;t part of the table columns.
-    154:     #
-    155:     # ==== Example:
-    156:     #   # Instantiates a single new object
-    157:     #   User.new(first_name: &#39;Jamie&#39;)
- =&gt; 158:     def initialize(attributes = nil)
-    159:       defaults = self.class.column_defaults.dup
-    160:       defaults.each { |k, v| defaults[k] = v.dup if v.duplicable? }
-    161:
-    162:       @attributes   = self.class.initialize_attributes(defaults)
-    163:       @columns_hash = self.class.column_types.dup
-[9] pry(main)&gt; cat --ex 1
-Exception: ArgumentError: wrong number of arguments (2 for 0..1)
---
-From: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/active_record.rb @ line 8 @ level: 1 of backtrace (of 26).
-
-     3:   def self.supports?(klass)
-     4:     defined?(ActiveRecord) &amp;&amp; klass.ancestors.include?(ActiveRecord::Base)
-     5:   end
-     6:
-     7:   def build_instance
- =&gt;  8:     self.__instance = __klass.new(__attributes, without_protection: true)
-     9:   end
-    10:
-    11: end
-</code></pre>
-
-<p><code>cat --ex n</code> で実際のコンテキストのコードを見れる。</p>
-
-<p>なお↑の話は<a href="https://github.com/pry/pry/wiki/Exceptions">pry/wiki/Exceptions</a> に全て書いてあります。</p>
 
 ]]></content>
   </entry>
