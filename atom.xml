@@ -4,13 +4,49 @@
   <title><![CDATA[@banyan's blog]]></title>
   <link href="http://banyan.me/atom.xml" rel="self"/>
   <link href="http://banyan.me/"/>
-  <updated>2013-10-22T23:24:04+09:00</updated>
+  <updated>2013-11-21T10:47:13+09:00</updated>
   <id>http://banyan.me/</id>
   <author>
     <name><![CDATA[@banyan's blog]]></name>
   </author>
   <generator uri="https://github.com/mizzy/nebel/">nebel</generator>
 
+
+  <entry>
+    <title type="html"><![CDATA[Git の pre-commit hook で未来のコミットをさせないようにする]]></title>
+    <link href="http://banyan.me/2013/11/21/1" />
+    <updated>2013-11-21T10:47:13+09:00</updated>
+    <id>http://banyan.me/2013/11/21/1</id>
+    <content type="html"><![CDATA[
+<p>最近 Mac で &quot;Set date and time automatically&quot; のチェックを外し、
+日付を変えて開発をすることが多いのですが、ありがちなのがそのまま commit してしまうことで、
+まだ PR 中に気付ければいいけど、それが merge されてしまって、更にその上に変更をかぶせてしまってたりすると
+直すのがなかなか大変でめんどくさい (filter-branch とか使う) ので git の pre-commit でもし日付が変更されている状態なら日付を戻して commit するようにした。
+実際は履歴が気持ち悪くなるだけで特に副作用はないけれど。</p>
+
+<p><code>
+$ sudo lsof -i:123 -P
+</code></p>
+
+<p>ポートが使われているかどうかは lsof とかで調べればいいけど、チェック自体をコマンドラインからどうやって制御すればいいかなと思ったけど、以下のコマンドがあったことを初めて知った。</p>
+
+<p><code>
+$ systemsetup -setusingnetworktime on
+</code></p>
+
+<p><code>
+$ git config --global init.templatedir &#39;~/.git_template&#39;
+</code></p>
+
+<p>を実行した後、</p>
+
+<p><a href="https://gist.github.com/banyan/7574810">https://gist.github.com/banyan/7574810</a> (Mac のみ対応)</p>
+
+<p>を ~/.git_template/hooks 以下とかに pre-commit という名前で実行権限つけて保存すればOK。
+新規のリポジトリを作る際は hooks 以下に pre-commit というファイルができていれば OK で、既存のリポジトリに適用させる場合は git init で reinitialize すればよかった。</p>
+
+]]></content>
+  </entry>
 
   <entry>
     <title type="html"><![CDATA[Quipper で最初のリリースなので振り返る]]></title>
@@ -582,54 +618,6 @@ $ librarian-chef install # で bundle install のようにインストールで�
 <li>ひと通り動くけど、bundle exec rake test とした時に止まってしまうテストがあるなー</li>
 <li>インストールに時間かかるけれど、chef-rails-dev-box は rails-dev-box とは違うポリシーで動くようにしていけたらと思います</li>
 </ul>
-
-]]></content>
-  </entry>
-
-  <entry>
-    <title type="html"><![CDATA[randomize rspec example order]]></title>
-    <link href="http://banyan.me/2012/11/21/1" />
-    <updated>2012-11-21T01:05:27+09:00</updated>
-    <id>http://banyan.me/2012/11/21/1</id>
-    <content type="html"><![CDATA[
-<p><a href="http://blog.davidchelimsky.net/2012/07/07/rspec-211-is-released/">rspec-rails-2.11.0</a> (July 7th, 2012) 以降</p>
-
-<pre><code>$ rails generate rspec:install
-</code></pre>
-
-<p>rails の generator を使って生成する spec_helper.rb には</p>
-
-<pre><code>config.order = &quot;random&quot;
-</code></pre>
-
-<p>という一行が追加されるようになっている。このことで examples のテストの順番がデフォルトでランダムになる。</p>
-
-<p><a href="https://github.com/rspec/rspec-core/issues/403">Feature idea: allow examples to be run in random order (like minitest)</a> を見ると、元々は minitest で実装されていたアイディアで、rspec-core 本体では 2.8.0 rc releases の時 (November 6th, 2011) にはすでにリリースされている。(結構前からあるんですね...)</p>
-
-<p>このランダムというのはファイル単位ではなくて example 単位で random になる。そうなることで起こる問題が</p>
-
-<ol>
-<li>The documentation and html formatters がランダムにテストが走ると機能しない</li>
-<li>before(:all) or after(:all) の hook の関係性</li>
-</ol>
-
-<p>を議論している。後者の before(:all) や after(:all) の問題はランダム化する時の実装で含めるようにすれば問題はない、ということになってて、前者のほうは互換性がないときは STDERR にメッセージを送ればいいんじゃないかとか、formatter の whitelist でなんとかなるみたいなことを詳細はちょっとよく分からない。</p>
-
-<p>テストを実行した後に、</p>
-
-<pre><code>Randomized with seed 37840
-</code></pre>
-
-<p>という seed が出力されるので、もし random order を再現させたい場合は</p>
-
-<pre><code>$ bundle exec rspec --order rand:37840
-</code></pre>
-
-<p>などとして順序を再現することが可能になる。</p>
-
-<p>テストを書いてて、example の間に依存性ができていて、その spec だけを走らせると、テストが通るけど、全体を通すとこける、みたいなことは割とあるし、Travis CI でだけ落ちるとか頭の痛くなる問題なので、
-このオプションをつけるようにしてちょっと運用してみよう。
-でも適当にライブラリ選んでテスト order = &quot;random&quot; で走らせるとテスト落ちまくるんだけど、なかなか途中からいれると最初大変そうな気もするな...</p>
 
 ]]></content>
   </entry>
