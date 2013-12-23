@@ -4,13 +4,41 @@
   <title><![CDATA[@banyan's blog]]></title>
   <link href="http://banyan.me/atom.xml" rel="self"/>
   <link href="http://banyan.me/"/>
-  <updated>2013-11-21T10:47:13+09:00</updated>
+  <updated>2013-12-24T01:40:37+09:00</updated>
   <id>http://banyan.me/</id>
   <author>
     <name><![CDATA[@banyan's blog]]></name>
   </author>
   <generator uri="https://github.com/mizzy/nebel/">nebel</generator>
 
+
+  <entry>
+    <title type="html"><![CDATA[jenkins-ci-skip-plugin を書いてみた]]></title>
+    <link href="http://banyan.me/2013/12/24/1" />
+    <updated>2013-12-24T01:40:37+09:00</updated>
+    <id>http://banyan.me/2013/12/24/1</id>
+    <content type="html"><![CDATA[
+<p><a href="https://github.com/banyan/jenkins-ci-skip-plugin">jenkins-ci-skip-plugin</a></p>
+
+<p><code>[ci skip]</code> という文字列がコミットに含まれているとビルドをスキップするというのが Travis CI にあって、Circle CI も同じ機能がある。</p>
+
+<ul>
+<li><a href="http://about.travis-ci.org/docs/user/how-to-skip-a-build/">Travis CI: How to skip a build</a></li>
+<li><a href="https://circleci.com/docs/skip-a-build">Skip a build - CircleCI</a></li>
+</ul>
+
+<p>Rails とかはたくさんの environment でテストされているのでドキュメントの変更の場合は必ずコミットに含むように書いてある。</p>
+
+<ul>
+<li><a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation</a></li>
+</ul>
+
+<p>で、それを Jenkins でも同じようにできるようにするというもの。あんまり必要は感じてなかったんだけど、最近 Docker とか使ってテストするようになって feature branch とかでテストをパスできるんならしたいなと思うことがあったので書いてみました。</p>
+
+<p>Jenkins は Changeset の差分で見るので、もし Changeset の最新のコミットに文字列が含まれていれば NOT BUILT としてスキップされるけど、そのビルドを手動でもう一度ビルドを走らせる時は Changeset がない状態になるのでビルドが走ります。</p>
+
+]]></content>
+  </entry>
 
   <entry>
     <title type="html"><![CDATA[Git の hook で未来のコミットを書き換える]]></title>
@@ -408,219 +436,6 @@ config.action_controller.action_on_unpermitted_parameters = :raise
 <p>という便利情報も見てタイトルも @banyan&#39;s blog に変更しました。</p>
 
 <p>はてなスターもリセットされてしまったのか... うぅぅ、つらい</p>
-
-]]></content>
-  </entry>
-
-  <entry>
-    <title type="html"><![CDATA[社内で Chef 勉強会をして色々教えてもらった]]></title>
-    <link href="http://banyan.me/2013/03/21/1" />
-    <updated>2013-03-21T01:33:53+09:00</updated>
-    <id>http://banyan.me/2013/03/21/1</id>
-    <content type="html"><![CDATA[
-<p>自分の働いている会社は、ロリポップや heteml, Sqale などのホスティング事業をしてたり、また mizzy さんをはじめとして Puppet などを使ったプロビジョニングへの知識・経験がある人が多く、インフラエンジニアの人も多い。</p>
-
-<p>開発側としては正直ものすごく楽なことが多々ある。けれどそうやって頼ってると、個人的な遊びとか開発に必要な簡単な VM とか以外ではなかなか Puppet や Chef を使ってという機会が少ないんで、まずは適当なネタをでっちあげて偉大なプロビジョニングマスターの人たちから少しずつ色々教えてもらおうと思いました。</p>
-
-<p>ということでまず最初にやったのは rails-dev-box を chef で移植してみました。</p>
-
-<ul>
-<li><a href="https://github.com/banyan/chef-rails-dev-box">banyan/chef-rails-dev-box</a></li>
-</ul>
-
-<h3>rails-dev-box</h3>
-
-<p>rails-dev-box は <a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html">Contributing to Ruby on Rails / edgeguides.rubyonrails.org</a> で紹介されている Puppet + Vagrant を使って Rails 自体の開発をするための環境を簡単に作るというプロジェクトです。</p>
-
-<ul>
-<li><a href="https://github.com/rails/rails-dev-box">rails/rails-dev-box</a></li>
-</ul>
-
-<p>rails-dev-box は本当に簡単に rails 環境を構築することができて、VirtualBox と Vagrant がインストールされていれば以下のコマンドをたたくだけです。</p>
-
-<pre><code>host $ git clone https://github.com/rails/rails-dev-box.git
-host $ cd rails-dev-box
-host $ vagrant up
-
-host $ vagrant ssh # で接続
-Welcome to Ubuntu 12.04 LTS (GNU/Linux 3.2.0-23-generic-pae i686)
-...
-vagrant@rails-dev-box:~$
-</code></pre>
-
-<p>port 3000 が port forward されているので host の localhost:3000 で vagrant の VM で rails がが起動していれば見ることができる</p>
-
-<pre><code>host $ ls
-README.md   Vagrantfile puppet
-host $ git clone git://github.com/rails/rails.git # rails を clone
-
-vagrant@rails-dev-box:~$ ls /vagrant # リモートの /vagrant 以下に mount される
-puppet  rails  README.md  Vagrantfile
-</code></pre>
-
-<p>ローカルで開発して、テストは vagrant の VM 上で流す、というのが想定される使い方だと思う</p>
-
-<h3>chef-rails-dev-box</h3>
-
-<p>ここからは rails-dev-box と同じものを chef を使って構築していきます。
-chef-solo に関しては<a href="http://d.hatena.ne.jp/naoya/20130313/1363129532">入門Chef Solo - Infrastructure as Code</a>がとても参考になりました。</p>
-
-<p>だんだん書くのがめんどくさくなってきたので、以下コマンドにコメントつけるだけにします。</p>
-
-<pre><code>host $ gem install knife-solo --pre # install 0.3.0 # knife-solo は 0.3.0 以上が 入門Chef Solo で勧められていたので従う
-host $ gem install librarian # librarian は Chef の cookbooks を管理するための Ruby でいう bundler
-
-# box の種類がたくさんあってどれがいいのか全然分からなかった、なるべくミニマムなのを選ぶのがいいとのことだけどどれがミニマムかも分からない
-host $ vagrant box add ubuntu-1204 http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-1204-x64.box
-host $ vagrant list # 追加した box が表示されることを確認
-
-host $ mkdir chef-rails-dev-box
-host $ cd chef-rails-dev-box
-
-host $ vagrant init ubuntu-1204 # これで Vagrantfile が作成される
-
-host $ vagrant up
-host $ vagrant ssh # で接続できる
-
-host $ vagrant --help # 確認できる
-
-host $ vagrant provision # chef を適用
-
-host $ knife configure # 今回は chef サーバ使わないので全部エンターで
-host $ knife solo init chef # rails-dev-box にしたがって chef のレシピを作るディレクトリを作成
-</code></pre>
-
-<p>以下のような階層のディレクトリが作られる。シンプルで分かりやすい。ちょっと前は <a href="https://github.com/opscode/chef-repo">https://github.com/opscode/chef-repo</a> を落としてきて、自分色に染めるというのがやり方だった気がするけど、その作法は忘れてよさそう。</p>
-
-<pre><code>└── chef
-    ├── cookbooks
-    ├── data_bags
-    ├── nodes
-    ├── roles
-    └── site-cookbooks
-</code></pre>
-
-<p>このレシピ専用の cookbook を作る時は -o site-cookbooks として指定する</p>
-
-<pre><code>$ knife cookbook create hello -o site-cookbooks
-</code></pre>
-
-<h3>librarian と berkshelf</h3>
-
-<p>cookbooks 管理で有名なものは librarian と berkshelf があるようです。(その他もあるかも)</p>
-
-<ul>
-<li><p>librarian</p>
-
-<ul>
-<li>like bundler</li>
-<li><a href="https://github.com/applicationsonline/librarian">https://github.com/applicationsonline/librarian</a></li>
-</ul></li>
-<li><p>berkshelf</p>
-
-<ul>
-<li><a href="https://github.com/RiotGames/berkshelf">https://github.com/RiotGames/berkshelf</a></li>
-<li>なおやさんの chef-solo 本だとこっちを使ってた</li>
-</ul></li>
-<li><p><a href="http://christian-trabold.de/librarian-chef-vs-berkshelf">http://christian-trabold.de/librarian-chef-vs-berkshelf</a></p>
-
-<ul>
-<li>ほとんど機能は同じらしいけど、違いはハードリンクするのが berkshelf</li>
-</ul></li>
-</ul>
-
-<p>とりあえず librarian を使ってみた</p>
-
-<pre><code>$ librarian-chef init # で Cheffile ができる
-$ vi Cheffile
-$ librarian-chef install # で bundle install のようにインストールできる
-</code></pre>
-
-<p>ここで自分は cookbooks 以下にインストールされる外部の cookbooks までバージョン管理に含めてたけど、当然 bundler のように .gitignore で無視すべきだ、ということをあんちぽさんに指摘してもらった。</p>
-
-<h3>rails-dev-box で box の中でやっていることは以下の内容になる</h3>
-
-<ul>
-<li>Git</li>
-<li>RVM</li>
-<li>Ruby 1.9.3 (binary RVM install)</li>
-<li>Bundler</li>
-<li>SQLite3, MySQL, and Postgres</li>
-<li>System dependencies for nokogiri, sqlite3, mysql, mysql2, and pg</li>
-<li>Databases and users needed to run the Active Record test suite</li>
-<li>Node.js for the asset pipeline</li>
-<li>Memcached</li>
-</ul>
-
-<p>chef-rails-dev-box では rvm と Ruby 1.9.3 (binary RVM install) をやめて以下を使うことにする</p>
-
-<ul>
-<li>rbenv</li>
-<li>Ruby 2.0.0-p0 (via ruby-build)</li>
-</ul>
-
-<p>余談だけど以前 hsbt さんが rails-dev-box に<a href="http://www.hsbt.org/diary/20130112.html">rbenv のパッチをおくっている</a>けど reject されている。
-理由は rbenv がバイナリ経由でインストールすることができないから。@fxn さん (rails-dev-box の owner) は簡単にインストールできることを重視している。
-(ただこれ rbenv と ruby-build だけをいれてるだけで Puppet が走るときに別に ruby-build するわけでもないから時間もかからないし、すごい殊勝な PR でマージしてもいいと個人的には思う...)</p>
-
-<h3>色々と話したり教えてもらったこと</h3>
-
-<ul>
-<li>cookbook fork とかされてる奴とかあるけどどれが正しいのか全く分からない。基本は OpsCode を使う感じにした。カオス感ある</li>
-<li>apt-get -y upgrade すると文字化けして死ぬ、なぜ?
-
-<ul>
-<li>OS が問題なのでは? なるべくミニマムな奴使いましょう</li>
-</ul></li>
-<li>database は <a href="http://community.opscode.com/cookbooks/database">http://community.opscode.com/cookbooks/database</a>
-
-<ul>
-<li>MySQL, PostgreSQL, SQL Server などの DB 作成や User 作成が抽象化されている</li>
-<li>Puppet だとそこまで抽象化したものはないよ</li>
-</ul></li>
-<li> <a href="https://github.com/rails/rails-dev-box/issues/21">@fxn さんに質問もしたんすけど</a> rails-dev-box 使うとテスト遅いんですけど...
-
-<ul>
-<li>NFS + vagrant でぐぐれ! vagrant の FAQ ですよ!!1</li>
-<li>実際に rails-dev-box で試したら3時間かかってたのが1時間くらいになって 300% パフォーマンス改善された</li>
-<li>chef-rails-dev-box では NFS をデフォルト使うようにしてみる</li>
-</ul></li>
-<li>パッケージのインストールは<a href="https://github.com/banyan/chef-rails-dev-box/commit/f3d829115e28b60109e47f55f1fe45f73811229e">こんな風に書きました</a>
-
-<ul>
-<li>レシピに書くのはダメ。必ず attributes を使うことで nodes などでも override していく正しいレシピを書くことができる</li>
-<li><a href="https://github.com/banyan/chef-rails-dev-box/commit/0285bc1ff52a3b336678d80d74d12d7594e129f2">リファクタした</a></li>
-</ul></li>
-<li><a href="https://github.com/banyan/chef-rails-dev-box/commit/90e4491f49e7802bc52902118e3a065416238bb9">pre と post みたいにして</a> 順序の依存を書いてるんですけどどうなんでしょうか？
-
-<ul>
-<li><a href="https://github.com/banyan/chef-rails-dev-box/commit/90e4491f49e7802bc52902118e3a065416238bb9">こういう箇所</a> は bash (script) リソース使わずに direcory リソースを使うべきです!!</li>
-<li>そうすれば順序に依存した書き方を減らすことができます</li>
-<li>なるほどーと思ってやってみたけど direcory リソースではうまくいかなかった...</li>
-</ul></li>
-<li>chef はディレクトリ構造がしっかりしている。puppet は syntax が固いが、ディレクトリ構造はゆるい。Puppet はベストプラクティスはあるけれど、そういうのを学ばないとベチャッとしたレシピ (manifest) になりがち。Puppet と Chef どっちもどっちだけど自分なら Puppet を選ぶかな(by あんちぽさん)
-
-<ul>
-<li>あんちぽさんもはや Puppet と Chef の哲人みたいな感じになってきてる...</li>
-</ul></li>
-<li>Puppet は librarian みたいなの使われてますか?
-
-<ul>
-<li>まだ現場じゃそんなにつかわれてないんじゃないかな？ <a href="https://github.com/rodjek/librarian-puppet">librarian-puppet</a> というのもあるよ</li>
-</ul></li>
-<li>今回のような開発環境としてだけ使いたいケースだと Vagrantfile に attributes を書いて vagrant provision で実行してもいいけど、通常はどこかにデプロイするわけで、そういう時は knife-solo で chef を適用するようにすることでインターフェースを共通にして適用できる
-
-<ul>
-<li><a href="https://github.com/CPAN-API/prepan-cookbooks">CPAN-API/prepan-cookbooks</a> が参考になる</li>
-</ul></li>
-</ul>
-
-<h3>WIP of chef-rails-dev-box</h3>
-
-<ul>
-<li>ひと通り動くけど、bundle exec rake test とした時に止まってしまうテストがあるなー</li>
-<li>インストールに時間かかるけれど、chef-rails-dev-box は rails-dev-box とは違うポリシーで動くようにしていけたらと思います</li>
-</ul>
 
 ]]></content>
   </entry>
