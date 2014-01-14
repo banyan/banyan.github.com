@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>dokku-slide</title>
+    <meta charset='utf-8'>
+    <meta content='width=1024, user-scalable=no' name='viewport'>
+    <!-- deck.js's core css -->
+    <link href="deck.js/core/deck.core.css" rel="stylesheet" type="text/css"/>
+    <!-- deck.js extension CSS files -->
+    <link href="deck.js/extensions/codemirror/deck.codemirror.css" rel="stylesheet" type="text/css"/>
+    <link href="deck.js/extensions/goto/deck.goto.css" rel="stylesheet" type="text/css"/>
+    <link href="deck.js/extensions/hash/deck.hash.css" rel="stylesheet" type="text/css"/>
+    <link href="deck.js/extensions/menu/deck.menu.css" rel="stylesheet" type="text/css"/>
+    <link href="deck.js/extensions/navigation/deck.navigation.css" rel="stylesheet" type="text/css"/>
+    <link href="deck.js/extensions/scale/deck.scale.css" rel="stylesheet" type="text/css"/>
+    <link href="deck.js/extensions/status/deck.status.css" rel="stylesheet" type="text/css"/>
+    <!-- all css in the css dir: Keydown CSS, your custom CSS, and themes from deck.js -->
+    <link href="css/keydown.css" rel="stylesheet" type="text/css"/>
+    <link href="css/default.css" rel="stylesheet" type="text/css"/>
+    <link href="css/dokku-slide.css" rel="stylesheet" type="text/css"/>
+    <link href="css/horizontal-slide.css" rel="stylesheet" type="text/css"/>
+    <link href="css/swiss.css" rel="stylesheet" type="text/css"/>
+    <!-- Modernizr (provided for legacy browsers) -->
+    <script src="deck.js/support/modernizr.custom.js" type="text/javascript"></script>
+  </head>
+  <body class='deck-container keydown'>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h1>Dokku, 世界で最も小さい PaaS を5分で説明する LT (仮)</h1>
+        
+        <h2>Heroku Meetup #11 New Year Party!! - 新年会 - / 20140104</h2>
+        
+        <h3>Kohei Hasegawa @banyan, Quipper, Ltd.</h3>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <p>最近遊びのアプリケーションを Dokku で動かすようにしてみたので今日はその紹介をします。</p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='left slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h1>アジェンダ</h1>
+        
+        <ol>
+        <li>Dokku とは?</li>
+        <li>デプロイの流れ</li>
+        <li>Dokku のプラグインと今後</li>
+        <li>まとめ</li>
+        </ol>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='dokku full-background slide top-left'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h1>1. Dokku とは?</h1>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <blockquote><p>Docker powered mini-Heroku in around 100 lines of Bash.</p>
+        
+        <p>The smallest PaaS implementation you've ever seen.</p></blockquote>
+        
+        <p>Docker をベースとして 100行くらいの Bash で書かれた mini-Heroku</p>
+        
+        <p>あなたが今まで見た中でもっとも小さな PaaS 実装</p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='left slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h1>Dokku の概要</h1>
+        
+        <ul>
+        <li>Docker + Heroku の Buildpack を使って、VPS や EC2 に mini-heroku が作れる</li>
+        <li>heroku の Buildpack を使うので自分でイメージを作る必要はない</li>
+        <li>クリーンインストールで使うことが想定されている</li>
+        <li>サーバにインストールして、クライアントから鍵を通せば git push するだけで実行環境ができてアプリケーションが起動する</li>
+        </ul>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='left slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h1>Dokku の構成要素</h1>
+        
+        <ul>
+        <li><a href="https://github.com/progrium/dokku">Dokku</a> - Bash script</li>
+        <li><a href="https://github.com/dotcloud/docker">Docker</a> - Container runtime and manager</li>
+        <li><a href="https://github.com/progrium/buildstep">Buildstep</a> - Buildpack builder</li>
+        <li><a href="https://github.com/progrium/pluginhook">pluginhook</a> - Shell based plugins and hooks</li>
+        <li><a href="https://github.com/progrium/sshcommand">sshcommand</a> - Fixed commands over SSH</li>
+        <li>Nginx, SSH, Git</li>
+        </ul>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='left slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h1>Dokku のインストール</h1>
+        
+        <h4>サーバで実行</h4>
+        
+        <p><textarea class='code' display='none' mode='zsh'>$ wget -qO- https://raw.github.com/progrium/dokku/master/bootstrap.sh | sudo bash</textarea>
+    </p>
+        
+        <h4>クライアントで実行</h4>
+        
+        <ul>
+        <li>鍵を通す</li>
+        </ul>
+        
+        
+        <p><textarea class='code' display='none' mode='zsh'>$ cat ~/.ssh/id_rsa.pub | ssh example.org "sudo sshcommand acl-add dokku banyan"</textarea>
+    </p>
+        
+        <ul>
+        <li>デプロイしたいアプリケーションでリモートリポジトリの設定</li>
+        </ul>
+        
+        
+        <p><textarea class='code' display='none' mode='zsh'>$ git remote add example.org dokku@example.org:rails4-sample</textarea>
+    </p>
+        
+        <ul>
+        <li>これでデプロイできる、Heroku と同じ。</li>
+        </ul>
+        
+        
+        <p><textarea class='code' display='none' mode='zsh'>$ git push example.org master</textarea>
+    </p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h1>実際 git push すると何が起こるのか？</h1>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='left slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h1>dokku ユーザが ssh で接続すると</h1>
+        
+        <p>常に <code>dokku</code> コマンドが叩かれるようになる。</p>
+        
+        <p><textarea class='code' display='none' mode='zsh'>$ cat ~/.ssh/id_rsa.pub | ssh example.org "sudo sshcommand acl-add dokku banyan"</textarea>
+    </p>
+        
+        <p><code>/home/dokku/.ssh/authorized_keys</code></p>
+        
+        <p><textarea class='code' display='none' mode='zsh'>command="FINGERPRINT=02:8d... NAME=banyan `cat /home/dokku/.sshcommand` $SSH_ORIGINAL_COMMAND",no-agent-forwarding,no-user-rc,no-X11-forwarding,no-port-forwarding ssh-rsa AAAAB3Nza...</textarea>
+    </p>
+        
+        <p><textarea class='code' display='none' mode='zsh'># cat /home/dokku/.sshcommand&#x000A;/usr/local/bin/dokku</textarea>
+    </p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='dokku-flow full-background slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='left slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <p>これでメインの dokku スクリプトが実行される</p>
+        
+        <p><textarea class='code' display='none' mode='bash'>receive)&#x000A;  APP="$2"; IMAGE="app/$APP"&#x000A;  echo "-----> Cleaning up ..."&#x000A;  dokku cleanup&#x000A;  echo "-----> Building $APP ..."&#x000A;  cat | dokku build $APP&#x000A;  echo "-----> Releasing $APP ..."&#x000A;  dokku release $APP&#x000A;  echo "-----> Deploying $APP ..."&#x000A;  dokku deploy $APP&#x000A;  echo "=====> Application deployed:"&#x000A;  echo "       $(dokku url $APP)"&#x000A;  echo&#x000A;  ;;</textarea>
+    </p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='left slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h1>dokku cleanup</h1>
+        
+        <p>Exit Status のコンテナと使われてないイメージを消す</p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='left slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h1>dokku build</h1>
+        
+        <p><textarea class='code' display='none' mode='bash'>build)&#x000A;  APP="$2"; IMAGE="app/$APP"; CACHE_DIR="$DOKKU_ROOT/$APP/cache"&#x000A;  id=$(cat | docker run -i -a stdin progrium/buildstep /bin/bash -c "mkdir -p /app && tar -xC /app")&#x000A;  test $(docker wait $id) -eq 0&#x000A;  docker commit $id $IMAGE > /dev/null</textarea>
+    </p>
+        
+        <p>パイプで docker のコンテナの中の /app にソースを inject して docker commit します。</p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='left slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h1>dokku release</h1>
+        
+        <p><textarea class='code' display='none' mode='bash'>$ dokku config:set FOO=BAR</textarea>
+    </p>
+        
+        <p>とかで設定してある ENV がある場合にコンテナに inject して、コンテナを docker commit します。</p>
+        
+        <p><textarea class='code' display='none' mode='bash'>id=$(cat "$DOKKU_ROOT/$APP/ENV" | docker run -i -a stdin $IMAGE /bin/bash -c "mkdir -p /app/.profile.d && cat > /app/.profile.d/app-env.sh")&#x000A;    test $(docker wait $id) -eq 0&#x000A;    docker commit $id $IMAGE > /dev/null</textarea>
+    </p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='left slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h1>dokku deploy</h1>
+        
+        <p><textarea class='code' display='none' mode='bash'>id=$(docker run -d -p 5000 -e PORT=5000 $DOCKER_ARGS $IMAGE /bin/bash -c "/start web")</textarea>
+    </p>
+        
+        <p>ここで実際にコンテナが起動されます</p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h1>Demo</h1>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='left slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h1>まとめ</h1>
+        
+        <ul>
+        <li>Dokku の大まかな流れをみてきました。Docker と heroku の buildpack やその他のミドルウェアをシンプルに使いながら、小さな PaaS を実現していてコードを読んでいても面白いです。</li>
+        <li>Dokku には PostgreSQL, Memcached, Redis などプラグイン機構があります。</li>
+        <li>Dokku 動くけどバグはなかなか多いです。後方互換性壊す変更も多い :(</li>
+        <li>Dokku よりも複雑なことがしたい場合 flynn というプロダクトがあり、現在開発中です。</li>
+        </ul>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='left slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h2>参照URL</h2>
+        
+        <ul>
+        <li>http://progrium.com/blog/2013/06/19/dokku-the-smallest-paas-implementation-youve-ever-seen/</li>
+        <li>http://off-the-stack.moorman.nu/2013-11-23-how-dokku-works.html</li>
+        <li>http://git-scm.com/book/ch9-6.html</li>
+        </ul>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='foosball full-background slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h1>ご清聴ありがとうございました。</h1>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <!-- deck.js navigation extension -->
+    <a class='deck-prev-link' href='#' title='Previous'>&#8592;</a>
+    <a class='deck-next-link' href='#' title='Next'>&#8594;</a>
+    <!-- deck.js hash extension -->
+    <a class='deck-permalink' href='.' title='Permalink to this slide'>#</a>
+    <!-- deck.js status extension -->
+    <p class='deck-status'>
+      <span class='deck-status-current'></span>
+      /
+      <span class='deck-status-total'></span>
+    </p>
+    <!-- jQuery & deck.js -->
+    <script src="deck.js/support/jquery.1.6.4.min.js" type="text/javascript"></script>
+    <script src="deck.js/core/deck.core.js" type="text/javascript"></script>
+    <!-- deck.js extension JS files -->
+    <script src="deck.js/extensions/codemirror/codemirror.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/deck.codemirror.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/clike/clike.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/clojure/clojure.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/coffeescript/coffeescript.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/css/css.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/diff/diff.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/haskell/haskell.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/htmlmixed/htmlmixed.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/javascript/javascript.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/lua/lua.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/php/php.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/plsql/plsql.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/python/python.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/r/r.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/rst/rst.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/ruby/ruby.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/scheme/scheme.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/smalltalk/smalltalk.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/sparql/sparql.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/stex/stex.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/velocity/velocity.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/xml/xml.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/xmlpure/xmlpure.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/yaml/yaml.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/goto/deck.goto.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/hash/deck.hash.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/menu/deck.menu.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/navigation/deck.navigation.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/scale/deck.scale.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/status/deck.status.js" type="text/javascript"></script>
+    <!-- your custom JS here, including call to initialize deck.js-codemirror -->
+    <script src="js/dokku-slide.js" type="text/javascript"></script>
+    <!-- Initialize the deck. -->
+    <script type='text/javascript'>
+      $(function() { $.deck('.slide'); });
+    </script>
+  </body>
+</html>

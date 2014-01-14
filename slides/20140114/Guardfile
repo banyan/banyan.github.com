@@ -1,0 +1,12 @@
+# A sample Guardfile
+# More info at https://github.com/guard/guard#readme
+
+guard :shell do
+  extensions = %w(md markdown mkd mdown mkdn mark).join("|")
+  watch(/.+\.#{extensions}/i) {|m| `keydown slides #{m[0]}` }
+end
+
+guard 'livereload' do
+  watch(%r{slides/(.+\.md$)})
+  watch(%r{slides/(.+\.html$)})
+end
