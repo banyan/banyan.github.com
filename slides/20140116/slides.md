@@ -186,7 +186,7 @@ docker commit $id $IMAGE > /dev/null
 id=$(docker run -d -p 5000 -e PORT=5000 $DOCKER_ARGS $IMAGE /bin/bash -c "/start web")
 ```
 
-ここで実際にコンテナが起動されます
+ここで実際にコンテナが起動されます。これでアクセスできるようになりました :)
 
 !SLIDE left
 
@@ -202,7 +202,7 @@ id=$(docker run -d -p 5000 -e PORT=5000 $DOCKER_ARGS $IMAGE /bin/bash -c "/start
 * [dokku-ps](https://github.com/progrium/dokku/pull/298) dokku ps:scale APP web=4 worker=1
 * [dokku-add-on](https://github.com/progrium/dokku/pull/292) heroku style addons.
 
-!SLIDE left
+!SLIDE
 
 # Demo
 
