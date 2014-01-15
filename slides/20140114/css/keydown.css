@@ -104,10 +104,10 @@ body {
       -moz-box-pack: start;
       -ms-box-pack: start;
       box-pack: start; }
-      .keydown.deck-container .slide.full-background.dokku {
-        background-image: url(../images/dokku.png); }
-      .keydown.deck-container .slide.full-background.dokku-flow {
-        background-image: url(../images/dokku-flow.png); }
+      .keydown.deck-container .slide.full-background.dokku-flow4 {
+        background-image: url(../images/dokku-flow4.png); }
+      .keydown.deck-container .slide.full-background.dokku-flow5 {
+        background-image: url(../images/dokku-flow5.png); }
       .keydown.deck-container .slide.full-background.foosball {
         background-image: url(../images/foosball.jpg); }
       .keydown.deck-container .slide.full-background h1 {

@@ -10,3 +10,19 @@
 /*.deck-status {*/
     /*display: none;*/
 /*}*/
+
+/* .slide.full-background.dokku-flow4 { */
+/* background-image: url(../images/dokku-flow4.png); */
+/* } */
+.keydown.deck-container .slide.full-background.dokku-flow4 {
+  background-image: url(../images/dokku-flow4.png);
+  background-size:1342px 554px;
+  background-repeat:no-repeat;
+}
+
+.keydown.deck-container .slide.full-background.dokku-flow5 {
+  background-image: url(../images/dokku-flow5.png);
+  background-size:1315px 616px;
+  background-repeat:no-repeat;
+  margin-top: 100px;
+}

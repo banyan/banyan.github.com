@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>dokku-slide</title>
+    <title>Inside Dokku in 5 minutes</title>
     <meta charset='utf-8'>
     <meta content='width=1024, user-scalable=no' name='viewport'>
     <!-- deck.js's core css -->
@@ -27,7 +27,7 @@
     <section class='slide'>
       <div class='spacer top'></div>
       <div class='content'>
-        <h1>Dokku, 世界で最も小さい PaaS を5分で説明する LT (仮)</h1>
+        <h1>Inside Dokku in 5 minutes</h1>
         
         <h2>Heroku Meetup #11 New Year Party!! - 新年会 - / 20140104</h2>
         
@@ -38,41 +38,18 @@
     <section class='slide'>
       <div class='spacer top'></div>
       <div class='content'>
-        <p>最近遊びのアプリケーションを Dokku で動かすようにしてみたので今日はその紹介をします。</p>
-      </div>
-      <div class='spacer bottom'></div>
-    </section>
-    <section class='left slide'>
-      <div class='spacer top'></div>
-      <div class='content'>
-        <h1>アジェンダ</h1>
-        
-        <ol>
-        <li>Dokku とは?</li>
-        <li>デプロイの流れ</li>
-        <li>Dokku のプラグインと今後</li>
-        <li>まとめ</li>
-        </ol>
-      </div>
-      <div class='spacer bottom'></div>
-    </section>
-    <section class='dokku full-background slide top-left'>
-      <div class='spacer top'></div>
-      <div class='content'>
-        <h1>1. Dokku とは?</h1>
+        <p>最近遊びのアプリケーションを Dokku で動かすようにしてみて色々仕組みが面白かったので今日はその紹介をします。</p>
       </div>
       <div class='spacer bottom'></div>
     </section>
     <section class='slide'>
       <div class='spacer top'></div>
       <div class='content'>
-        <blockquote><p>Docker powered mini-Heroku in around 100 lines of Bash.</p>
+        <h3>Dokku - <a href="https://github.com/progrium/dokku">https://github.com/progrium/dokku</a></h3>
         
-        <p>The smallest PaaS implementation you've ever seen.</p></blockquote>
+        <blockquote><p>Docker powered mini-Heroku in around 100 lines of Bash. The smallest PaaS implementation you've ever seen.</p></blockquote>
         
-        <p>Docker をベースとして 100行くらいの Bash で書かれた mini-Heroku</p>
-        
-        <p>あなたが今まで見た中でもっとも小さな PaaS 実装</p>
+        <p>Docker をベースとして 100行くらいの Bash で書かれた mini-Heroku。あなたが今まで見た中でもっとも小さな PaaS 実装。</p>
       </div>
       <div class='spacer bottom'></div>
     </section>
@@ -83,8 +60,7 @@
         
         <ul>
         <li>Docker + Heroku の Buildpack を使って、VPS や EC2 に mini-heroku が作れる</li>
-        <li>heroku の Buildpack を使うので自分でイメージを作る必要はない</li>
-        <li>クリーンインストールで使うことが想定されている</li>
+        <li>Buildpack を使うので自分でイメージを作る必要はない</li>
         <li>サーバにインストールして、クライアントから鍵を通せば git push するだけで実行環境ができてアプリケーションが起動する</li>
         </ul>
       </div>
@@ -135,7 +111,7 @@
     </p>
         
         <ul>
-        <li>これでデプロイできる、Heroku と同じ。</li>
+        <li>git push で Heroku と同じようにデプロイできる</li>
         </ul>
         
         
@@ -154,24 +130,34 @@
     <section class='left slide'>
       <div class='spacer top'></div>
       <div class='content'>
-        <h1>dokku ユーザが ssh で接続すると</h1>
+        <h1>まず sshcommand の設定で</h1>
         
-        <p>常に <code>dokku</code> コマンドが叩かれるようになる。</p>
+        <ul>
+        <li>SSH の authorized_keys にはログイン時に実行するコマンドを指定することができて、それを利用してdokku ユーザが ssh で接続すると常に <code>dokku</code> コマンドが叩かれるようになる</li>
+        </ul>
+        
         
         <p><textarea class='code' display='none' mode='zsh'>$ cat ~/.ssh/id_rsa.pub | ssh example.org "sudo sshcommand acl-add dokku banyan"</textarea>
     </p>
         
         <p><code>/home/dokku/.ssh/authorized_keys</code></p>
         
-        <p><textarea class='code' display='none' mode='zsh'>command="FINGERPRINT=02:8d... NAME=banyan `cat /home/dokku/.sshcommand` $SSH_ORIGINAL_COMMAND",no-agent-forwarding,no-user-rc,no-X11-forwarding,no-port-forwarding ssh-rsa AAAAB3Nza...</textarea>
+        <p><textarea class='code' display='none' mode='zsh'>command="FINGERPRINT=02:8d... NAME=banyan `cat /home/dokku/.sshcommand` $SSH_ORIGINAL_COMMAND",... ssh-rsa AAAAB3Nza...</textarea>
     </p>
         
-        <p><textarea class='code' display='none' mode='zsh'># cat /home/dokku/.sshcommand&#x000A;/usr/local/bin/dokku</textarea>
+        <p><textarea class='code' display='none' mode='zsh'>$ cat /home/dokku/.sshcommand&#x000A;/usr/local/bin/dokku</textarea>
     </p>
       </div>
       <div class='spacer bottom'></div>
     </section>
-    <section class='dokku-flow full-background slide'>
+    <section class='dokku-flow4 full-background slide snazzy-slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='dokku-flow5 full-background slide snazzy-slide'>
       <div class='spacer top'></div>
       <div class='content'>
         
@@ -181,10 +167,19 @@
     <section class='left slide'>
       <div class='spacer top'></div>
       <div class='content'>
-        <p>これでメインの dokku スクリプトが実行される</p>
+        <h3>これでメインの dokku スクリプトが実行される。</h3>
         
         <p><textarea class='code' display='none' mode='bash'>receive)&#x000A;  APP="$2"; IMAGE="app/$APP"&#x000A;  echo "-----> Cleaning up ..."&#x000A;  dokku cleanup&#x000A;  echo "-----> Building $APP ..."&#x000A;  cat | dokku build $APP&#x000A;  echo "-----> Releasing $APP ..."&#x000A;  dokku release $APP&#x000A;  echo "-----> Deploying $APP ..."&#x000A;  dokku deploy $APP&#x000A;  echo "=====> Application deployed:"&#x000A;  echo "       $(dokku url $APP)"&#x000A;  echo&#x000A;  ;;</textarea>
     </p>
+        
+        <h3>dokku receive では4つのフローが実行されます。</h3>
+        
+        <ul>
+        <li>dokku cleanup</li>
+        <li>dokku build</li>
+        <li>dokku release</li>
+        <li>dokku deploy</li>
+        </ul>
       </div>
       <div class='spacer bottom'></div>
     </section>
@@ -193,7 +188,9 @@
       <div class='content'>
         <h1>dokku cleanup</h1>
         
-        <p>Exit Status のコンテナと使われてないイメージを消す</p>
+        <p><br /></p>
+        
+        <p>使われてないイメージやコンテナを消す</p>
       </div>
       <div class='spacer bottom'></div>
     </section>
@@ -202,10 +199,18 @@
       <div class='content'>
         <h1>dokku build</h1>
         
+        <p><br /></p>
+        
         <p><textarea class='code' display='none' mode='bash'>build)&#x000A;  APP="$2"; IMAGE="app/$APP"; CACHE_DIR="$DOKKU_ROOT/$APP/cache"&#x000A;  id=$(cat | docker run -i -a stdin progrium/buildstep /bin/bash -c "mkdir -p /app && tar -xC /app")&#x000A;  test $(docker wait $id) -eq 0&#x000A;  docker commit $id $IMAGE > /dev/null</textarea>
     </p>
         
-        <p>パイプで docker のコンテナの中の /app にソースを inject して docker commit します。</p>
+        <p>パイプで docker のコンテナの中の /app にソースを inject して docker commit します。
+        またイメージは <code>progrium/buildstep</code> の Docker のイメージをベースにしています。</p>
+        
+        <p><textarea class='code' display='none' mode='&#x000A;    id=$(docker run -d -v $CACHE_DIR:/cache $IMAGE /build/builder)'>docker attach $id&#x000A;  test $(docker wait $id) -eq 0&#x000A;  docker commit $id $IMAGE > /dev/null</textarea>
+    </p>
+        
+        <p>その後、buildstep の <code>build/builder</code> というスクリプトが、このアプリケーションが何の言語かを調べて、各言語の buildpack を compile してコミットします。</p>
       </div>
       <div class='spacer bottom'></div>
     </section>
@@ -214,12 +219,14 @@
       <div class='content'>
         <h1>dokku release</h1>
         
+        <p><br /></p>
+        
         <p><textarea class='code' display='none' mode='bash'>$ dokku config:set FOO=BAR</textarea>
     </p>
         
-        <p>とかで設定してある ENV がある場合にコンテナに inject して、コンテナを docker commit します。</p>
+        <p>とかで設定してある ENV がある場合にコンテナに inject して、<br />コンテナを docker commit します。</p>
         
-        <p><textarea class='code' display='none' mode='bash'>id=$(cat "$DOKKU_ROOT/$APP/ENV" | docker run -i -a stdin $IMAGE /bin/bash -c "mkdir -p /app/.profile.d && cat > /app/.profile.d/app-env.sh")&#x000A;    test $(docker wait $id) -eq 0&#x000A;    docker commit $id $IMAGE > /dev/null</textarea>
+        <p><textarea class='code' display='none' mode='bash'>id=$(cat "$DOKKU_ROOT/$APP/ENV" | docker run -i -a stdin $IMAGE /bin/bash -c "mkdir -p /app/.profile.d && cat > /app/.profile.d/app-env.sh")&#x000A;test $(docker wait $id) -eq 0&#x000A;docker commit $id $IMAGE > /dev/null</textarea>
     </p>
       </div>
       <div class='spacer bottom'></div>
@@ -229,6 +236,8 @@
       <div class='content'>
         <h1>dokku deploy</h1>
         
+        <p><br /></p>
+        
         <p><textarea class='code' display='none' mode='bash'>id=$(docker run -d -p 5000 -e PORT=5000 $DOCKER_ARGS $IMAGE /bin/bash -c "/start web")</textarea>
     </p>
         
@@ -236,7 +245,29 @@
       </div>
       <div class='spacer bottom'></div>
     </section>
-    <section class='slide'>
+    <section class='left slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h1>Dokku にある機能</h1>
+        
+        <ul>
+        <li>Plugins (PostgreSQL, Memcached, Redis...)</li>
+        <li>SSL</li>
+        </ul>
+        
+        
+        <h1>Dokku 0.3.0 で予定されてる機能</h1>
+        
+        <p>(現在 2014/01/16 は v0.2.1)</p>
+        
+        <ul>
+        <li><a href="https://github.com/progrium/dokku/pull/298">dokku-ps</a> dokku ps:scale APP web=4 worker=1</li>
+        <li><a href="https://github.com/progrium/dokku/pull/292">dokku-add-on</a> heroku style addons.</li>
+        </ul>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='left slide'>
       <div class='spacer top'></div>
       <div class='content'>
         <h1>Demo</h1>
@@ -250,9 +281,8 @@
         
         <ul>
         <li>Dokku の大まかな流れをみてきました。Docker と heroku の buildpack やその他のミドルウェアをシンプルに使いながら、小さな PaaS を実現していてコードを読んでいても面白いです。</li>
-        <li>Dokku には PostgreSQL, Memcached, Redis などプラグイン機構があります。</li>
-        <li>Dokku 動くけどバグはなかなか多いです。後方互換性壊す変更も多い :(</li>
-        <li>Dokku よりも複雑なことがしたい場合 flynn というプロダクトがあり、現在開発中です。</li>
+        <li>Dokku 動くけどバグはなかなか多いです。後方互換性のない変更も多いし Docker の変更も多く安定はしてない。</li>
+        <li>Dokku よりも複雑なことがしたい場合 <a href="https://flynn.io/">flynn</a> というプロダクトがあり、現在開発中のようです。</li>
         </ul>
       </div>
       <div class='spacer bottom'></div>
@@ -260,12 +290,12 @@
     <section class='left slide'>
       <div class='spacer top'></div>
       <div class='content'>
-        <h2>参照URL</h2>
+        <h3>参照URL</h3>
         
         <ul>
-        <li>http://progrium.com/blog/2013/06/19/dokku-the-smallest-paas-implementation-youve-ever-seen/</li>
-        <li>http://off-the-stack.moorman.nu/2013-11-23-how-dokku-works.html</li>
-        <li>http://git-scm.com/book/ch9-6.html</li>
+        <li><a href="http://progrium.com/blog/2013/06/19/dokku-the-smallest-paas-implementation-youve-ever-seen/">http://progrium.com/blog/2013/06/19/dokku-the-smallest-paas-implementation-youve-ever-seen/</a></li>
+        <li><a href="http://off-the-stack.moorman.nu/2013-11-23-how-dokku-works.html">http://off-the-stack.moorman.nu/2013-11-23-how-dokku-works.html</a></li>
+        <li><a href="http://git-scm.com/book/ch9-6.html">http://git-scm.com/book/ch9-6.html</a></li>
         </ul>
       </div>
       <div class='spacer bottom'></div>
