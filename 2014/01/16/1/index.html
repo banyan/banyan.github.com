@@ -5,7 +5,7 @@
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <head>
 	<meta charset="utf-8">
-	<title>jenkins-ci-skip-plugin を書いてみた - @banyan's blog</title>
+	<title>Dokku の LT してきた - @banyan's blog</title>
 	<meta name="description" content="">
 	<meta name="author" content="Kohei Hasegawa">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -91,35 +91,39 @@
     <div class="sixteen columns autopagerize_page_element">
 
       <div class="sixteen columns entry-title-container">
-        <h1 class="entry-title"><a href="/2013/12/24/1">jenkins-ci-skip-plugin を書いてみた</a></h1>
+        <h1 class="entry-title"><a href="/2014/01/16/1">Dokku の LT してきた</a></h1>
       </div>
 
       <div class="sixteen columns">
         <div class="three columns alpha">
           <span class="time">
-            <time>Dec 24<span>th</span>, 2013</time>
+            <time>Jan 16<span>th</span>, 2014</time>
           </span>
         </div>
         <div id="main-content" class="twelve columns offset-by-one omega">
           <div class="content inner">
-            <p><a href="https://github.com/banyan/jenkins-ci-skip-plugin">jenkins-ci-skip-plugin</a></p>
+            <p><a href="http://herokujp.doorkeeper.jp/events/8004">Heroku Meetup #11 New Year Party!!</a> で <a href="https://github.com/progrium/dokku">Dokku</a> の話を LT してきた。</p>
 
-<p><code>[ci skip]</code> という文字列がコミットに含まれているとビルドをスキップするというのが Travis CI にあって、Circle CI も同じ機能がある。</p>
+<p><a href="http://banyan.me/slides/20140116/slides.html">Inside Dokku in 5 minutes</a></p>
 
-<ul>
-<li><a href="http://about.travis-ci.org/docs/user/how-to-skip-a-build/">Travis CI: How to skip a build</a></li>
-<li><a href="https://circleci.com/docs/skip-a-build">Skip a build - CircleCI</a></li>
-</ul>
+<p>5分過ぎると5分過ぎてますよーとかドラが鳴るとかはなく、ケーブルを抜いて終わるという strict な感じな LT だった。</p>
 
-<p>Rails とかはたくさんの environment でテストされているのでドキュメントの変更の場合は必ずコミットに含むように書いてある。</p>
+<p>5分なので Dokku スライドに書かなかった内容としては、</p>
 
 <ul>
-<li><a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation</a></li>
+<li>Ubuntu 13.04 で動かす必要がある (Ubuntu 13.10 だと Docker 側にバグがあって docker 0.8.* 系で修正される予定らしい、<a href="https://github.com/dotcloud/docker/issues/1300">これ</a>と<a href="https://github.com/dotcloud/docker/issues/1906">これ</a>)</li>
+<li>クリーンインストールを前提としている</li>
+<li>サーバのホストネームが名前解決されない時は <code>/home/dokku/VHOST</code> に手動でホスト名を書く必要がある</li>
+<li>Docker のバージョンがあがって Docker 側に regression がある時は  <code>DOCKER_VERSION=0.7.5 make install</code> とかして Docker のバージョン固定する (<a href="https://github.com/progrium/dokku/pull/407">PR</a>)</li>
+<li><code>/home/dokku/dokkurc</code> に <code>export DOKKU_TRACE=1</code> と書くとログが出るのでデバッグとか流れを追うのに便利</li>
+<li><code>dokku run [application name] rake db:migrate</code> とかで migrate は手動で行う必要がある</li>
+<li>MySQL plugin とかは前は動いてと思うけど、docker, dokku 共に変更が加えられて動かなくなってる。<a href="https://github.com/banyan/dokku-mysql-plugin">https://github.com/banyan/dokku-mysql-plugin</a> の fork はとりあえず動いてる。PostgreSQL は plugin たくさんある。</li>
+<li>これは dokku の問題ではなく docker の問題だけど、status が Ghost の Docker が出てしまうことがあった。<a href="https://github.com/dotcloud/docker/issues/2419">https://github.com/dotcloud/docker/issues/2419</a> docker 側でもよくわかってないらしい。確かに kill とか stop はできなかったけど、docker restart したら自分の場合は普通に直った。</li>
+<li>root domain の設定は <a href="https://github.com/progrium/dokku/wiki/Deploying-to-root-and-subdomains">https://github.com/progrium/dokku/wiki/Deploying-to-root-and-subdomains</a> に書いてある</li>
 </ul>
 
-<p>で、それを Jenkins でも同じようにできるようにするというもの。あんまり必要は感じてなかったんだけど、最近 Docker とか使ってテストするようになって feature branch とかでテストをパスできるんならしたいなと思うことがあったので書いてみました。</p>
-
-<p>Jenkins は Changeset の差分で見るので、もし Changeset の最新のコミットに文字列が含まれていれば NOT BUILT としてスキップされるけど、そのビルドを手動でもう一度ビルドを走らせる時は Changeset がない状態になるのでビルドが走ります。</p>
+<p>Dokku の仕組み面白いと思いました。SSH の本とかもやはり読みたいなーと思った。
+あとはプレゼンをもう少しなんとかしたい。同僚の @kyanny はリビングプレゼンテーション Zen という感じなのでもう少し何とか吸収したいなぁ &gt;&lt;</p>
 
           </div>
         </div>
@@ -128,11 +132,9 @@
       <div class="sixteen columns">
         <div class="pagination">
           
-          <a href="/2013/11/21/1" rel="next">« earlier</a>
+          <a href="/2013/12/24/1" rel="next">« earlier</a>
           
 
-          
-          <a href="/2014/01/16/1">later »</a>
           
         </div>
       </div>

@@ -5,7 +5,7 @@
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <head>
 	<meta charset="utf-8">
-	<title>jenkins-ci-skip-plugin を書いてみた - @banyan's blog</title>
+	<title>CloudFront を API 経由で作成するメモ - @banyan's blog</title>
 	<meta name="description" content="">
 	<meta name="author" content="Kohei Hasegawa">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -91,35 +91,34 @@
     <div class="sixteen columns autopagerize_page_element">
 
       <div class="sixteen columns entry-title-container">
-        <h1 class="entry-title"><a href="/2013/12/24/1">jenkins-ci-skip-plugin を書いてみた</a></h1>
+        <h1 class="entry-title"><a href="/2013/12/25/1">CloudFront を API 経由で作成するメモ</a></h1>
       </div>
 
       <div class="sixteen columns">
         <div class="three columns alpha">
           <span class="time">
-            <time>Dec 24<span>th</span>, 2013</time>
+            <time>Dec 25<span>th</span>, 2013</time>
           </span>
         </div>
         <div id="main-content" class="twelve columns offset-by-one omega">
           <div class="content inner">
-            <p><a href="https://github.com/banyan/jenkins-ci-skip-plugin">jenkins-ci-skip-plugin</a></p>
+            <p>CloudFront の distribution を API 経由で作成したいと思ったとする。</p>
 
-<p><code>[ci skip]</code> という文字列がコミットに含まれているとビルドをスキップするというのが Travis CI にあって、Circle CI も同じ機能がある。</p>
+<p>なんだかすごく簡単にできそうに思うけど結構骨が折れる。プログラム的な難しさは何もないけど、渡すべき値を理解しなければいけない。</p>
 
-<ul>
-<li><a href="http://about.travis-ci.org/docs/user/how-to-skip-a-build/">Travis CI: How to skip a build</a></li>
-<li><a href="https://circleci.com/docs/skip-a-build">Skip a build - CircleCI</a></li>
-</ul>
+<p>Ruby を使っているとして、aws-sdk-ruby を使えばラップしてくれて何か簡単になるんじゃないか！という幻想を抱いてはいけない。
+CloudFront のように渡すべきパラメータが多く、ネストしてたりすると aws-sdk-ruby を使うことでかえってめんどくさくなる気もする。</p>
 
-<p>Rails とかはたくさんの environment でテストされているのでドキュメントの変更の場合は必ずコミットに含むように書いてある。</p>
+<p><a href="http://docs.aws.amazon.com/AWSRubySDK/latest/AWS/CloudFront/Client/V20131111.html#create_distribution-instance_method">http://docs.aws.amazon.com/AWSRubySDK/latest/AWS/CloudFront/Client/V20131111.html#create_distribution-instance_method</a></p>
 
-<ul>
-<li><a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation</a></li>
-</ul>
+<p>例えば該当のメソッドは↑のリンクのような感じで、まともにハッシュを作っていくと発狂すると思う。</p>
 
-<p>で、それを Jenkins でも同じようにできるようにするというもの。あんまり必要は感じてなかったんだけど、最近 Docker とか使ってテストするようになって feature branch とかでテストをパスできるんならしたいなと思うことがあったので書いてみました。</p>
+<p>これをなるべく簡単にやる方法はないだろうか?
+仮に aws-sdk-ruby を使うとしても AWS の公式のドキュメントは見る必要が必ずあると思う。</p>
 
-<p>Jenkins は Changeset の差分で見るので、もし Changeset の最新のコミットに文字列が含まれていれば NOT BUILT としてスキップされるけど、そのビルドを手動でもう一度ビルドを走らせる時は Changeset がない状態になるのでビルドが走ります。</p>
+<p><a href="http://docs.aws.amazon.com/AmazonCloudFront/latest/APIReference/CreateDistribution.html">http://docs.aws.amazon.com/AmazonCloudFront/latest/APIReference/CreateDistribution.html</a></p>
+
+<p>simple-aws を使う</p>
 
           </div>
         </div>
@@ -128,11 +127,9 @@
       <div class="sixteen columns">
         <div class="pagination">
           
-          <a href="/2013/11/21/1" rel="next">« earlier</a>
+          <a href="/2013/12/24/1" rel="next">« earlier</a>
           
 
-          
-          <a href="/2014/01/16/1">later »</a>
           
         </div>
       </div>

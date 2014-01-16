@@ -56,12 +56,21 @@ span.time {
 
 div.content a {
   text-shadow: 0 2px 7px cyan;
-  display: inline-block;
   max-width: 100%;
   color: #111;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+}
+
+hoge {
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
 }
 
 div.content a:hover {
@@ -98,6 +107,19 @@ div.content code {
   margin-bottom: 1em;
 }
 
+div.content li code {
+  display: inline-block;
+  margin: 0 0px;
+  padding: 0 1px;
+  border: 1px solid #ddd;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+  height: 24px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background-color: rgba(0, 0, 0, 0.03);
+  font-family: 'Monaco', 'Consolas', 'Courier New', Courier, monospace, sans-serif;
+}
+
 #sidebar {
   float: right;
   margin: 0 0 0 0;
@@ -121,8 +143,7 @@ div#main-content ul li {
   margin-left: 40px;
   list-style-type: disc;
   list-style-position: outside;
-  line-height: 32px;
-  font-size: 102%;
+  padding-bottom: 2px;
 }
 
 table {

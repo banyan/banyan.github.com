@@ -4,13 +4,45 @@
   <title><![CDATA[@banyan's blog]]></title>
   <link href="http://banyan.me/atom.xml" rel="self"/>
   <link href="http://banyan.me/"/>
-  <updated>2013-12-24T01:40:37+09:00</updated>
+  <updated>2014-01-16T22:38:27+09:00</updated>
   <id>http://banyan.me/</id>
   <author>
     <name><![CDATA[@banyan's blog]]></name>
   </author>
   <generator uri="https://github.com/mizzy/nebel/">nebel</generator>
 
+
+  <entry>
+    <title type="html"><![CDATA[Dokku の LT してきた]]></title>
+    <link href="http://banyan.me/2014/01/16/1" />
+    <updated>2014-01-16T22:38:27+09:00</updated>
+    <id>http://banyan.me/2014/01/16/1</id>
+    <content type="html"><![CDATA[
+<p><a href="http://herokujp.doorkeeper.jp/events/8004">Heroku Meetup #11 New Year Party!!</a> で <a href="https://github.com/progrium/dokku">Dokku</a> の話を LT してきた。</p>
+
+<p><a href="http://banyan.me/slides/20140116/slides.html">Inside Dokku in 5 minutes</a></p>
+
+<p>5分過ぎると5分過ぎてますよーとかドラが鳴るとかはなく、ケーブルを抜いて終わるという strict な感じな LT だった。</p>
+
+<p>5分なので Dokku スライドに書かなかった内容としては、</p>
+
+<ul>
+<li>Ubuntu 13.04 で動かす必要がある (Ubuntu 13.10 だと Docker 側にバグがあって docker 0.8.* 系で修正される予定らしい、<a href="https://github.com/dotcloud/docker/issues/1300">これ</a>と<a href="https://github.com/dotcloud/docker/issues/1906">これ</a>)</li>
+<li>クリーンインストールを前提としている</li>
+<li>サーバのホストネームが名前解決されない時は <code>/home/dokku/VHOST</code> に手動でホスト名を書く必要がある</li>
+<li>Docker のバージョンがあがって Docker 側に regression がある時は  <code>DOCKER_VERSION=0.7.5 make install</code> とかして Docker のバージョン固定する (<a href="https://github.com/progrium/dokku/pull/407">PR</a>)</li>
+<li><code>/home/dokku/dokkurc</code> に <code>export DOKKU_TRACE=1</code> と書くとログが出るのでデバッグとか流れを追うのに便利</li>
+<li><code>dokku run [application name] rake db:migrate</code> とかで migrate は手動で行う必要がある</li>
+<li>MySQL plugin とかは前は動いてと思うけど、docker, dokku 共に変更が加えられて動かなくなってる。<a href="https://github.com/banyan/dokku-mysql-plugin">https://github.com/banyan/dokku-mysql-plugin</a> の fork はとりあえず動いてる。PostgreSQL は plugin たくさんある。</li>
+<li>これは dokku の問題ではなく docker の問題だけど、status が Ghost の Docker が出てしまうことがあった。<a href="https://github.com/dotcloud/docker/issues/2419">https://github.com/dotcloud/docker/issues/2419</a> docker 側でもよくわかってないらしい。確かに kill とか stop はできなかったけど、docker restart したら自分の場合は普通に直った。</li>
+<li>root domain の設定は <a href="https://github.com/progrium/dokku/wiki/Deploying-to-root-and-subdomains">https://github.com/progrium/dokku/wiki/Deploying-to-root-and-subdomains</a> に書いてある</li>
+</ul>
+
+<p>Dokku の仕組み面白いと思いました。SSH の本とかもやはり読みたいなーと思った。
+あとはプレゼンをもう少しなんとかしたい。同僚の @kyanny はリビングプレゼンテーション Zen という感じなのでもう少し何とか吸収したいなぁ &gt;&lt;</p>
+
+]]></content>
+  </entry>
 
   <entry>
     <title type="html"><![CDATA[jenkins-ci-skip-plugin を書いてみた]]></title>
@@ -415,27 +447,6 @@ config.action_controller.action_on_unpermitted_parameters = :raise
 
 <p>paperboy&amp;co. で教えてもらったオープンネスとアウトプットをするという気持ちを忘れずにがんばっていきたいと思います。
 今後ともどうぞよろしくお願いします。</p>
-
-]]></content>
-  </entry>
-
-  <entry>
-    <title type="html"><![CDATA[github.com から github.io に変わったのでドメインつけたりした]]></title>
-    <link href="http://banyan.me/2013/05/26/1" />
-    <updated>2013-05-26T19:30:18+09:00</updated>
-    <id>http://banyan.me/2013/05/26/1</id>
-    <content type="html"><![CDATA[
-<p>github.com というドメインは変わることはない!! そう考えていたことがわたしにもありました。</p>
-
-<p>ずっと banyan.github.com という GitHub Pages のドメインでやってたけど、
-セキュリティ対策ということで banyan.github.io に変更になったので、せっかくなので、banyan.me というドメインをつけた。</p>
-
-<p><blockquote class="twitter-tweet"><p>ブログ名に twitter アカウントいれておくとブクマされて URL 流れたとき mention 飛んできて便利</p>&mdash; Kensuke Nagae (@kyanny) <a href="https://twitter.com/kyanny/status/332446326312824832">May 9, 2013</a></blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
-
-<p>という便利情報も見てタイトルも @banyan&#39;s blog に変更しました。</p>
-
-<p>はてなスターもリセットされてしまったのか... うぅぅ、つらい</p>
 
 ]]></content>
   </entry>
