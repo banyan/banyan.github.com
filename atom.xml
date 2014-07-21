@@ -4,13 +4,28 @@
   <title><![CDATA[@banyan's blog]]></title>
   <link href="http://banyan.me/atom.xml" rel="self"/>
   <link href="http://banyan.me/"/>
-  <updated>2014-07-22T01:46:21+09:00</updated>
+  <updated>2014-07-22T02:00:47+09:00</updated>
   <id>http://banyan.me/</id>
   <author>
     <name><![CDATA[@banyan's blog]]></name>
   </author>
   <generator uri="https://github.com/mizzy/nebel/">nebel</generator>
 
+
+  <entry>
+    <title type="html"><![CDATA[会社の hubot 公開した]]></title>
+    <link href="http://banyan.me/2014/07/22/2" />
+    <updated>2014-07-22T02:00:47+09:00</updated>
+    <id>http://banyan.me/2014/07/22/2</id>
+    <content type="html"><![CDATA[
+<p>OMG の<a href="http://tech.ohmyglasses.jp/blog/2014/06/20/life-that-there-is-a-hubot/">記事</a>を見ていいなと思って、会社の hubot publicize した。</p>
+
+<p><a href="https://github.com/quipper/quipper-hubot">quipper/quipper-hubot</a></p>
+
+<p>script の数が少ないうちにえいやっと公開するのがよさそう。まだ少なかったのでよかったです。</p>
+
+]]></content>
+  </entry>
 
   <entry>
     <title type="html"><![CDATA[フィリピンでエンジニアインターンしてみた]]></title>
@@ -386,126 +401,6 @@ end
 
 <p>include されていて、
 前回<a href="http://banyan.me/2013/06/02/1/">書いた設定</a>で ActionController::UnpermittedParameters が raise されることを確認できました。</p>
-
-]]></content>
-  </entry>
-
-  <entry>
-    <title type="html"><![CDATA[Strong Parameters の action_on_unpermitted_parameters の振る舞いについて]]></title>
-    <link href="http://banyan.me/2013/06/02/1" />
-    <updated>2013-06-02T18:47:31+09:00</updated>
-    <id>http://banyan.me/2013/06/02/1</id>
-    <content type="html"><![CDATA[
-<p>Rails4 から Rails のコアに取り込まれた Strong Parameters は、それまでの Model 側で mass assignments 対策を attr_accessible / attr_protected を使って行なっていたことに比べると、Controller 側で制御することは利用する側から言えば、とてもわかりやすくなったと思う。</p>
-
-<p>Strong Parameters の詳細は <a href="http://edgeguides.rubyonrails.org/action_controller_overview.html#strong-parameters">edgeguides.rubyonrails.org の Strong Parameters の箇所</a>を見るといいと思います。</p>
-
-<p><code>
-$ rails g scaffold post title content:text published:boolean
-</code></p>
-
-<p>Rails 4.0.0.rc1 で scaffold してみると</p>
-
-<pre><code>class PostsController &lt; ApplicationController
-# ... (略)
-  def create
-      @post = Post.new(post_params)
-# ... (略)
-  private
-# ... (略)
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def post_params
-      params.require(:post).permit(:title, :content, :published)
-    end
-</code></pre>
-
-<p>こんな感じで生成される。</p>
-
-<p>require で指定されたキーがない場合は例外が起こる。</p>
-
-<pre><code>&gt; ActionController::Parameters.new(person: { name: &#39;Francesco&#39; }).require(:person)
-# =&gt; {&quot;name&quot;=&gt;&quot;Francesco&quot;}
-
-&gt; ActionController::Parameters.new(person: nil).require(:person)
-# =&gt; ActionController::ParameterMissing: param not found: person
-
-&gt; ActionController::Parameters.new(person: {}).require(:person)
-# =&gt; ActionController::ParameterMissing: param not found: person
-</code></pre>
-
-<p>一方 permit で指定したキー (カラム名に相当する) は configure option で設定しない限りログだけ吐かれて例外が起こらない。</p>
-
-<pre><code>&gt; ActionController::Parameters.new(person: { name: &#39;Francesco&#39; }).require(:person).permit(:foo)
-Unpermitted parameters: name
-=&gt; {}
-</code></pre>
-
-<p>該当のソースは <a href="https://github.com/rails/rails/blob/31219045ebde6acd26b0f023d006836fc2c10f88/actionpack/lib/action_controller/metal/strong_parameters.rb">actionpack/lib/action<em>controller/metal/strong</em>parameters.rb@3121904</a> で (SHA-1 は 2013/06/02 の HEAD)</p>
-
-<pre><code>247     def permit(*filters)
-248       params = self.class.new
-249
-250       filters.flatten.each do |filter|
-251         case filter
-252         when Symbol, String
-253           permitted_scalar_filter(params, filter)
-254         when Hash then
-255           hash_filter(params, filter)
-256         end
-257       end
-258
-259       unpermitted_parameters!(params) if self.class.action_on_unpermitted_parameters
-260
-261       params.permit!
-262     end
-...
-340       def unpermitted_parameters!(params)
-341         unpermitted_keys = unpermitted_keys(params)
-342         if unpermitted_keys.any?
-343           case self.class.action_on_unpermitted_parameters
-344           when :log
-345             name = &quot;unpermitted_parameters.action_controller&quot;
-346             ActiveSupport::Notifications.instrument(name, keys: unpermitted_keys)
-347           when :raise
-348             raise ActionController::UnpermittedParameters.new(unpermitted_keys)
-349           end
-350         end
-351       end
-</code></pre>
-
-<p>259行目に指定されている action_on_unpermitted_parameters は <a href="https://github.com/rails/rails/blob/31219045ebde6acd26b0f023d006836fc2c10f88/actionpack/lib/action_controller/railtie.rb">actionpack/lib/action_controller/railtie.rb@312190</a> でデフォルトの振る舞いが指定されている。</p>
-
-<pre><code>22     initializer &quot;action_controller.parameters_config&quot; do |app|
-23       options = app.config.action_controller
-24
-25       ActionController::Parameters.permit_all_parameters = options.delete(:permit_all_parameters) { false }
-26       ActionController::Parameters.action_on_unpermitted_parameters = options.delete(:action_on_unpermitted_parameters) do
-27         (Rails.env.test? || Rails.env.development?) ? :log : false
-28       end
-29     end
-</code></pre>
-
-<p>27行目にあるように Rails.env が test か development の時は log に &#39;Unpermitted parameters:&#39; というログが出るだけでその値は nil になる。一方で production でも nil になる。</p>
-
-<p>結論から先に書くべきだけど、なんでこんな振る舞いになっているかと思った。例えば Rails3 から Rails4 に upgrade して Strong Parameters に対応させる時 permit 忘れのバグがたくさん出そうだし、テストコードでそういうものをすべてカバーできるほどのテストはなかなか書いてないと思うのでデフォルトは :raise でいいのではないかと思いました。(実際自分の遊びのアプリケーションでもバグが出た)</p>
-
-<p>この振る舞い自体はこの <a href="https://github.com/rails/rails/commit/57126ee5e392a4dc2eed22963d25020a48a93413">commit</a> で変更されていて、そしてこのことが議論されているのがこの <a href="https://github.com/rails/strong_parameters/pull/75">PR</a> になる。rails/rails と rails/strong_parameters で議論が別れていて追いにくいけど多分以下のような流れになっていると思う。</p>
-
-<ol>
-<li>unpermitted parameters がそのまま nil になってしまうのでなんとかできないかという <a href="https://github.com/rails/strong_parameters/issues/66">issue</a> があがる</li>
-<li>それを受けて、configure option として raise できるようになった PR が<a href="https://github.com/rails/strong_parameters/pull/75">これ</a>。</li>
-<li>config/environments 以下の development.rb や test.rb のテンプレートに ActionController::Parameters.action_on_unpermitted_parameters の設定もできるようにしたほうがいいかどうかという話で DHH は「Because nobody is really ever want to change it」と<a href="https://github.com/rails/rails/pull/8752#issuecomment-11893845">言って</a>、デフォルトのテンプレートの設定するところには出さないようにしている。</li>
-</ol>
-
-<h3>まとめ</h3>
-
-<p>ということで非常に長くなってしまったけど、デフォルトで :raise したほうがいいかの議論はまだされてない気がする。これは PR したほうがいい気がするんだけどどうなんだろうか...</p>
-
-<p>とりあえずは config/application.rb や config/environments/*.rb で以下のようにすれば permit に許可してない値が入ってきた時に例外が起こるように設定はできるので、そうしたほうが検知できていいと思う。</p>
-
-<p><code>
-config.action_controller.action_on_unpermitted_parameters = :raise
-</code></p>
 
 ]]></content>
   </entry>
