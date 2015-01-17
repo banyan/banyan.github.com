@@ -5,7 +5,7 @@
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <head>
 	<meta charset="utf-8">
-	<title>Working with Unix Processes の Daemon Processes を社内勉強会で読んだメモ - @banyan's blog</title>
+	<title>randomize rspec example order - @banyan's blog</title>
 	<meta name="description" content="">
 	<meta name="author" content="Kohei Hasegawa">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -91,25 +91,55 @@
     <div class="sixteen columns autopagerize_page_element">
 
       <div class="sixteen columns entry-title-container">
-        <h1 class="entry-title"><a href="/2012/06/07/2">Working with Unix Processes の Daemon Processes を社内勉強会で読んだメモ</a></h1>
+        <h1 class="entry-title"><a href="/2012/11/20/1">randomize rspec example order</a></h1>
       </div>
 
       <div class="sixteen columns">
         <div class="three columns alpha">
           <span class="time">
-            <time>Jun 7<span>th</span>, 2012</time>
+            <time>Nov 20<span>th</span>, 2012</time>
           </span>
         </div>
         <div id="main-content" class="twelve columns offset-by-one omega">
           <div class="content inner">
-            <p>Working with Unix Processes の Daemon Processes を社内勉強会で読んだ。
-以前さらっと読んだ時はふんふん...なるほどーとか読みながら読めたけど
-すごい忘れてるし、そもそもじっくり話しながら読んだら自分は全然理解できてないことが分かった。</p>
+            <p><a href="http://blog.davidchelimsky.net/2012/07/07/rspec-211-is-released/">rspec-rails-2.11.0</a> (July 7th, 2012) 以降</p>
 
-<p>ので改めて読んでメモしとく。
-まだ理解曖昧な部分はアップデートしていきたい</p>
+<pre><code>$ rails generate rspec:install
+</code></pre>
 
-<script src="https://gist.github.com/2889128.js"> </script>
+<p>rails の generator を使って生成する spec_helper.rb には</p>
+
+<pre><code>config.order = &quot;random&quot;
+</code></pre>
+
+<p>という一行が追加されるようになっている。このことで examples のテストの順番がデフォルトでランダムになる。</p>
+
+<p><a href="https://github.com/rspec/rspec-core/issues/403">Feature idea: allow examples to be run in random order (like minitest)</a> を見ると、元々は minitest で実装されていたアイディアで、rspec-core 本体では 2.8.0 rc releases の時 (November 6th, 2011) にはすでにリリースされている。(結構前からあるんですね...)</p>
+
+<p>このランダムというのはファイル単位ではなくて example 単位で random になる。そうなることで起こる問題が</p>
+
+<ol>
+<li>The documentation and html formatters がランダムにテストが走ると機能しない</li>
+<li>before(:all) or after(:all) の hook の関係性</li>
+</ol>
+
+<p>を議論している。後者の before(:all) や after(:all) の問題はランダム化する時の実装で含めるようにすれば問題はない、ということになってて、前者のほうは互換性がないときは STDERR にメッセージを送ればいいんじゃないかとか、formatter の whitelist でなんとかなるみたいなことを詳細はちょっとよく分からない。</p>
+
+<p>テストを実行した後に、</p>
+
+<pre><code>Randomized with seed 37840
+</code></pre>
+
+<p>という seed が出力されるので、もし random order を再現させたい場合は</p>
+
+<pre><code>$ bundle exec rspec --order rand:37840
+</code></pre>
+
+<p>などとして順序を再現することが可能になる。</p>
+
+<p>テストを書いてて、example の間に依存性ができていて、その spec だけを走らせると、テストが通るけど、全体を通すとこける、みたいなことは割とあるし、Travis CI でだけ落ちるとか頭の痛くなる問題なので、
+このオプションをつけるようにしてちょっと運用してみよう。
+でも適当にライブラリ選んでテスト order = &quot;random&quot; で走らせるとテスト落ちまくるんだけど、なかなか途中からいれると最初大変そうな気もするな...</p>
 
           </div>
         </div>
@@ -118,11 +148,11 @@
       <div class="sixteen columns">
         <div class="pagination">
           
-          <a href="/2012/06/07/1" rel="next">« earlier</a>
+          <a href="/2012/11/18/2" rel="next">« earlier</a>
           
 
           
-          <a href="/2012/06/14/1">later »</a>
+          <a href="/2013/03/20/1">later »</a>
           
         </div>
       </div>

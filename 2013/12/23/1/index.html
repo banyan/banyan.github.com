@@ -5,7 +5,7 @@
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <head>
 	<meta charset="utf-8">
-	<title>Working with Unix Processes の Daemon Processes を社内勉強会で読んだメモ - @banyan's blog</title>
+	<title>jenkins-ci-skip-plugin を書いてみた - @banyan's blog</title>
 	<meta name="description" content="">
 	<meta name="author" content="Kohei Hasegawa">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -91,25 +91,35 @@
     <div class="sixteen columns autopagerize_page_element">
 
       <div class="sixteen columns entry-title-container">
-        <h1 class="entry-title"><a href="/2012/06/07/2">Working with Unix Processes の Daemon Processes を社内勉強会で読んだメモ</a></h1>
+        <h1 class="entry-title"><a href="/2013/12/23/1">jenkins-ci-skip-plugin を書いてみた</a></h1>
       </div>
 
       <div class="sixteen columns">
         <div class="three columns alpha">
           <span class="time">
-            <time>Jun 7<span>th</span>, 2012</time>
+            <time>Dec 23<span>rd</span>, 2013</time>
           </span>
         </div>
         <div id="main-content" class="twelve columns offset-by-one omega">
           <div class="content inner">
-            <p>Working with Unix Processes の Daemon Processes を社内勉強会で読んだ。
-以前さらっと読んだ時はふんふん...なるほどーとか読みながら読めたけど
-すごい忘れてるし、そもそもじっくり話しながら読んだら自分は全然理解できてないことが分かった。</p>
+            <p><a href="https://github.com/banyan/jenkins-ci-skip-plugin">jenkins-ci-skip-plugin</a></p>
 
-<p>ので改めて読んでメモしとく。
-まだ理解曖昧な部分はアップデートしていきたい</p>
+<p><code>[ci skip]</code> という文字列がコミットに含まれているとビルドをスキップするというのが Travis CI にあって、Circle CI も同じ機能がある。</p>
 
-<script src="https://gist.github.com/2889128.js"> </script>
+<ul>
+<li><a href="http://about.travis-ci.org/docs/user/how-to-skip-a-build/">Travis CI: How to skip a build</a></li>
+<li><a href="https://circleci.com/docs/skip-a-build">Skip a build - CircleCI</a></li>
+</ul>
+
+<p>Rails とかはたくさんの environment でテストされているのでドキュメントの変更の場合は必ずコミットに含むように書いてある。</p>
+
+<ul>
+<li><a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation</a></li>
+</ul>
+
+<p>で、それを Jenkins でも同じようにできるようにするというもの。あんまり必要は感じてなかったんだけど、最近 Docker とか使ってテストするようになって feature branch とかでテストをパスできるんならしたいなと思うことがあったので書いてみました。</p>
+
+<p>Jenkins は Changeset の差分で見るので、もし Changeset の最新のコミットに文字列が含まれていれば NOT BUILT としてスキップされるけど、そのビルドを手動でもう一度ビルドを走らせる時は Changeset がない状態になるのでビルドが走ります。</p>
 
           </div>
         </div>
@@ -118,11 +128,11 @@
       <div class="sixteen columns">
         <div class="pagination">
           
-          <a href="/2012/06/07/1" rel="next">« earlier</a>
+          <a href="/2013/11/20/1" rel="next">« earlier</a>
           
 
           
-          <a href="/2012/06/14/1">later »</a>
+          <a href="/2014/01/16/1">later »</a>
           
         </div>
       </div>

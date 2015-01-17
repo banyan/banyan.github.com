@@ -5,7 +5,7 @@
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <head>
 	<meta charset="utf-8">
-	<title>Working with Unix Processes の Daemon Processes を社内勉強会で読んだメモ - @banyan's blog</title>
+	<title>Can't focus on iframe with IE - @banyan's blog</title>
 	<meta name="description" content="">
 	<meta name="author" content="Kohei Hasegawa">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -91,25 +91,46 @@
     <div class="sixteen columns autopagerize_page_element">
 
       <div class="sixteen columns entry-title-container">
-        <h1 class="entry-title"><a href="/2012/06/07/2">Working with Unix Processes の Daemon Processes を社内勉強会で読んだメモ</a></h1>
+        <h1 class="entry-title"><a href="/2015/01/17/1">Can't focus on iframe with IE</a></h1>
       </div>
 
       <div class="sixteen columns">
         <div class="three columns alpha">
           <span class="time">
-            <time>Jun 7<span>th</span>, 2012</time>
+            <time>Jan 17<span>th</span>, 2015</time>
           </span>
         </div>
         <div id="main-content" class="twelve columns offset-by-one omega">
           <div class="content inner">
-            <p>Working with Unix Processes の Daemon Processes を社内勉強会で読んだ。
-以前さらっと読んだ時はふんふん...なるほどーとか読みながら読めたけど
-すごい忘れてるし、そもそもじっくり話しながら読んだら自分は全然理解できてないことが分かった。</p>
+            <p>iframe with IE (IE11) でハマった。</p>
 
-<p>ので改めて読んでメモしとく。
-まだ理解曖昧な部分はアップデートしていきたい</p>
+<pre><code>var ChatComponent = React.createClass({
+  render: function() {
+    return (
+      &lt;div&gt;
+        &lt;input type=&quot;text&quot; /&gt;
+      &lt;/div&gt;
+    );
+  }
+});
+</code></pre>
 
-<script src="https://gist.github.com/2889128.js"> </script>
+<p>という component を iframe 上で表示していて、最初の iframe を生成する時は問題ないが、一度 component を削除して2回目に iframe を生成すると文字が入力できない状態になってしまう (focus されない)</p>
+
+<pre><code>var ChatComponent = React.createClass({
+  render: function() {
+    return (
+      &lt;div&gt;
+        &lt;input type=&quot;text&quot; autoFocus /&gt;
+      &lt;/div&gt;
+    );
+  }
+});
+</code></pre>
+
+<p>autofocus attribute をつけるとうまくいく。2015年でも IE を疑う気持ちを忘れてはいけないことを学んだ。</p>
+
+<p>refs: <a href="http://bugs.jquery.com/ticket/12319">http://bugs.jquery.com/ticket/12319</a></p>
 
           </div>
         </div>
@@ -118,11 +139,9 @@
       <div class="sixteen columns">
         <div class="pagination">
           
-          <a href="/2012/06/07/1" rel="next">« earlier</a>
+          <a href="/2014/07/21/2" rel="next">« earlier</a>
           
 
-          
-          <a href="/2012/06/14/1">later »</a>
           
         </div>
       </div>

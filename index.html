@@ -91,22 +91,46 @@
     <div class="sixteen columns autopagerize_page_element">
 
       <div class="sixteen columns entry-title-container">
-        <h1 class="entry-title"><a href="/2014/07/22/2">会社の hubot 公開した</a></h1>
+        <h1 class="entry-title"><a href="/2015/01/17/1">Can't focus on iframe with IE</a></h1>
       </div>
 
       <div class="sixteen columns">
         <div class="three columns alpha">
           <span class="time">
-            <time>Jul 22<span>nd</span>, 2014</time>
+            <time>Jan 17<span>th</span>, 2015</time>
           </span>
         </div>
         <div id="main-content" class="twelve columns offset-by-one omega">
           <div class="content inner">
-            <p>OMG の<a href="http://tech.ohmyglasses.jp/blog/2014/06/20/life-that-there-is-a-hubot/">記事</a>を見ていいなと思って、会社の hubot publicize した。</p>
+            <p>iframe with IE (IE11) でハマった。</p>
 
-<p><a href="https://github.com/quipper/quipper-hubot">quipper/quipper-hubot</a></p>
+<pre><code>var ChatComponent = React.createClass({
+  render: function() {
+    return (
+      &lt;div&gt;
+        &lt;input type=&quot;text&quot; /&gt;
+      &lt;/div&gt;
+    );
+  }
+});
+</code></pre>
 
-<p>script の数が少ないうちにえいやっと公開するのがよさそう。まだ少なかったのでよかったです。</p>
+<p>という component を iframe 上で表示していて、最初の iframe を生成する時は問題ないが、一度 component を削除して2回目に iframe を生成すると文字が入力できない状態になってしまう (focus されない)</p>
+
+<pre><code>var ChatComponent = React.createClass({
+  render: function() {
+    return (
+      &lt;div&gt;
+        &lt;input type=&quot;text&quot; autoFocus /&gt;
+      &lt;/div&gt;
+    );
+  }
+});
+</code></pre>
+
+<p>autofocus attribute をつけるとうまくいく。2015年でも IE を疑う気持ちを忘れてはいけないことを学んだ。</p>
+
+<p>refs: <a href="http://bugs.jquery.com/ticket/12319">http://bugs.jquery.com/ticket/12319</a></p>
 
           </div>
         </div>
@@ -115,7 +139,7 @@
       <div class="sixteen columns">
         <div class="pagination">
           
-          <a href="/2014/07/22/1" rel="next">« earlier</a>
+          <a href="/2014/07/21/2" rel="next">« earlier</a>
           
 
           

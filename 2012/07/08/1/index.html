@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<title>My Chef Solo - @banyan's blog</title>
+	<meta name="description" content="">
+	<meta name="author" content="Kohei Hasegawa">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+	<link rel="stylesheet" href="/stylesheets/base.css">
+	<link rel="stylesheet" href="/stylesheets/skeleton.css">
+	<link rel="stylesheet" href="/stylesheets/layout.css">
+	<link rel="stylesheet" href="/stylesheets/main.css">
+
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<link rel="shortcut icon" href="/images/favicon.ico">
+	<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/images/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/images/apple-touch-icon-114x114.png">
+
+	<link href="/atom.xml" rel="alternate" title="@banyan's blog" type="application/atom+xml">
+
+	<script type="text/javascript" src="http://s.hatena.ne.jp/js/HatenaStar.js"></script>
+	<script type="text/javascript">
+    Hatena.Star.Token = 'f06d120fa8e459fb6efd041fce9f7f83c99a8914';
+    Hatena.Star.SiteConfig = {
+      entryNodes: {
+        'div.container': {
+          uri: 'h1.entry-title a',
+          title: 'h1.entry-title',
+          container: 'div.entry-title-container'
+        }
+      }
+    };
+  </script>
+
+	<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+	<script src="javascripts/tabs.js"></script>
+
+  <script type="text/javascript" src="http://use.typekit.com/owy0rxg.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1469541-7']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+  </script>
+</head>
+<body>
+  <div class="container">
+    <nav class="sixteen columns header">
+      <ul>
+        <li>
+          <a href="/archive">archive</a>
+        </li>
+        <li>
+          <a href="http://github.com/banyan" target="_blank">github</a>
+        </li>
+        <li>
+          <a href="http://twitter.com/banyan" target="_blank">twitter</a>
+        </li>
+        <li>
+          <a href="http://www.lastfm.jp/user/bannyan" target="_blank">last.fm</a>
+        </li>
+        <li>
+          <a href="http://pinboard.in/u:banyan" target="_blank">pinboard</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="sixteen columns blog-title">
+      <h1 class="remove-bottom">
+        <a href="/">@banyan's blog</a>
+      </h1>
+    </div>
+
+    <div class="sixteen columns autopagerize_page_element">
+
+      <div class="sixteen columns entry-title-container">
+        <h1 class="entry-title"><a href="/2012/07/08/1">My Chef Solo</a></h1>
+      </div>
+
+      <div class="sixteen columns">
+        <div class="three columns alpha">
+          <span class="time">
+            <time>Jul 8<span>th</span>, 2012</time>
+          </span>
+        </div>
+        <div id="main-content" class="twelve columns offset-by-one omega">
+          <div class="content inner">
+            <p>僕の働いている<a href="http://paperboy.co.jp">会社</a>では、<a href="https://github.com/mizzy">mizzy</a> さんが <a href="https://github.com/mizzy/maglica">Maglica</a> という素晴らしいツール (Maglica の説明の<a href="http://mizzy.org/slides/maglica/">スライド</a>) を作られていて、VM が一瞬で構築できるようになってます。</p>
+
+<p>これは本当に life changing で時間も削減できるし、また VM を作ったり消したりが気軽にできるので開発には本当に便利になりました。</p>
+
+<p>しかしながら、先週チームに Windows を使うデザイナーがアサインしてきて (今までチームには Mac 使いしかいなかった) 、Maglica で VM を作って手作業で Linux の Rails 環境を一緒に構築してたけど、
+せっかく VM の箇所が自動化できてるのにこういうことをやっちゃいけないなーと思いました。</p>
+
+<p>ちょうど新卒の教育向けに <a href="https://github.com/hiboma">@hiboma</a> が Chef Solo Tutorial をしていたのもあったし、
+僕もそれを見ててちょっと意識が高まったので少しでも自動化してみようと思いちょっとやってました。</p>
+
+<p>Chef Solo 自体はちょうど1年半くらい前にさくらの VPS を構築する時にちょっとだけ触ったことある程度です。
+その時の recipe、cookbook を見ると、なんというか色々入りすぎてて、もう使う気もしない感じでした。</p>
+
+<p>ちなみに1年半前よりも GitHub で検索しても情報がすごい増えた気がしました。</p>
+
+<p>ということで新しく作り直して、GitHub にあげてみました。</p>
+
+<p><a href="https://github.com/banyan/chef">https://github.com/banyan/chef</a></p>
+
+<p>こうしたほうがもっと幸せになれるとかあったら教えて頂けるとありがたいです。</p>
+
+<p>サーバはさくらの VPS を契約して放置したままだったので、
+それを使いながらと、あと EC2 で一個 VM 作ってそれと同時に試してました。</p>
+
+<p>とりあえずの方針としては</p>
+
+<ul>
+<li>必ずいれるソフトウェアのパッケージを管理する
+
+<ul>
+<li>なるべくミニマムにする。本当に必要なものだけ。</li>
+</ul></li>
+<li>package 単位で cookbook を作る</li>
+<li>rbenv, ruby-build</li>
+<li>ufw, ssh の設定をする</li>
+<li>role をいい感じにわける</li>
+</ul>
+
+<p>というところでそれくらいまではできた感じです。</p>
+
+<p>これからやることとしては、</p>
+
+<ul>
+<li>最初にいれる Ruby + Chef + Git も Capistrano で操作する</li>
+<li>Unicorn</li>
+<li>Supervisor</li>
+<li>Mac (homebrew の管理)</li>
+<li>Redhat 系の対応</li>
+<li>Chef Solo + Capistrano</li>
+<li>Role とかもっといい感じにできそう</li>
+</ul>
+
+<p>などがうまくできるようになるといいなと思います。</p>
+
+<p>実際に改めて触ってみるとまだちょっとしかできてないけど、TDD 感覚でサーバを構築できるのは楽しい感じがしますね。</p>
+
+<p>いまいち分かってないことや確信を得れてないことはまだたくさんあるのですが、
+とりあえずまず晒しながら update していこうと思います。</p>
+
+<h5>参考</h5>
+
+<ul>
+<li><a href="https://github.com/cookbooks">https://github.com/cookbooks</a></li>
+<li><a href="http://d.hatena.ne.jp/sfujiwara/20120705/1341477250">chef-solo + capistrano で複数ホストを管理する</a></li>
+<li><a href="https://github.com/opscode/cookbooks">https://github.com/opscode/cookbooks</a></li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="sixteen columns">
+        <div class="pagination">
+          
+          <a href="/2012/06/22/1" rel="next">« earlier</a>
+          
+
+          
+          <a href="/2012/07/31/1">later »</a>
+          
+        </div>
+      </div>
+    </div>
+    <div class="autopagerize_insert_before"></div>
+  </div>
+</body>
+</html>

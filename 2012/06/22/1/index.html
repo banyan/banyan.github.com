@@ -5,7 +5,7 @@
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <head>
 	<meta charset="utf-8">
-	<title>Working with Unix Processes の Daemon Processes を社内勉強会で読んだメモ - @banyan's blog</title>
+	<title>GitHub の Organization の権限についてのメモ - @banyan's blog</title>
 	<meta name="description" content="">
 	<meta name="author" content="Kohei Hasegawa">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -91,25 +91,81 @@
     <div class="sixteen columns autopagerize_page_element">
 
       <div class="sixteen columns entry-title-container">
-        <h1 class="entry-title"><a href="/2012/06/07/2">Working with Unix Processes の Daemon Processes を社内勉強会で読んだメモ</a></h1>
+        <h1 class="entry-title"><a href="/2012/06/22/1">GitHub の Organization の権限についてのメモ</a></h1>
       </div>
 
       <div class="sixteen columns">
         <div class="three columns alpha">
           <span class="time">
-            <time>Jun 7<span>th</span>, 2012</time>
+            <time>Jun 22<span>nd</span>, 2012</time>
           </span>
         </div>
         <div id="main-content" class="twelve columns offset-by-one omega">
           <div class="content inner">
-            <p>Working with Unix Processes の Daemon Processes を社内勉強会で読んだ。
-以前さらっと読んだ時はふんふん...なるほどーとか読みながら読めたけど
-すごい忘れてるし、そもそもじっくり話しながら読んだら自分は全然理解できてないことが分かった。</p>
+            <p>2012-06-23 現在のものなので、
+また仕様がすぐに変わるかもしれないですがメモとして書いとく。</p>
 
-<p>ので改めて読んでメモしとく。
-まだ理解曖昧な部分はアップデートしていきたい</p>
+<p>(仕様が変わったら更新する予定なのと、間違えてたら教えて頂けるとありがたいです。)</p>
 
-<script src="https://gist.github.com/2889128.js"> </script>
+<p>Organization を作ると Team を作ることが可能。
+Team には今のところ3つの権限がある。</p>
+
+<ul>
+<li>Pull Only</li>
+<li>Push &amp; Pull</li>
+<li>Push Pull &amp; Administrative</li>
+</ul>
+
+<p>この他に実質的な管理者である</p>
+
+<ul>
+<li>Owner</li>
+</ul>
+
+<p>がある。</p>
+
+<table>
+  <tr>
+    <th>権限</th>
+    <th>issue を作るとメールが飛んでくるか</th>
+    <th>Pull Request ができるか</th>
+    <th>Organization の設定を管理画面からできるか</th>
+  </tr>
+  <tr>
+    <th>Pull Only</th>
+    <td>no</td>
+    <td>no</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <th>Push & Pull</th>
+    <td>yes</td>
+    <td>yes</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <th>Push Pull & Administrative</th>
+    <td>yes</td>
+    <td>yes</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <th>Owner</th>
+    <td>yes</td>
+    <td>yes</td>
+    <td>yes</td>
+  </tr>
+</table>
+
+<hr>
+
+<p><blockquote class="twitter-tweet"><p>@<a href="https://twitter.com/banyan">banyan</a> <a href="http://t.co/Cr83XmsBb8" title="http://banyan.github.io/2012/06/23/1/">banyan.github.io/2012/06/23/1/</a> ですが、現在は Push &amp; Pull でも Pull Request できるみたいです。</p>&mdash; m4i (@m4i) <a href="https://twitter.com/m4i/status/325230152978161664">April 19, 2013</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+
+<ul>
+<li>以前は Push &amp; Pull で Pull Request できなかったのですが、@m4i さんに教えて頂いたのでできるように変更しました。(2013/05/26 updated)</li>
+<li>なお、自分のアカウントに対して fork すれば Pull Request は可能。プライベートリポジトリの場合でも fork してもカウントされない。</li>
+</ul>
 
           </div>
         </div>
@@ -118,11 +174,11 @@
       <div class="sixteen columns">
         <div class="pagination">
           
-          <a href="/2012/06/07/1" rel="next">« earlier</a>
+          <a href="/2012/06/14/1" rel="next">« earlier</a>
           
 
           
-          <a href="/2012/06/14/1">later »</a>
+          <a href="/2012/07/08/1">later »</a>
           
         </div>
       </div>

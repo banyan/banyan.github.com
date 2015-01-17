@@ -5,7 +5,7 @@
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <head>
 	<meta charset="utf-8">
-	<title>Working with Unix Processes の Daemon Processes を社内勉強会で読んだメモ - @banyan's blog</title>
+	<title>capybara + poltergeist か capybara + capybara-webkit でテストが通らない問題にぶつかった - @banyan's blog</title>
 	<meta name="description" content="">
 	<meta name="author" content="Kohei Hasegawa">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -91,25 +91,85 @@
     <div class="sixteen columns autopagerize_page_element">
 
       <div class="sixteen columns entry-title-container">
-        <h1 class="entry-title"><a href="/2012/06/07/2">Working with Unix Processes の Daemon Processes を社内勉強会で読んだメモ</a></h1>
+        <h1 class="entry-title"><a href="/2012/10/23/2">capybara + poltergeist か capybara + capybara-webkit でテストが通らない問題にぶつかった</a></h1>
       </div>
 
       <div class="sixteen columns">
         <div class="three columns alpha">
           <span class="time">
-            <time>Jun 7<span>th</span>, 2012</time>
+            <time>Oct 23<span>rd</span>, 2012</time>
           </span>
         </div>
         <div id="main-content" class="twelve columns offset-by-one omega">
           <div class="content inner">
-            <p>Working with Unix Processes の Daemon Processes を社内勉強会で読んだ。
-以前さらっと読んだ時はふんふん...なるほどーとか読みながら読めたけど
-すごい忘れてるし、そもそもじっくり話しながら読んだら自分は全然理解できてないことが分かった。</p>
+            <h3>はじめに</h3>
 
-<p>ので改めて読んでメモしとく。
-まだ理解曖昧な部分はアップデートしていきたい</p>
+<p>この情報は 2012-10-24 のものです。これ以降ではこの回避方法より正式に upgrade するだけで問題が解決する可能性がありますのでご確認ください。
+現状日本語の情報がなかったので書きました。また正式な対応があり次第 update する予定です。何かありましたら <a href="http://twitter.com/banyan">@banyan</a> まで教えて頂けるとありがたいです。</p>
 
-<script src="https://gist.github.com/2889128.js"> </script>
+<h3>現象</h3>
+
+<h4><a href="https://github.com/jonleighton/poltergeist">poltergeist</a> を使っている場合</h4>
+
+<ul>
+<li>js =&gt; true にしていると1つ目のテストは通るが js =&gt; true にしている2つ目のテストは落ちる</li>
+<li>正確にいうと奇数のテストは通るが、偶数のテストは落ちる</li>
+<li>エラー内容は以下のような感じ</li>
+</ul>
+
+<p><code>
+Failure/Error: visit &quot;/&quot;
+    Capybara::Poltergeist::DeadClient:
+    The PhantomJS client died while processing {&quot;name&quot;:&quot;visit&quot;,&quot;args&quot;:[&quot;http://127.0.0.1:63091/&quot;]}
+{&quot;name&quot;=&gt;&quot;visit&quot;, &quot;args&quot;=&gt;[&quot;http://127.0.0.1:63091/&quot;]}
+PhantomJS has crashed. Please read the crash reporting guide at https://code.google.com/p/phantomjs/wiki/CrashReporting and file a bug report at https://code.google.com/p
+</code></p>
+
+<ul>
+<li>capybara (1.1.2)</li>
+<li>poltergeist (1.0.1)</li>
+</ul>
+
+<h4><a href="https://github.com/thoughtbot/capybara-webkit">capybara-webkit</a> を使っている場合</h4>
+
+<ul>
+<li>js =&gt; true のテストがはじめに Capybara::Driver::Webkit::WebkitNoResponseError がでてそれ以降のテスト全て Errno::EPIPE: Broken pipe が出て死ぬ</li>
+</ul>
+
+<p><code>Capybara::Driver::Webkit::WebkitNoResponseError:
+No response received from the server.
+</code></p>
+
+<ul>
+<li>capybara (1.1.2)</li>
+<li>capybara-webkit (0.12.1)</li>
+</ul>
+
+<h4>issue とか調べていくと、font-awesome を使っている人が起こっている...（ ﾟдﾟ）</h4>
+
+<ul>
+<li><a href="https://github.com/thoughtbot/capybara-webkit/issues/68">https://github.com/thoughtbot/capybara-webkit/issues/68</a></li>
+<li><a href="https://github.com/thoughtbot/capybara-webkit/issues/181">https://github.com/thoughtbot/capybara-webkit/issues/181</a></li>
+<li><a href="https://github.com/jonleighton/poltergeist/issues/44">https://github.com/jonleighton/poltergeist/issues/44</a></li>
+<li>Mac の font が原因? まだ正式に答えは出てなさそう。</li>
+</ul>
+
+<h4>テストの時は font-awesome を使わないようにする方法でとりあえず回避した</h4>
+
+<ul>
+<li><a href="https://github.com/thoughtbot/capybara-webkit/issues/181#issuecomment-6809202">https://github.com/thoughtbot/capybara-webkit/issues/181#issuecomment-6809202</a></li>
+</ul>
+
+<h4>所感</h4>
+
+<ul>
+<li>そもそも JS の example が少なかったし導入のタイミングだったので切り分けで時間がかかった。
+
+<ul>
+<li>元々通ってたのが gem の update をして気づいたのならすぐ気づけたと思った。</li>
+</ul></li>
+<li>poltergeist(phantomjs) 諦めて capybara-webkit でも同じように死んだので気づけました。</li>
+</ul>
 
           </div>
         </div>
@@ -118,11 +178,11 @@
       <div class="sixteen columns">
         <div class="pagination">
           
-          <a href="/2012/06/07/1" rel="next">« earlier</a>
+          <a href="/2012/10/23/1" rel="next">« earlier</a>
           
 
           
-          <a href="/2012/06/14/1">later »</a>
+          <a href="/2012/11/18/1">later »</a>
           
         </div>
       </div>

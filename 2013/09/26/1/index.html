@@ -5,7 +5,7 @@
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <head>
 	<meta charset="utf-8">
-	<title>Working with Unix Processes の Daemon Processes を社内勉強会で読んだメモ - @banyan's blog</title>
+	<title>HipChat の pull-request-review-comment を既存の hook に適用させる - @banyan's blog</title>
 	<meta name="description" content="">
 	<meta name="author" content="Kohei Hasegawa">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -91,25 +91,34 @@
     <div class="sixteen columns autopagerize_page_element">
 
       <div class="sixteen columns entry-title-container">
-        <h1 class="entry-title"><a href="/2012/06/07/2">Working with Unix Processes の Daemon Processes を社内勉強会で読んだメモ</a></h1>
+        <h1 class="entry-title"><a href="/2013/09/26/1">HipChat の pull-request-review-comment を既存の hook に適用させる</a></h1>
       </div>
 
       <div class="sixteen columns">
         <div class="three columns alpha">
           <span class="time">
-            <time>Jun 7<span>th</span>, 2012</time>
+            <time>Sep 26<span>th</span>, 2013</time>
           </span>
         </div>
         <div id="main-content" class="twelve columns offset-by-one omega">
           <div class="content inner">
-            <p>Working with Unix Processes の Daemon Processes を社内勉強会で読んだ。
-以前さらっと読んだ時はふんふん...なるほどーとか読みながら読めたけど
-すごい忘れてるし、そもそもじっくり話しながら読んだら自分は全然理解できてないことが分かった。</p>
+            <p>HipChat の GitHub Integration はデフォルトの event が多くて便利だけど、
+pull-request-review-comment はサポートとされてなかったけどやっと最近デフォルトで入った。</p>
 
-<p>ので改めて読んでメモしとく。
-まだ理解曖昧な部分はアップデートしていきたい</p>
+<ul>
+<li><a href="https://github.com/github/github-services/pull/695">Send pull<em>request</em>review_comment events to HipChat</a></li>
+</ul>
 
-<script src="https://gist.github.com/2889128.js"> </script>
+<p>自分もその前の <a href="https://github.com/github/github-services/pull/648">pr</a> に微力ながら +1 とかしてたので非常に嬉しいけど
+technoweenie さんが<a href="https://github.com/github/github-services/pull/695#issuecomment-24836222">ここ</a> で言ってるように
+既存の hook には適用されない。update でもダメで、octokit で delete して create してもうまく適用されなかった。
+edit で今の default_event を全部適用させるようにしてみて届くようにしました。</p>
+
+<ul>
+<li><a href="https://gist.github.com/banyan/6718410">update-hipchat-hooks-event.rb</a></li>
+</ul>
+
+<p>(というか元から API 経由だったら適用できたっぽいことを知らなかった</p>
 
           </div>
         </div>
@@ -118,11 +127,11 @@
       <div class="sixteen columns">
         <div class="pagination">
           
-          <a href="/2012/06/07/1" rel="next">« earlier</a>
+          <a href="/2013/07/09/1" rel="next">« earlier</a>
           
 
           
-          <a href="/2012/06/14/1">later »</a>
+          <a href="/2013/10/22/1">later »</a>
           
         </div>
       </div>

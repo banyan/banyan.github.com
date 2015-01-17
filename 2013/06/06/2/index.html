@@ -5,7 +5,7 @@
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <head>
 	<meta charset="utf-8">
-	<title>Working with Unix Processes の Daemon Processes を社内勉強会で読んだメモ - @banyan's blog</title>
+	<title>vcr の結果はバージョン管理に含めるべきかどうか - @banyan's blog</title>
 	<meta name="description" content="">
 	<meta name="author" content="Kohei Hasegawa">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -91,25 +91,47 @@
     <div class="sixteen columns autopagerize_page_element">
 
       <div class="sixteen columns entry-title-container">
-        <h1 class="entry-title"><a href="/2012/06/07/2">Working with Unix Processes の Daemon Processes を社内勉強会で読んだメモ</a></h1>
+        <h1 class="entry-title"><a href="/2013/06/06/2">vcr の結果はバージョン管理に含めるべきかどうか</a></h1>
       </div>
 
       <div class="sixteen columns">
         <div class="three columns alpha">
           <span class="time">
-            <time>Jun 7<span>th</span>, 2012</time>
+            <time>Jun 6<span>th</span>, 2013</time>
           </span>
         </div>
         <div id="main-content" class="twelve columns offset-by-one omega">
           <div class="content inner">
-            <p>Working with Unix Processes の Daemon Processes を社内勉強会で読んだ。
-以前さらっと読んだ時はふんふん...なるほどーとか読みながら読めたけど
-すごい忘れてるし、そもそもじっくり話しながら読んだら自分は全然理解できてないことが分かった。</p>
+            <p><a href="https://github.com/vcr/vcr">vcr</a> は便利な gem で、外部の API などと通信するときにレスポンスをキャッシュして、以降はそのキャッシュを利用してテストを書くことができる gem です。
+少し癖はありますが基本的には便利で、vcr 自体については <a href="http://railscasts.com/episodes/291-testing-with-vcr?view=comments">railscasts</a> とかに詳しいと思います。</p>
 
-<p>ので改めて読んでメモしとく。
-まだ理解曖昧な部分はアップデートしていきたい</p>
+<p>一方で使っていて、確信を持てなかったのが、その vcr を使ったキャッシュををバージョン管理してしまっていいかでした。
+自分は含めて使っていましたが、PR の差分も大きくなるし、いつも少し迷ってました。(言語化できない罪悪感があった)</p>
 
-<script src="https://gist.github.com/2889128.js"> </script>
+<p>railscasts のコメントの中でメンテナの <a href="https://github.com/myronmarston">Myron Marston</a> さんがこのことについて書いていたのでこれを訳しておこうと思います。</p>
+
+<blockquote>
+<p>これはトレードオフの問題で、あなたがどうしたいのかで変わってきます。自分自身の使い方としては、VCR cassets をバージョン管理する傾向が多いです。
+その理由は、ある特定のタイミングでどんな HTTP response だったかの歴史を持つことができるのが好きだからです。git bisect をして、テストを通すことも可能です。
+もし cassets がコミットされていなければ、そして HTTP response が変わっていたら、古い状態でテストが通った時の commit しかないため大変になるでしょう。</p>
+
+<p>一方で cassets をコミットするということは、多くのファイルができるため git リポジトリが膨れ上がります。
+またレスポンスを手動で微調整してテストを通すことも簡単になります。
+私は cassets (vcr のキャッシュ) をコミットしないことはそれをただキャッシュとして扱うことだと思っていて好ましく思います。(訳が怪しい)</p>
+
+<p>最終的にはあなたがどう考えるか次第です - 今ここであげたメリット・デメリットがあなたにとってどちらが大切かということを考えてみてください。</p>
+
+<p><a href="http://railscasts.com/episodes/291-testing-with-vcr?view=comments#comment_162799">http://railscasts.com/episodes/291-testing-with-vcr?view=comments#comment_162799</a></p>
+</blockquote>
+
+<p>時としてバージョン管理していいかどうか迷うような状況は色々な理由でやってきたりすることはあると思うのですが、こういう指針があるのはありがたいなーと思いました。</p>
+
+<h3>Updated.</h3>
+
+<p>railcasts の Ryan さんにこのコメントの部分だけ訳していいですか？って聞いたら、いいよと言ってくれました。</p>
+
+<p><blockquote class="twitter-tweet"><p>@<a href="https://twitter.com/banyan">banyan</a> that’s fine with me. Thanks for translating.</p>&mdash; Ryan Bates (@rbates) <a href="https://twitter.com/rbates/status/342707440959225856">June 6, 2013</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
 
           </div>
         </div>
@@ -118,11 +140,11 @@
       <div class="sixteen columns">
         <div class="pagination">
           
-          <a href="/2012/06/07/1" rel="next">« earlier</a>
+          <a href="/2013/06/06/1" rel="next">« earlier</a>
           
 
           
-          <a href="/2012/06/14/1">later »</a>
+          <a href="/2013/07/09/1">later »</a>
           
         </div>
       </div>
