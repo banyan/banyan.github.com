@@ -39,7 +39,7 @@ Python 3.4 以上が必要で以下作業メモ。</p>
 <pre><code># m4a を変換するために必要というエラーメッセージが出た
 wget https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-64bit-static.tar.xz
 tar xof ffmpeg-release-64bit-static.tar.xz
-cd ffmpeg-release-64bit-static.tar.xz
+cd ffmpeg-release-64bit-static
 sudo cp ffmpeg-3.2.1-64bit-static/ffmpeg /usr/local/bin
 
 # Python3 を install してない場合
