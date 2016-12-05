@@ -4,13 +4,67 @@
   <title><![CDATA[@banyan's blog]]></title>
   <link href="http://banyan.me/atom.xml" rel="self"/>
   <link href="http://banyan.me/"/>
-  <updated>2015-01-17T17:24:06-05:00</updated>
+  <updated>2016-12-05T13:39:32+09:00</updated>
   <id>http://banyan.me/</id>
   <author>
     <name><![CDATA[@banyan's blog]]></name>
   </author>
   <generator uri="https://github.com/mizzy/nebel/">nebel</generator>
 
+
+  <entry>
+    <title type="html"><![CDATA[Subsonic から Google Play Music に移行する]]></title>
+    <link href="http://banyan.me/2016/12/05/1" />
+    <updated>2016-12-05T13:39:32+09:00</updated>
+    <id>http://banyan.me/2016/12/05/1</id>
+    <content type="html"><![CDATA[
+<p>長い間 Subsonic を使ってきた。一方で Spotify 等のストリーミング配信サービスもたくさん出てきた。
+Spotify をちょっと試してみると悪くなくとりあえず有料ユーザになった。</p>
+
+<p>ずっと Spotify を使い続けるか分からないけれど Spotify を契約すると Subsonic のために借りてる VPS の金額が気になってくる。自前でサーバ立てるしかないか... とか考えてたら Google Play Music に音楽をインポートできるよと同僚に教えてもらう。
+とはいえどうせそんなにインポートできないだろう、あと Google Play Music の有料ユーザにならないといけないのでは？とか思ったけど</p>
+
+<p><img src="/images/google-play-music.png" alt=""></p>
+
+<p>全然問題なかった。</p>
+
+<p>Google Play Music 自体が正式に日本でローンチしたのが2015年9月だが無料でインポートできることを全く知らなかった。(あと検索すると日本ローンチ前からもインポートして使ってる人は多そうだった)
+とりあえずローカルの PC から音楽を手動でアップロードすると何の問題なくインポートができた。</p>
+
+<p>で VPS からインポートしたい。</p>
+
+<p><a href="https://github.com/simon-weber/gmusicapi">https://github.com/simon-weber/gmusicapi</a> という unofficial なライブラリがあって、更にそれを使った <a href="https://github.com/thebigmunch/gmusicapi-scripts">https://github.com/thebigmunch/gmusicapi-scripts</a> スクリプトのリポジトリがあった。
+Python 3.4 以上が必要で以下作業メモ。</p>
+
+<pre><code># m4a を変換するために必要というエラーメッセージが出た
+wget https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-64bit-static.tar.xz
+tar xof ffmpeg-release-64bit-static.tar.xz
+cd ffmpeg-release-64bit-static.tar.xz
+sudo cp ffmpeg-3.2.1-64bit-static/ffmpeg /usr/local/bin
+
+# Python3 を install してない場合
+sudo apt-get update
+sudo apt-get install python3.4 # gmusicapi-scripts は Python 3.4 以上が必要らしい
+sudo apt install python3-pip
+
+sudo pip3 install gmusicapi-scripts
+# https://github.com/simon-weber/gmusicapi/issues/60
+gmsync up /path/to/music -U XX:XX:XX:XX:XX:XX
+# =&gt; oauth の token を取得する URL が表示されて入力すると upload が開始される
+</code></pre>
+
+<p>VPS などから upload する時に MAC Address が取得できない時は最初 random にしていたらしい: <a href="https://github.com/simon-weber/gmusicapi/issues/60">https://github.com/simon-weber/gmusicapi/issues/60</a>
+Google Play Music の Settings のページに以下が書いてあり、</p>
+
+<blockquote>
+<p>Listen to your music from any computer as well as up to ten devices. Uploading or downloading music using Music Manager or Google Play Music for Chrome counts towards your device limit. You can deauthorize four devices per year.</p>
+</blockquote>
+
+<p>random にしているとこの制限にひっかかることから明示的に外から MAC Address を渡せるようにしたようだ。とりあえず自分のローカルの PC の MAC Address を渡すようにした (別のデバイスとしては認識されるが)
+あとは nohup で実行して問題なくインポートできてる。時間はそれなりにかかるとは思うが、Subsonic には今までとてもお世話になったので感謝しつつサーバを解約できるので嬉しい。</p>
+
+]]></content>
+  </entry>
 
   <entry>
     <title type="html"><![CDATA[Can't focus on iframe with IE]]></title>
@@ -53,9 +107,9 @@
 
   <entry>
     <title type="html"><![CDATA[会社の hubot 公開した]]></title>
-    <link href="http://banyan.me/2014/07/21/2" />
-    <updated>2014-07-21T13:00:47-04:00</updated>
-    <id>http://banyan.me/2014/07/21/2</id>
+    <link href="http://banyan.me/2014/07/22/2" />
+    <updated>2014-07-22T02:00:47+09:00</updated>
+    <id>http://banyan.me/2014/07/22/2</id>
     <content type="html"><![CDATA[
 <p>OMG の<a href="http://tech.ohmyglasses.jp/blog/2014/06/20/life-that-there-is-a-hubot/">記事</a>を見ていいなと思って、会社の hubot publicize した。</p>
 
@@ -68,9 +122,9 @@
 
   <entry>
     <title type="html"><![CDATA[フィリピンでエンジニアインターンしてみた]]></title>
-    <link href="http://banyan.me/2014/07/21/1" />
-    <updated>2014-07-21T12:46:21-04:00</updated>
-    <id>http://banyan.me/2014/07/21/1</id>
+    <link href="http://banyan.me/2014/07/22/1" />
+    <updated>2014-07-22T01:46:21+09:00</updated>
+    <id>http://banyan.me/2014/07/22/1</id>
     <content type="html"><![CDATA[
 <h3>経緯</h3>
 
@@ -152,7 +206,7 @@
   <entry>
     <title type="html"><![CDATA[Dokku の LT してきた]]></title>
     <link href="http://banyan.me/2014/01/16/1" />
-    <updated>2014-01-16T08:38:27-05:00</updated>
+    <updated>2014-01-16T22:38:27+09:00</updated>
     <id>http://banyan.me/2014/01/16/1</id>
     <content type="html"><![CDATA[
 <p><a href="http://herokujp.doorkeeper.jp/events/8004">Heroku Meetup #11 New Year Party!!</a> で <a href="https://github.com/progrium/dokku">Dokku</a> の話を LT してきた。</p>
@@ -183,9 +237,9 @@
 
   <entry>
     <title type="html"><![CDATA[jenkins-ci-skip-plugin を書いてみた]]></title>
-    <link href="http://banyan.me/2013/12/23/1" />
-    <updated>2013-12-23T11:40:37-05:00</updated>
-    <id>http://banyan.me/2013/12/23/1</id>
+    <link href="http://banyan.me/2013/12/24/1" />
+    <updated>2013-12-24T01:40:37+09:00</updated>
+    <id>http://banyan.me/2013/12/24/1</id>
     <content type="html"><![CDATA[
 <p><a href="https://github.com/banyan/jenkins-ci-skip-plugin">jenkins-ci-skip-plugin</a></p>
 
@@ -211,9 +265,9 @@
 
   <entry>
     <title type="html"><![CDATA[Git の hook で未来のコミットを書き換える]]></title>
-    <link href="http://banyan.me/2013/11/20/1" />
-    <updated>2013-11-20T20:47:13-05:00</updated>
-    <id>http://banyan.me/2013/11/20/1</id>
+    <link href="http://banyan.me/2013/11/21/1" />
+    <updated>2013-11-21T10:47:13+09:00</updated>
+    <id>http://banyan.me/2013/11/21/1</id>
     <content type="html"><![CDATA[
 <p>最近 Mac で &quot;Set date and time automatically&quot; のチェックを外し、
 日付を変えて開発をすることが多いのですが、ありがちなのがそのまま commit してしまうことで、
@@ -251,7 +305,7 @@ $ git config --global init.templatedir &#39;~/.git_template&#39;
   <entry>
     <title type="html"><![CDATA[Quipper で最初のリリースなので振り返る]]></title>
     <link href="http://banyan.me/2013/10/22/1" />
-    <updated>2013-10-22T10:24:04-04:00</updated>
+    <updated>2013-10-22T23:24:04+09:00</updated>
     <id>http://banyan.me/2013/10/22/1</id>
     <content type="html"><![CDATA[
 <p>5月に Quipper に入ってやっと最初のリリースが迎えられそうな中、チームのメンバー全員がなぜかブログを書き始めた。なんなのこれ...</p>
@@ -265,8 +319,9 @@ $ git config --global init.templatedir &#39;~/.git_template&#39;
 <li><a href="http://mzbqpmb.wordpress.com/2013/10/22/quipper%E3%81%AEhr%E6%B4%BB%E5%8B%95%EF%BC%88%E3%82%B9%E3%83%86%E3%83%9E%E3%81%98%E3%82%83%E3%81%AA%E3%81%84%E3%82%88%EF%BC%89/">Quipperのエンジニアのblog day（ステマじゃないよ）</a></li>
 </ul>
 
-<p><blockquote class="twitter-tweet"><p>でも <a href="https://twitter.com/banyan">@banyan</a> さんが日記書くまでは寝るわけにいかない。</p>&mdash; 北市真 (@KitaitiMakoto) <a href="https://twitter.com/KitaitiMakoto/statuses/392649527267561472">October 22, 2013</a></blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+<blockquote class="twitter-tweet"><p>でも <a href="https://twitter.com/banyan">@banyan</a> さんが日記書くまでは寝るわけにいかない。</p>&mdash; 北市真 (@KitaitiMakoto) <a href="https://twitter.com/KitaitiMakoto/statuses/392649527267561472">October 22, 2013</a></blockquote>
+
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 <p>同調圧力は見て見ぬふりをしてたけど、外部のブログ圧力に負け僕も書くことにします。</p>
 
@@ -308,9 +363,9 @@ brunch は結局必要になるいろんなものが最初から全部あるの�
 
   <entry>
     <title type="html"><![CDATA[HipChat の pull-request-review-comment を既存の hook に適用させる]]></title>
-    <link href="http://banyan.me/2013/09/26/1" />
-    <updated>2013-09-26T21:01:37-04:00</updated>
-    <id>http://banyan.me/2013/09/26/1</id>
+    <link href="http://banyan.me/2013/09/27/1" />
+    <updated>2013-09-27T10:01:37+09:00</updated>
+    <id>http://banyan.me/2013/09/27/1</id>
     <content type="html"><![CDATA[
 <p>HipChat の GitHub Integration はデフォルトの event が多くて便利だけど、
 pull-request-review-comment はサポートとされてなかったけどやっと最近デフォルトで入った。</p>
@@ -336,7 +391,7 @@ edit で今の default_event を全部適用させるようにしてみて届く
   <entry>
     <title type="html"><![CDATA[mocha-phantomjs@3.1.0 requires mocha.js@1.12.0 or later]]></title>
     <link href="http://banyan.me/2013/07/09/1" />
-    <updated>2013-07-09T03:49:43-04:00</updated>
+    <updated>2013-07-09T08:49:43+01:00</updated>
     <id>http://banyan.me/2013/07/09/1</id>
     <content type="html"><![CDATA[
 <pre><code>$ mocha-phantomjs public/test/index.html
@@ -355,46 +410,6 @@ TypeError: &#39;undefined&#39; is not an object (evaluating &#39;Mocha.process.s
 <li><a href="https://github.com/metaskills/mocha-phantomjs/pull/75">use mocha 1.12.x</a></li>
 <li><a href="https://github.com/metaskills/mocha-phantomjs/issues/76">mocha-phantomjs@3.1.0 doesn&#39;t work</a></li>
 </ul>
-
-]]></content>
-  </entry>
-
-  <entry>
-    <title type="html"><![CDATA[vcr の結果はバージョン管理に含めるべきかどうか]]></title>
-    <link href="http://banyan.me/2013/06/06/2" />
-    <updated>2013-06-06T13:43:47-04:00</updated>
-    <id>http://banyan.me/2013/06/06/2</id>
-    <content type="html"><![CDATA[
-<p><a href="https://github.com/vcr/vcr">vcr</a> は便利な gem で、外部の API などと通信するときにレスポンスをキャッシュして、以降はそのキャッシュを利用してテストを書くことができる gem です。
-少し癖はありますが基本的には便利で、vcr 自体については <a href="http://railscasts.com/episodes/291-testing-with-vcr?view=comments">railscasts</a> とかに詳しいと思います。</p>
-
-<p>一方で使っていて、確信を持てなかったのが、その vcr を使ったキャッシュををバージョン管理してしまっていいかでした。
-自分は含めて使っていましたが、PR の差分も大きくなるし、いつも少し迷ってました。(言語化できない罪悪感があった)</p>
-
-<p>railscasts のコメントの中でメンテナの <a href="https://github.com/myronmarston">Myron Marston</a> さんがこのことについて書いていたのでこれを訳しておこうと思います。</p>
-
-<blockquote>
-<p>これはトレードオフの問題で、あなたがどうしたいのかで変わってきます。自分自身の使い方としては、VCR cassets をバージョン管理する傾向が多いです。
-その理由は、ある特定のタイミングでどんな HTTP response だったかの歴史を持つことができるのが好きだからです。git bisect をして、テストを通すことも可能です。
-もし cassets がコミットされていなければ、そして HTTP response が変わっていたら、古い状態でテストが通った時の commit しかないため大変になるでしょう。</p>
-
-<p>一方で cassets をコミットするということは、多くのファイルができるため git リポジトリが膨れ上がります。
-またレスポンスを手動で微調整してテストを通すことも簡単になります。
-私は cassets (vcr のキャッシュ) をコミットしないことはそれをただキャッシュとして扱うことだと思っていて好ましく思います。(訳が怪しい)</p>
-
-<p>最終的にはあなたがどう考えるか次第です - 今ここであげたメリット・デメリットがあなたにとってどちらが大切かということを考えてみてください。</p>
-
-<p><a href="http://railscasts.com/episodes/291-testing-with-vcr?view=comments#comment_162799">http://railscasts.com/episodes/291-testing-with-vcr?view=comments#comment_162799</a></p>
-</blockquote>
-
-<p>時としてバージョン管理していいかどうか迷うような状況は色々な理由でやってきたりすることはあると思うのですが、こういう指針があるのはありがたいなーと思いました。</p>
-
-<h3>Updated.</h3>
-
-<p>railcasts の Ryan さんにこのコメントの部分だけ訳していいですか？って聞いたら、いいよと言ってくれました。</p>
-
-<p><blockquote class="twitter-tweet"><p>@<a href="https://twitter.com/banyan">banyan</a> that’s fine with me. Thanks for translating.</p>&mdash; Ryan Bates (@rbates) <a href="https://twitter.com/rbates/status/342707440959225856">June 6, 2013</a></blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
 
 ]]></content>
   </entry>
