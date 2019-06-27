@@ -96,19 +96,16 @@
 直すのがなかなか大変でめんどくさい (filter-branch とか使う) ので git の <s>pre-commit でもし日付が変更されている状態なら日付を戻して commit するようにした。</s>
 実際は履歴が気持ち悪くなるだけで特に副作用はないけれど。</p>
 
-<p><code>
-$ sudo lsof -i:123 -P
-</code></p>
+<pre><code>$ sudo lsof -i:123 -P
+</code></pre>
 
 <p>ポートが使われているかどうかは lsof とかで調べればいいけど、チェック自体をコマンドラインからどうやって制御すればいいかなと思ったけど、以下のコマンドがあったことを初めて知った。</p>
 
-<p><code>
-$ systemsetup -setusingnetworktime on
-</code></p>
+<pre><code>$ systemsetup -setusingnetworktime on
+</code></pre>
 
-<p><code>
-$ git config --global init.templatedir &#39;~/.git_template&#39;
-</code></p>
+<pre><code>$ git config --global init.templatedir &#39;~/.git_template&#39;
+</code></pre>
 
 <p>を実行した後、</p>
 

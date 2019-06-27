@@ -94,9 +94,8 @@
 
 <p>Strong Parameters の詳細は <a href="http://edgeguides.rubyonrails.org/action_controller_overview.html#strong-parameters">edgeguides.rubyonrails.org の Strong Parameters の箇所</a>を見るといいと思います。</p>
 
-<p><code>
-$ rails g scaffold post title content:text published:boolean
-</code></p>
+<pre><code>$ rails g scaffold post title content:text published:boolean
+</code></pre>
 
 <p>Rails 4.0.0.rc1 で scaffold してみると</p>
 
@@ -197,9 +196,8 @@ Unpermitted parameters: name
 
 <p>とりあえずは config/application.rb や config/environments/*.rb で以下のようにすれば permit に許可してない値が入ってきた時に例外が起こるように設定はできるので、そうしたほうが検知できていいと思う。</p>
 
-<p><code>
-config.action_controller.action_on_unpermitted_parameters = :raise
-</code></p>
+<pre><code>config.action_controller.action_on_unpermitted_parameters = :raise
+</code></pre>
 
           </div>
         </div>

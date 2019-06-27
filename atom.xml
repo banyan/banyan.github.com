@@ -4,13 +4,70 @@
   <title><![CDATA[@banyan's blog]]></title>
   <link href="http://banyan.me/atom.xml" rel="self"/>
   <link href="http://banyan.me/"/>
-  <updated>2016-12-05T13:39:32+09:00</updated>
+  <updated>2019-06-28T01:23:06+09:00</updated>
   <id>http://banyan.me/</id>
   <author>
     <name><![CDATA[@banyan's blog]]></name>
   </author>
   <generator uri="https://github.com/mizzy/nebel/">nebel</generator>
 
+
+  <entry>
+    <title type="html"><![CDATA[service worker + webview + chrome 75 でハマった]]></title>
+    <link href="http://banyan.me/2019/06/28/1" />
+    <updated>2019-06-28T01:23:06+09:00</updated>
+    <id>http://banyan.me/2019/06/28/1</id>
+    <content type="html"><![CDATA[
+<p>作っているアプリケーションで2019年の5月末から Android での webview で画面が真っ白になってしまうクレームが少しずつ入り始めた。
+(一部のページだけを webview で表示している)</p>
+
+<p>真っ白になってしまう、ということは心当たりはあった。</p>
+
+<p>今作っている SPA では S3 でホストしていなくて、Kubernates 上の nginx で静的なファイルをホストしている。(その前に CDN もいる。) そのため、デプロイの度に js やら css やらのファイルは消滅してしまう形になる。CDN の cache があるため、ファイルがなくなっても即座に 404 を返さないが、はじめに話を聞いた時は恐らく特定の android 端末で index.html を cache してしまって存在しないファイルを load しようとして 404 が返ってきてしまって真っ白な画面が表示されていると思った。</p>
+
+<p>が、違った。たまたま社内の android 端末で再現できて、<code>An unknown error occurred when fetching the script</code> というエラーを吐いて service worker が pending の状態で止まっていた。precache しようとしてファイルは全て cancelled という状態になっていた。</p>
+
+<p>webview のバージョンが 75.0.3770.101 でほぼ最新ということから、bugs.chromium.org を探すと完全に同じ内容のバグ報告が見つかった。
+<a href="https://bugs.chromium.org/p/chromium/issues/detail?id=977784">https://bugs.chromium.org/p/chromium/issues/detail?id=977784</a></p>
+
+<p>同僚の Android エンジニアと相談して対応方法を検討して webview を Chrome Custom tab に切り替える方法を検討したが、諸事情あり一旦はこの webview として読み込まれた場合は service worker を起動させないように変更した。</p>
+
+<pre><code>export default function register() {
+  if (process.env.NODE_ENV === &#39;production&#39; &amp;&amp; &#39;serviceWorker&#39; in navigator) {
+    // The URL constructor is available in all browsers that support SW.
+    const publicUrl = new URL(
+      process.env.PUBLIC_URL!,
+      window.location.toString(),
+   );
+
+   if (navigator.userAgent.indexOf(&#39;foo&#39;) &gt;= 0) {
+      navigator.serviceWorker.getRegistrations().then(registrations =&gt; {
+        for (const registration of registrations) {
+          registration.unregister().then(() =&gt; {
+            window.location.reload();
+          });
+        }
+      });
+
+      return;
+    }
+...
+</code></pre>
+
+<p>service worker は CRA ベースのスクリプトで workbox を使っている。</p>
+
+<p>この webview として表示する時に UA を渡していたため、判別することが可能で、
+マッチした時はまず service worker を register しないという処理にした。</p>
+
+<p>で、すでに service worker をインストール済みだった場合に unregister する、という処理をいれた。
+これを service worker がまだインストールされていない状態で開くと、service worker は register されないという期待通りの挙動になった。次に service worker がインストールされた状態で開くと正しく unregister が走り、service worker は register されないという期待通りの挙動になった。</p>
+
+<p>で、すでに <a href="https://bugs.chromium.org/p/chromium/issues/detail?id=977784">https://bugs.chromium.org/p/chromium/issues/detail?id=977784</a> の状態になっている人はどうなるか、というと unregister が走る前に <code>An unknown error occurred when fetching the script</code> が出て死んでしまう状態になった。結果アプリのデータを消すか uninstall するかでしか戻らない状態になった。</p>
+
+<p>service worker でそんなに問題が起こったことがなかったのだけど改めて起きると大変だなと学んだ。</p>
+
+]]></content>
+  </entry>
 
   <entry>
     <title type="html"><![CDATA[Subsonic から Google Play Music に移行する]]></title>
@@ -39,7 +96,7 @@ Python 3.4 以上が必要で以下作業メモ。</p>
 <pre><code># m4a を変換するために必要というエラーメッセージが出た
 wget https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-64bit-static.tar.xz
 tar xof ffmpeg-release-64bit-static.tar.xz
-cd ffmpeg-release-64bit-static
+cd ffmpeg-release-64bit-static.tar.xz
 sudo cp ffmpeg-3.2.1-64bit-static/ffmpeg /usr/local/bin
 
 # Python3 を install してない場合
@@ -275,19 +332,16 @@ Google Play Music の Settings のページに以下が書いてあり、</p>
 直すのがなかなか大変でめんどくさい (filter-branch とか使う) ので git の <s>pre-commit でもし日付が変更されている状態なら日付を戻して commit するようにした。</s>
 実際は履歴が気持ち悪くなるだけで特に副作用はないけれど。</p>
 
-<p><code>
-$ sudo lsof -i:123 -P
-</code></p>
+<pre><code>$ sudo lsof -i:123 -P
+</code></pre>
 
 <p>ポートが使われているかどうかは lsof とかで調べればいいけど、チェック自体をコマンドラインからどうやって制御すればいいかなと思ったけど、以下のコマンドがあったことを初めて知った。</p>
 
-<p><code>
-$ systemsetup -setusingnetworktime on
-</code></p>
+<pre><code>$ systemsetup -setusingnetworktime on
+</code></pre>
 
-<p><code>
-$ git config --global init.templatedir &#39;~/.git_template&#39;
-</code></p>
+<pre><code>$ git config --global init.templatedir &#39;~/.git_template&#39;
+</code></pre>
 
 <p>を実行した後、</p>
 
@@ -384,32 +438,6 @@ edit で今の default_event を全部適用させるようにしてみて届く
 </ul>
 
 <p>(というか元から API 経由だったら適用できたっぽいことを知らなかった</p>
-
-]]></content>
-  </entry>
-
-  <entry>
-    <title type="html"><![CDATA[mocha-phantomjs@3.1.0 requires mocha.js@1.12.0 or later]]></title>
-    <link href="http://banyan.me/2013/07/09/1" />
-    <updated>2013-07-09T08:49:43+01:00</updated>
-    <id>http://banyan.me/2013/07/09/1</id>
-    <content type="html"><![CDATA[
-<pre><code>$ mocha-phantomjs public/test/index.html
-TypeError: &#39;undefined&#39; is not an object (evaluating &#39;Mocha.process.stdout&#39;)
-
-  mocha-phantomjs/core_extensions.js:17
-  mocha-phantomjs/core_extensions.js:58
-</code></pre>
-
-<p><a href="https://github.com/metaskills/mocha-phantomjs">mocha-phantomjs@3.1.0</a> から mocha.js は 1.12.0 以上であることが必要になりました。
-後方互換性がない変更のようです。</p>
-
-<h3>refs:</h3>
-
-<ul>
-<li><a href="https://github.com/metaskills/mocha-phantomjs/pull/75">use mocha 1.12.x</a></li>
-<li><a href="https://github.com/metaskills/mocha-phantomjs/issues/76">mocha-phantomjs@3.1.0 doesn&#39;t work</a></li>
-</ul>
 
 ]]></content>
   </entry>
