@@ -28,7 +28,8 @@ GEM
       multi_json (~> 1.8)
     guard-shell (0.6.1)
       guard (>= 1.1.0)
-    haml (4.0.3)
+    haml (5.1.2)
+      temple (>= 0.8.0)
       tilt
     http_parser.rb (0.5.3)
     keydown (0.9.2)
@@ -55,8 +56,9 @@ GEM
     rdiscount (2.1.7)
     sass (3.2.13)
     slop (3.4.7)
+    temple (0.8.2)
     thor (0.18.1)
-    tilt (1.4.1)
+    tilt (2.0.10)
     timers (1.1.0)
 
 PLATFORMS
