@@ -5,7 +5,7 @@
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <head>
 	<meta charset="utf-8">
-	<title>Git の hook で未来のコミットを書き換える - @banyan's blog</title>
+	<title>Dank Mono というフォントを買った - @banyan's blog</title>
 	<meta name="description" content="">
 	<meta name="author" content="Kohei Hasegawa">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -79,46 +79,34 @@
     <div class="sixteen columns autopagerize_page_element">
 
       <div class="sixteen columns entry-title-container">
-        <h1 class="entry-title"><a href="/2013/11/21/1">Git の hook で未来のコミットを書き換える</a></h1>
+        <h1 class="entry-title"><a href="/2020/02/08/1">Dank Mono というフォントを買った</a></h1>
       </div>
 
       <div class="sixteen columns">
         <div class="three columns alpha">
           <span class="time">
-            <time>Nov 21<span>st</span>, 2013</time>
+            <time>Feb 8<span>th</span>, 2020</time>
           </span>
         </div>
         <div id="main-content" class="twelve columns offset-by-one omega">
           <div class="content inner">
-            <p>最近 Mac で &quot;Set date and time automatically&quot; のチェックを外し、
-日付を変えて開発をすることが多いのですが、ありがちなのがそのまま commit してしまうことで、
-まだ PR 中に気付ければいいけど、それが merge されてしまって、更にその上に変更をかぶせてしまってたりすると
-直すのがなかなか大変でめんどくさい (filter-branch とか使う) ので git の <s>pre-commit でもし日付が変更されている状態なら日付を戻して commit するようにした。</s>
-実際は履歴が気持ち悪くなるだけで特に副作用はないけれど。</p>
+            <p><a href="https://dank.sh/">Dank Mono</a> というフォントを買った。</p>
 
-<p><code>
-$ sudo lsof -i:123 -P
-</code></p>
+<p>去年 <a href="https://codesandbox.io/">codesandbox</a> を使ってちょっとしたコードを書いている時にこのフォントに気づいた。
+codesandbox ではコメントアウトすると Italic になる。</p>
 
-<p>ポートが使われているかどうかは lsof とかで調べればいいけど、チェック自体をコマンドラインからどうやって制御すればいいかなと思ったけど、以下のコマンドがあったことを初めて知った。</p>
+<p><img src="/images/dank-mono-example.gif" width="100%"></p>
 
-<p><code>
-$ systemsetup -setusingnetworktime on
-</code></p>
+<p>最初はなんかかっこいいなと思いながら認識していなかったけど、ふと思い立って同じフォントにしようと思って検索すると、<a href="https://spectrum.chat/codesandbox/general/how-do-i-get-the-codesandbox-online-editor-type-font-for-my-vscode%7Ec788ab83-e4f0-42b5-93ba-edb962a28fcb?m=MTU3MjYwNDA3NjEwMg==">このフォントであると知る</a>。</p>
 
-<p><code>
-$ git config --global init.templatedir &#39;~/.git_template&#39;
-</code></p>
+<p><img src="/images/dank-mono-code.png" width="100%"></p>
 
-<p>を実行した後、</p>
+<p>これは公式のサイトから取ってきたものだが、いくつかのキーワードが、Italic になっていてこれはこれで悪くはないが、若干目に対する主張も強いので、コメントの時だけの振る舞いにする。
+Visual Studio Code を使っていてそうするためには <a href="https://stackoverflow.com/questions/41320848/how-do-i-get-visual-studio-code-to-display-italic-fonts-in-formatted-code">SO</a> を見ると、<code>editor.tokenColorCustomizations</code> で設定できそう。</p>
 
-<p><a href="https://gist.github.com/banyan/7574810">https://gist.github.com/banyan/7574810</a></p>
+<p>ただデフォルトで Italic になるものを明示的に overwrite してあげないといけないようで、token が分からない時は <code>Developer: Inspect TM Scopes</code> とかをして調べたりしつつ一旦以下に設定してみて試してみる。</p>
 
-<p><s>を ~/.git_template/hooks 以下とかに pre-commit という名前で実行権限つけて保存すればOK。
-新規のリポジトリを作る際は hooks 以下に pre-commit というファイルができていれば OK で、既存のリポジトリに適用させる場合は git init で reinitialize すればよかった。</s></p>
-
-<p>当初 pre-commit でできると思ったけど、実際に Mac の時間は戻るけど、git の commit object が先に作られてしまう (もう少し調べる) ため pre-commit の時に時間を戻してもダメだった。
-なのであんまりきれいな方法じゃないけど、post-commit で時間を戻した後に commit --amend する方法にした。</p>
+<script src="https://gist.github.com/banyan/55f7e07a52e5ad905ff1203e9a94c32c.js"></script>
 
           </div>
         </div>
@@ -127,11 +115,9 @@ $ git config --global init.templatedir &#39;~/.git_template&#39;
       <div class="sixteen columns">
         <div class="pagination">
           
-          <a href="/2013/10/22/1" rel="next">« earlier</a>
+          <a href="/2019/06/28/1" rel="next">« earlier</a>
           
 
-          
-          <a href="/2013/12/24/1">later »</a>
           
         </div>
       </div>

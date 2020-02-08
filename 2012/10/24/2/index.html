@@ -105,12 +105,13 @@
 <li>エラー内容は以下のような感じ</li>
 </ul>
 
-<pre><code>Failure/Error: visit &quot;/&quot;
+<p><code>
+Failure/Error: visit &quot;/&quot;
     Capybara::Poltergeist::DeadClient:
     The PhantomJS client died while processing {&quot;name&quot;:&quot;visit&quot;,&quot;args&quot;:[&quot;http://127.0.0.1:63091/&quot;]}
 {&quot;name&quot;=&gt;&quot;visit&quot;, &quot;args&quot;=&gt;[&quot;http://127.0.0.1:63091/&quot;]}
 PhantomJS has crashed. Please read the crash reporting guide at https://code.google.com/p/phantomjs/wiki/CrashReporting and file a bug report at https://code.google.com/p
-</code></pre>
+</code></p>
 
 <ul>
 <li>capybara (1.1.2)</li>
@@ -123,8 +124,9 @@ PhantomJS has crashed. Please read the crash reporting guide at https://code.goo
 <li>js =&gt; true のテストがはじめに Capybara::Driver::Webkit::WebkitNoResponseError がでてそれ以降のテスト全て Errno::EPIPE: Broken pipe が出て死ぬ</li>
 </ul>
 
-<pre><code class="Capybara::Driver::Webkit::WebkitNoResponseError:">No response received from the server.
-</code></pre>
+<p><code>Capybara::Driver::Webkit::WebkitNoResponseError:
+No response received from the server.
+</code></p>
 
 <ul>
 <li>capybara (1.1.2)</li>

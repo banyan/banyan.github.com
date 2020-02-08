@@ -4,13 +4,40 @@
   <title><![CDATA[@banyan's blog]]></title>
   <link href="http://banyan.me/atom.xml" rel="self"/>
   <link href="http://banyan.me/"/>
-  <updated>2019-06-28T01:23:06+09:00</updated>
+  <updated>2020-02-08T18:21:09+09:00</updated>
   <id>http://banyan.me/</id>
   <author>
     <name><![CDATA[@banyan's blog]]></name>
   </author>
   <generator uri="https://github.com/mizzy/nebel/">nebel</generator>
 
+
+  <entry>
+    <title type="html"><![CDATA[Dank Mono というフォントを買った]]></title>
+    <link href="http://banyan.me/2020/02/08/1" />
+    <updated>2020-02-08T18:21:09+09:00</updated>
+    <id>http://banyan.me/2020/02/08/1</id>
+    <content type="html"><![CDATA[
+<p><a href="https://dank.sh/">Dank Mono</a> というフォントを買った。</p>
+
+<p>去年 <a href="https://codesandbox.io/">codesandbox</a> を使ってちょっとしたコードを書いている時にこのフォントに気づいた。
+codesandbox ではコメントアウトすると Italic になる。</p>
+
+<p><img src="/images/dank-mono-example.gif" width="100%"></p>
+
+<p>最初はなんかかっこいいなと思いながら認識していなかったけど、ふと思い立って同じフォントにしようと思って検索すると、<a href="https://spectrum.chat/codesandbox/general/how-do-i-get-the-codesandbox-online-editor-type-font-for-my-vscode%7Ec788ab83-e4f0-42b5-93ba-edb962a28fcb?m=MTU3MjYwNDA3NjEwMg==">このフォントであると知る</a>。</p>
+
+<p><img src="/images/dank-mono-code.png" width="100%"></p>
+
+<p>これは公式のサイトから取ってきたものだが、いくつかのキーワードが、Italic になっていてこれはこれで悪くはないが、若干目に対する主張も強いので、コメントの時だけの振る舞いにする。
+Visual Studio Code を使っていてそうするためには <a href="https://stackoverflow.com/questions/41320848/how-do-i-get-visual-studio-code-to-display-italic-fonts-in-formatted-code">SO</a> を見ると、<code>editor.tokenColorCustomizations</code> で設定できそう。</p>
+
+<p>ただデフォルトで Italic になるものを明示的に overwrite してあげないといけないようで、token が分からない時は <code>Developer: Inspect TM Scopes</code> とかをして調べたりしつつ一旦以下に設定してみて試してみる。</p>
+
+<script src="https://gist.github.com/banyan/55f7e07a52e5ad905ff1203e9a94c32c.js"></script>
+
+]]></content>
+  </entry>
 
   <entry>
     <title type="html"><![CDATA[service worker + webview + chrome 75 でハマった]]></title>
@@ -25,7 +52,11 @@
 
 <p>今作っている SPA では S3 でホストしていなくて、Kubernates 上の nginx で静的なファイルをホストしている。(その前に CDN もいる。) そのため、デプロイの度に js やら css やらのファイルは消滅してしまう形になる。CDN の cache があるため、ファイルがなくなっても即座に 404 を返さないが、はじめに話を聞いた時は恐らく特定の android 端末で index.html を cache してしまって存在しないファイルを load しようとして 404 が返ってきてしまって真っ白な画面が表示されていると思った。</p>
 
-<p>が、違った。たまたま社内の android 端末で再現できて、<code>An unknown error occurred when fetching the script</code> というエラーを吐いて service worker が pending の状態で止まっていた。precache しようとしてファイルは全て cancelled という状態になっていた。</p>
+<p>が、違った。たまたま社内の android 端末で再現できて、
+<code>
+An unknown error occurred when fetching the script
+</code>
+というエラーを吐いて service worker が pending の状態で止まっていた。precache しようとしてファイルは全て cancelled という状態になっていた。</p>
 
 <p>webview のバージョンが 75.0.3770.101 でほぼ最新ということから、bugs.chromium.org を探すと完全に同じ内容のバグ報告が見つかった。
 <a href="https://bugs.chromium.org/p/chromium/issues/detail?id=977784">https://bugs.chromium.org/p/chromium/issues/detail?id=977784</a></p>
@@ -56,13 +87,15 @@
 
 <p>service worker は CRA ベースのスクリプトで workbox を使っている。</p>
 
-<p>この webview として表示する時に UA を渡していたため、判別することが可能で、
-マッチした時はまず service worker を register しないという処理にした。</p>
+<p>この webview として表示する時に UA を渡していたため、判別することが可能で、 マッチした時はまず service worker を register しないという処理にした。</p>
 
-<p>で、すでに service worker をインストール済みだった場合に unregister する、という処理をいれた。
-これを service worker がまだインストールされていない状態で開くと、service worker は register されないという期待通りの挙動になった。次に service worker がインストールされた状態で開くと正しく unregister が走り、service worker は register されないという期待通りの挙動になった。</p>
+<p>で、すでに service worker をインストール済みだった場合に unregister する、という処理をいれた。 これを service worker がまだインストールされていない状態で開くと、service worker は register されないという期待通りの挙動になった。次に service worker がインストールされた状態で開くと正しく unregister が走り、service worker は register されないという期待通りの挙動になった。</p>
 
-<p>で、すでに <a href="https://bugs.chromium.org/p/chromium/issues/detail?id=977784">https://bugs.chromium.org/p/chromium/issues/detail?id=977784</a> の状態になっている人はどうなるか、というと unregister が走る前に <code>An unknown error occurred when fetching the script</code> が出て死んでしまう状態になった。結果アプリのデータを消すか uninstall するかでしか戻らない状態になった。</p>
+<p>で、すでに <a href="https://bugs.chromium.org/p/chromium/issues/detail?id=977784">https://bugs.chromium.org/p/chromium/issues/detail?id=977784</a> の状態になっている人はどうなるか、というと unregister が走る前に
+<code>
+An unknown error occurred when fetching the script
+</code>
+が出て死んでしまう状態になった。結果アプリのデータを消すか uninstall するかでしか戻らない状態になった。</p>
 
 <p>service worker でそんなに問題が起こったことがなかったのだけど改めて起きると大変だなと学んだ。</p>
 
@@ -96,7 +129,7 @@ Python 3.4 以上が必要で以下作業メモ。</p>
 <pre><code># m4a を変換するために必要というエラーメッセージが出た
 wget https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-64bit-static.tar.xz
 tar xof ffmpeg-release-64bit-static.tar.xz
-cd ffmpeg-release-64bit-static.tar.xz
+cd ffmpeg-release-64bit-static
 sudo cp ffmpeg-3.2.1-64bit-static/ffmpeg /usr/local/bin
 
 # Python3 を install してない場合
@@ -332,16 +365,19 @@ Google Play Music の Settings のページに以下が書いてあり、</p>
 直すのがなかなか大変でめんどくさい (filter-branch とか使う) ので git の <s>pre-commit でもし日付が変更されている状態なら日付を戻して commit するようにした。</s>
 実際は履歴が気持ち悪くなるだけで特に副作用はないけれど。</p>
 
-<pre><code>$ sudo lsof -i:123 -P
-</code></pre>
+<p><code>
+$ sudo lsof -i:123 -P
+</code></p>
 
 <p>ポートが使われているかどうかは lsof とかで調べればいいけど、チェック自体をコマンドラインからどうやって制御すればいいかなと思ったけど、以下のコマンドがあったことを初めて知った。</p>
 
-<pre><code>$ systemsetup -setusingnetworktime on
-</code></pre>
+<p><code>
+$ systemsetup -setusingnetworktime on
+</code></p>
 
-<pre><code>$ git config --global init.templatedir &#39;~/.git_template&#39;
-</code></pre>
+<p><code>
+$ git config --global init.templatedir &#39;~/.git_template&#39;
+</code></p>
 
 <p>を実行した後、</p>
 
@@ -411,33 +447,6 @@ brunch は結局必要になるいろんなものが最初から全部あるの�
 
 <p>とりあえず今回は Ruby 3割、JS (Coffee) 7割くらいでずっと JS メインのプロジェクトはやりたかったので大変ではありましたが楽しかったです :)
 あと開発者も<a href="http://www.quipper.com/japan/careers">募集</a>してるそうです。(アジアに飛ばしてほしい)</p>
-
-]]></content>
-  </entry>
-
-  <entry>
-    <title type="html"><![CDATA[HipChat の pull-request-review-comment を既存の hook に適用させる]]></title>
-    <link href="http://banyan.me/2013/09/27/1" />
-    <updated>2013-09-27T10:01:37+09:00</updated>
-    <id>http://banyan.me/2013/09/27/1</id>
-    <content type="html"><![CDATA[
-<p>HipChat の GitHub Integration はデフォルトの event が多くて便利だけど、
-pull-request-review-comment はサポートとされてなかったけどやっと最近デフォルトで入った。</p>
-
-<ul>
-<li><a href="https://github.com/github/github-services/pull/695">Send pull<em>request</em>review_comment events to HipChat</a></li>
-</ul>
-
-<p>自分もその前の <a href="https://github.com/github/github-services/pull/648">pr</a> に微力ながら +1 とかしてたので非常に嬉しいけど
-technoweenie さんが<a href="https://github.com/github/github-services/pull/695#issuecomment-24836222">ここ</a> で言ってるように
-既存の hook には適用されない。update でもダメで、octokit で delete して create してもうまく適用されなかった。
-edit で今の default_event を全部適用させるようにしてみて届くようにしました。</p>
-
-<ul>
-<li><a href="https://gist.github.com/banyan/6718410">update-hipchat-hooks-event.rb</a></li>
-</ul>
-
-<p>(というか元から API 経由だったら適用できたっぽいことを知らなかった</p>
 
 ]]></content>
   </entry>
