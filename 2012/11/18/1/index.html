@@ -1,217 +1,166 @@
-<!DOCTYPE html>
-<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
-<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
-<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
-<head>
-	<meta charset="utf-8">
-	<title>pry の wtf のメモ - @banyan's blog</title>
-	<meta name="description" content="">
-	<meta name="author" content="Kohei Hasegawa">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>pry の wtf のメモ - @banyan's blog</title>
+    <meta name="author" content="Kohei Hasegawa" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="/stylesheets/main.css" />
+    <link
+      rel="stylesheet"
+      href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.1/build/styles/github-gist.min.css"
+    />
+    <link rel="shortcut icon" href="/images/favicon.ico" />
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="72x72"
+      href="/images/apple-touch-icon-72x72.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="114x114"
+      href="/images/apple-touch-icon-114x114.png"
+    />
+    <link
+      href="/atom.xml"
+      rel="alternate"
+      title="@banyan's blog"
+      type="application/atom+xml"
+    />
 
-	<link rel="stylesheet" href="/stylesheets/base.css">
-	<link rel="stylesheet" href="/stylesheets/skeleton.css">
-	<link rel="stylesheet" href="/stylesheets/layout.css">
-	<link rel="stylesheet" href="/stylesheets/main.css">
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(["_setAccount", "UA-1469541-7"]);
+      _gaq.push(["_trackPageview"]);
 
-	<!--[if lt IE 9]>
-		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
+      (function () {
+        var ga = document.createElement("script");
+        ga.type = "text/javascript";
+        ga.async = true;
+        ga.src =
+          ("https:" == document.location.protocol
+            ? "https://ssl"
+            : "http://www") + ".google-analytics.com/ga.js";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </head>
 
-	<link rel="shortcut icon" href="/images/favicon.ico">
-	<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
-	<link rel="apple-touch-icon" sizes="72x72" href="/images/apple-touch-icon-72x72.png">
-	<link rel="apple-touch-icon" sizes="114x114" href="/images/apple-touch-icon-114x114.png">
-
-	<link href="/atom.xml" rel="alternate" title="@banyan's blog" type="application/atom+xml">
-
-	<script type="text/javascript" src="http://s.hatena.ne.jp/js/HatenaStar.js"></script>
-	<script type="text/javascript">
-    Hatena.Star.Token = 'f06d120fa8e459fb6efd041fce9f7f83c99a8914';
-    Hatena.Star.SiteConfig = {
-      entryNodes: {
-        'div.container': {
-          uri: 'h1.entry-title a',
-          title: 'h1.entry-title',
-          container: 'h1.entry-title'
-        }
-      }
-    };
-  </script>
-
-	<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-	<script src="javascripts/tabs.js"></script>
-
-  <script type="text/javascript" src="http://use.typekit.com/owy0rxg.js"></script>
-  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-  <script type="text/javascript">
-
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-1469541-7']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-
-  </script>
-</head>
-<body>
-  <div class="container">
-    <nav class="sixteen columns header">
-      <ul>
-        <li>
-          <a href="/archive">archive</a>
-        </li>
-      </ul>
-    </nav>
-
-    <div class="sixteen columns blog-title">
-      <h1 class="remove-bottom">
-        <a href="/">@banyan's blog</a>
-      </h1>
-    </div>
-
-    <div class="sixteen columns autopagerize_page_element">
-
-      <div class="sixteen columns entry-title-container">
-        <h1 class="entry-title"><a href="/2012/11/18/1">pry の wtf のメモ</a></h1>
-      </div>
-
-      <div class="sixteen columns">
-        <div class="three columns alpha">
-          <span class="time">
-            <time>Nov 18<span>th</span>, 2012</time>
-          </span>
+  <body>
+    <main class="content-width">
+      <div class="content-padded autopagerize_page_element">
+        <div>
+          <h1 class="entry-title"><a href="/2012/11/18/1">pry の wtf のメモ</a></h1>
         </div>
-        <div id="main-content" class="twelve columns offset-by-one omega">
-          <div class="content inner">
-            <p>pry で例外の backtrace を見るにはどうすればいいのか。</p>
 
+        <div>
+          <time>Nov 18th, 2012</time>
+        </div>
+
+        <div id="main-content">
+          <div class="content">
+            <p>pry で例外の backtrace を見るにはどうすればいいのか。</p>
 <pre><code>Loading development environment (Rails 4.0.0.beta)
 [1] pry(main)&gt; Fabricate(:user)
 ArgumentError: wrong number of arguments (2 for 0..1)
-from /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/bundler/gems/rails-6c5bd10dc498/activerecord/lib/active_record/core.rb:158:in `initialize&#39;
-</code></pre>
-
-<p>例えばこんなエラーが出た時に、0 か 1 しか受け付けないメソッドに2つ渡しているために ArgumentError が出ているのは分かるが、
+from /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/bundler/gems/rails-6c5bd10dc498/activerecord/lib/active_record/core.rb:158:in `initialize'</code></pre><p>例えばこんなエラーが出た時に、0 か 1 しか受け付けないメソッドに2つ渡しているために ArgumentError が出ているのは分かるが、
 こっちからどう渡しているのかを知りたい時は、<code>_ex_</code> という変数を参照すればよい。</p>
-
 <pre><code>[2] pry(main)&gt; _ex_.message
-=&gt; &quot;wrong number of arguments (2 for 0..1)&quot;
+=&gt; "wrong number of arguments (2 for 0..1)"
 
 [3] pry(main)&gt; _ex_.backtrace
-=&gt; [&quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/bundler/gems/rails-6c5bd10dc498/activerecord/lib/active_record/core.rb:158:in `initialize&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/active_record.rb:8:in `new&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/active_record.rb:8:in `build_instance&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/base.rb:13:in `build&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/base.rb:26:in `create&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/schematic/definition.rb:62:in `block in fabricate&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/schematic/definition.rb:61:in `instance_eval&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/schematic/definition.rb:61:in `fabricate&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/fabricator.rb:8:in `fabricate&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication.rb:52:in `Fabricate&#39;&quot;,
- &quot;(pry):1:in `__pry__&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:275:in `eval&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:275:in `re&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:251:in `rep&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:231:in `block (3 levels) in repl&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:232:in `loop&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:232:in `block (2 levels) in repl&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:229:in `catch&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:229:in `block in repl&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:228:in `catch&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:228:in `repl&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_class.rb:154:in `start&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/bundler/gems/rails-6c5bd10dc498/railties/lib/rails/commands/console.rb:78:in `start&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/bundler/gems/rails-6c5bd10dc498/railties/lib/rails/commands/console.rb:9:in `start&#39;&quot;,
- &quot;/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/bundler/gems/rails-6c5bd10dc498/railties/lib/rails/commands.rb:71:in `&lt;top (required)&gt;&#39;&quot;,
- &quot;script/rails:6:in `require&#39;&quot;,
- &quot;script/rails:6:in `&lt;main&gt;&#39;&quot;]
-</code></pre>
-
-<p>とは言いながらも <em>ex</em> って覚えにくいので、wtf というコマンドが用意されている。</p>
-
+=&gt; ["/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/bundler/gems/rails-6c5bd10dc498/activerecord/lib/active_record/core.rb:158:in `initialize'",
+ "/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/active_record.rb:8:in `new'",
+ "/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/active_record.rb:8:in `build_instance'",
+ "/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/base.rb:13:in `build'",
+ "/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/base.rb:26:in `create'",
+ "/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/schematic/definition.rb:62:in `block in fabricate'",
+ "/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/schematic/definition.rb:61:in `instance_eval'",
+ "/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/schematic/definition.rb:61:in `fabricate'",
+ "/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/fabricator.rb:8:in `fabricate'",
+ "/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication.rb:52:in `Fabricate'",
+ "(pry):1:in `__pry__'",
+ "/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:275:in `eval'",
+ "/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:275:in `re'",
+ "/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:251:in `rep'",
+ "/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:231:in `block (3 levels) in repl'",
+ "/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:232:in `loop'",
+ "/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:232:in `block (2 levels) in repl'",
+ "/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:229:in `catch'",
+ "/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:229:in `block in repl'",
+ "/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:228:in `catch'",
+ "/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:228:in `repl'",
+ "/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_class.rb:154:in `start'",
+ "/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/bundler/gems/rails-6c5bd10dc498/railties/lib/rails/commands/console.rb:78:in `start'",
+ "/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/bundler/gems/rails-6c5bd10dc498/railties/lib/rails/commands/console.rb:9:in `start'",
+ "/Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/bundler/gems/rails-6c5bd10dc498/railties/lib/rails/commands.rb:71:in `&lt;top (required)&gt;'",
+ "script/rails:6:in `require'",
+ "script/rails:6:in `&lt;main&gt;'"]</code></pre><p>とは言いながらも <em>ex</em> って覚えにくいので、wtf というコマンドが用意されている。</p>
 <p>ん？と思ったら wtf</p>
-
 <pre><code>[4] pry(main)&gt; wtf
 Exception: ArgumentError: wrong number of arguments (2 for 0..1)
 --
-0: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/bundler/gems/rails-6c5bd10dc498/activerecord/lib/active_record/core.rb:158:in `initialize&#39;
-1: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/active_record.rb:8:in `new&#39;
-2: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/active_record.rb:8:in `build_instance&#39;
-3: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/base.rb:13:in `build&#39;
-4: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/base.rb:26:in `create&#39;
-</code></pre>
-
-<p>んんん？？と思ったら wtf?</p>
-
+0: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/bundler/gems/rails-6c5bd10dc498/activerecord/lib/active_record/core.rb:158:in `initialize'
+1: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/active_record.rb:8:in `new'
+2: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/active_record.rb:8:in `build_instance'
+3: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/base.rb:13:in `build'
+4: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/base.rb:26:in `create'</code></pre><p>んんん？？と思ったら wtf?</p>
 <pre><code>[5] pry(main)&gt; wtf?
 Exception: ArgumentError: wrong number of arguments (2 for 0..1)
 --
-0: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/bundler/gems/rails-6c5bd10dc498/activerecord/lib/active_record/core.rb:158:in `initialize&#39;
-1: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/active_record.rb:8:in `new&#39;
-2: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/active_record.rb:8:in `build_instance&#39;
-3: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/base.rb:13:in `build&#39;
-4: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/base.rb:26:in `create&#39;
-5: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/schematic/definition.rb:62:in `block in fabricate&#39;
-6: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/schematic/definition.rb:61:in `instance_eval&#39;
-7: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/schematic/definition.rb:61:in `fabricate&#39;
-8: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/fabricator.rb:8:in `fabricate&#39;
-9: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication.rb:52:in `Fabricate&#39;
-</code></pre>
-
-<p>ちっ！！！！なんなんだよ、くそがっ！！！！と思ったら <code>wtf????!?!!?!??!</code></p>
-
+0: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/bundler/gems/rails-6c5bd10dc498/activerecord/lib/active_record/core.rb:158:in `initialize'
+1: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/active_record.rb:8:in `new'
+2: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/active_record.rb:8:in `build_instance'
+3: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/base.rb:13:in `build'
+4: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/base.rb:26:in `create'
+5: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/schematic/definition.rb:62:in `block in fabricate'
+6: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/schematic/definition.rb:61:in `instance_eval'
+7: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/schematic/definition.rb:61:in `fabricate'
+8: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/fabricator.rb:8:in `fabricate'
+9: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication.rb:52:in `Fabricate'</code></pre><p>ちっ！！！！なんなんだよ、くそがっ！！！！と思ったら <code>wtf????!?!!?!??!</code></p>
 <pre><code>[7] pry(main)&gt; wtf?!???!!!
 Exception: ArgumentError: wrong number of arguments (2 for 0..1)
 --
- 0: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/bundler/gems/rails-6c5bd10dc498/activerecord/lib/active_record/core.rb:158:in `initialize&#39;
- 1: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/active_record.rb:8:in `new&#39;
- 2: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/active_record.rb:8:in `build_instance&#39;
- 3: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/base.rb:13:in `build&#39;
- 4: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/base.rb:26:in `create&#39;
- 5: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/schematic/definition.rb:62:in `block in fabricate&#39;
- 6: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/schematic/definition.rb:61:in `instance_eval&#39;
- 7: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/schematic/definition.rb:61:in `fabricate&#39;
- 8: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/fabricator.rb:8:in `fabricate&#39;
- 9: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication.rb:52:in `Fabricate&#39;
-10: (pry):1:in `__pry__&#39;
-11: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:275:in `eval&#39;
-12: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:275:in `re&#39;
-13: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:251:in `rep&#39;
-14: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:231:in `block (3 levels) in repl&#39;
-15: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:232:in `loop&#39;
-16: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:232:in `block (2 levels) in repl&#39;
-17: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:229:in `catch&#39;
-18: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:229:in `block in repl&#39;
-19: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:228:in `catch&#39;
-20: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:228:in `repl&#39;
-21: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_class.rb:154:in `start&#39;
-22: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/bundler/gems/rails-6c5bd10dc498/railties/lib/rails/commands/console.rb:78:in `start&#39;
-23: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/bundler/gems/rails-6c5bd10dc498/railties/lib/rails/commands/console.rb:9:in `start&#39;
-24: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/bundler/gems/rails-6c5bd10dc498/railties/lib/rails/commands.rb:71:in `&lt;top (required)&gt;&#39;
-25: script/rails:6:in `require&#39;
-26: script/rails:6:in `&lt;main&gt;&#39;
-</code></pre>
-
-<p>やってることは <em>ex</em> と同じなんだけど感情と同期するメソッド名みたいなの初めて見た。面白い。
+ 0: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/bundler/gems/rails-6c5bd10dc498/activerecord/lib/active_record/core.rb:158:in `initialize'
+ 1: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/active_record.rb:8:in `new'
+ 2: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/active_record.rb:8:in `build_instance'
+ 3: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/base.rb:13:in `build'
+ 4: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/generator/base.rb:26:in `create'
+ 5: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/schematic/definition.rb:62:in `block in fabricate'
+ 6: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/schematic/definition.rb:61:in `instance_eval'
+ 7: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/schematic/definition.rb:61:in `fabricate'
+ 8: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication/fabricator.rb:8:in `fabricate'
+ 9: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/fabrication.rb:52:in `Fabricate'
+10: (pry):1:in `__pry__'
+11: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:275:in `eval'
+12: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:275:in `re'
+13: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:251:in `rep'
+14: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:231:in `block (3 levels) in repl'
+15: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:232:in `loop'
+16: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:232:in `block (2 levels) in repl'
+17: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:229:in `catch'
+18: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:229:in `block in repl'
+19: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:228:in `catch'
+20: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_instance.rb:228:in `repl'
+21: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/pry-0.9.10/lib/pry/pry_class.rb:154:in `start'
+22: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/bundler/gems/rails-6c5bd10dc498/railties/lib/rails/commands/console.rb:78:in `start'
+23: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/bundler/gems/rails-6c5bd10dc498/railties/lib/rails/commands/console.rb:9:in `start'
+24: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/bundler/gems/rails-6c5bd10dc498/railties/lib/rails/commands.rb:71:in `&lt;top (required)&gt;'
+25: script/rails:6:in `require'
+26: script/rails:6:in `&lt;main&gt;'</code></pre><p>やってることは <em>ex</em> と同じなんだけど感情と同期するメソッド名みたいなの初めて見た。面白い。
 pry すごい便利だけど、コマンド覚えにくい。でも wtf だけ他のコマンドと比べて覚えやすすぎる。こういうこと重要な気がする。</p>
-
 <pre><code>[8] pry(main)&gt; cat --ex
 Exception: ArgumentError: wrong number of arguments (2 for 0..1)
 --
 From: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/bundler/gems/rails-6c5bd10dc498/activerecord/lib/active_record/core.rb @ line 158 @ level: 0 of backtrace (of 26).
 
-    153:     # hence you can&#39;t have attributes that aren&#39;t part of the table columns.
+    153:     # hence you can't have attributes that aren't part of the table columns.
     154:     #
     155:     # ==== Example:
     156:     #   # Instantiates a single new object
-    157:     #   User.new(first_name: &#39;Jamie&#39;)
+    157:     #   User.new(first_name: 'Jamie')
  =&gt; 158:     def initialize(attributes = nil)
     159:       defaults = self.class.column_defaults.dup
     160:       defaults.each { |k, v| defaults[k] = v.dup if v.duplicable? }
@@ -231,30 +180,24 @@ From: /Users/banyan/ror/licm/.bundle/gems/ruby/2.0.0/gems/fabrication-2.5.0/lib/
  =&gt;  8:     self.__instance = __klass.new(__attributes, without_protection: true)
      9:   end
     10:
-    11: end
-</code></pre>
-
-<p><code>cat --ex n</code> で実際のコンテキストのコードを見れる。</p>
-
+    11: end</code></pre><p><code>cat --ex n</code> で実際のコンテキストのコードを見れる。</p>
 <p>なお↑の話は<a href="https://github.com/pry/pry/wiki/Exceptions">pry/wiki/Exceptions</a> に全て書いてあります。</p>
 
           </div>
         </div>
-      </div>
 
-      <div class="sixteen columns">
-        <div class="pagination">
-          
-          <a href="/2012/10/24/2" rel="next">« earlier</a>
-          
-
-          
-          <a href="/2012/11/18/2">later »</a>
-          
+        <div>
+          <div class="pagination">
+            
+            <a href="/2012/10/24/2" rel="next">« earlier</a>
+             
+            <a href="/2012/11/18/2">later »</a>
+            
+          </div>
         </div>
+
+        <div class="autopagerize_insert_before"></div>
       </div>
-    </div>
-    <div class="autopagerize_insert_before"></div>
-  </div>
-</body>
+    </main>
+  </body>
 </html>

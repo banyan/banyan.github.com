@@ -1,113 +1,77 @@
-<!DOCTYPE html>
-<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
-<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
-<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
-<head>
-	<meta charset="utf-8">
-	<title>Subsonic から Google Play Music に移行する - @banyan's blog</title>
-	<meta name="description" content="">
-	<meta name="author" content="Kohei Hasegawa">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Subsonic から Google Play Music に移行する - @banyan's blog</title>
+    <meta name="author" content="Kohei Hasegawa" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="/stylesheets/main.css" />
+    <link
+      rel="stylesheet"
+      href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.1/build/styles/github-gist.min.css"
+    />
+    <link rel="shortcut icon" href="/images/favicon.ico" />
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="72x72"
+      href="/images/apple-touch-icon-72x72.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="114x114"
+      href="/images/apple-touch-icon-114x114.png"
+    />
+    <link
+      href="/atom.xml"
+      rel="alternate"
+      title="@banyan's blog"
+      type="application/atom+xml"
+    />
 
-	<link rel="stylesheet" href="/stylesheets/base.css">
-	<link rel="stylesheet" href="/stylesheets/skeleton.css">
-	<link rel="stylesheet" href="/stylesheets/layout.css">
-	<link rel="stylesheet" href="/stylesheets/main.css">
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(["_setAccount", "UA-1469541-7"]);
+      _gaq.push(["_trackPageview"]);
 
-	<!--[if lt IE 9]>
-		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
+      (function () {
+        var ga = document.createElement("script");
+        ga.type = "text/javascript";
+        ga.async = true;
+        ga.src =
+          ("https:" == document.location.protocol
+            ? "https://ssl"
+            : "http://www") + ".google-analytics.com/ga.js";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </head>
 
-	<link rel="shortcut icon" href="/images/favicon.ico">
-	<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
-	<link rel="apple-touch-icon" sizes="72x72" href="/images/apple-touch-icon-72x72.png">
-	<link rel="apple-touch-icon" sizes="114x114" href="/images/apple-touch-icon-114x114.png">
-
-	<link href="/atom.xml" rel="alternate" title="@banyan's blog" type="application/atom+xml">
-
-	<script type="text/javascript" src="http://s.hatena.ne.jp/js/HatenaStar.js"></script>
-	<script type="text/javascript">
-    Hatena.Star.Token = 'f06d120fa8e459fb6efd041fce9f7f83c99a8914';
-    Hatena.Star.SiteConfig = {
-      entryNodes: {
-        'div.container': {
-          uri: 'h1.entry-title a',
-          title: 'h1.entry-title',
-          container: 'h1.entry-title'
-        }
-      }
-    };
-  </script>
-
-	<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-	<script src="javascripts/tabs.js"></script>
-
-  <script type="text/javascript" src="http://use.typekit.com/owy0rxg.js"></script>
-  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-  <script type="text/javascript">
-
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-1469541-7']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-
-  </script>
-</head>
-<body>
-  <div class="container">
-    <nav class="sixteen columns header">
-      <ul>
-        <li>
-          <a href="/archive">archive</a>
-        </li>
-      </ul>
-    </nav>
-
-    <div class="sixteen columns blog-title">
-      <h1 class="remove-bottom">
-        <a href="/">@banyan's blog</a>
-      </h1>
-    </div>
-
-    <div class="sixteen columns autopagerize_page_element">
-
-      <div class="sixteen columns entry-title-container">
-        <h1 class="entry-title"><a href="/2016/12/05/1">Subsonic から Google Play Music に移行する</a></h1>
-      </div>
-
-      <div class="sixteen columns">
-        <div class="three columns alpha">
-          <span class="time">
-            <time>Dec 5<span>th</span>, 2016</time>
-          </span>
+  <body>
+    <main class="content-width">
+      <div class="content-padded autopagerize_page_element">
+        <div>
+          <h1 class="entry-title"><a href="/2016/12/05/1">Subsonic から Google Play Music に移行する</a></h1>
         </div>
-        <div id="main-content" class="twelve columns offset-by-one omega">
-          <div class="content inner">
+
+        <div>
+          <time>Dec 5th, 2016</time>
+        </div>
+
+        <div id="main-content">
+          <div class="content">
             <p>長い間 Subsonic を使ってきた。一方で Spotify 等のストリーミング配信サービスもたくさん出てきた。
 Spotify をちょっと試してみると悪くなくとりあえず有料ユーザになった。</p>
-
 <p>ずっと Spotify を使い続けるか分からないけれど Spotify を契約すると Subsonic のために借りてる VPS の金額が気になってくる。自前でサーバ立てるしかないか... とか考えてたら Google Play Music に音楽をインポートできるよと同僚に教えてもらう。
 とはいえどうせそんなにインポートできないだろう、あと Google Play Music の有料ユーザにならないといけないのでは？とか思ったけど</p>
-
 <p><img src="/images/google-play-music.png" alt=""></p>
-
 <p>全然問題なかった。</p>
-
 <p>Google Play Music 自体が正式に日本でローンチしたのが2015年9月だが無料でインポートできることを全く知らなかった。(あと検索すると日本ローンチ前からもインポートして使ってる人は多そうだった)
 とりあえずローカルの PC から音楽を手動でアップロードすると何の問題なくインポートができた。</p>
-
 <p>で VPS からインポートしたい。</p>
-
 <p><a href="https://github.com/simon-weber/gmusicapi">https://github.com/simon-weber/gmusicapi</a> という unofficial なライブラリがあって、更にそれを使った <a href="https://github.com/thebigmunch/gmusicapi-scripts">https://github.com/thebigmunch/gmusicapi-scripts</a> スクリプトのリポジトリがあった。
 Python 3.4 以上が必要で以下作業メモ。</p>
-
 <pre><code># m4a を変換するために必要というエラーメッセージが出た
 wget https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-64bit-static.tar.xz
 tar xof ffmpeg-release-64bit-static.tar.xz
@@ -122,36 +86,29 @@ sudo apt install python3-pip
 sudo pip3 install gmusicapi-scripts
 # https://github.com/simon-weber/gmusicapi/issues/60
 gmsync up /path/to/music -U XX:XX:XX:XX:XX:XX
-# =&gt; oauth の token を取得する URL が表示されて入力すると upload が開始される
-</code></pre>
-
-<p>VPS などから upload する時に MAC Address が取得できない時は最初 random にしていたらしい: <a href="https://github.com/simon-weber/gmusicapi/issues/60">https://github.com/simon-weber/gmusicapi/issues/60</a>
+# =&gt; oauth の token を取得する URL が表示されて入力すると upload が開始される</code></pre><p>VPS などから upload する時に MAC Address が取得できない時は最初 random にしていたらしい: <a href="https://github.com/simon-weber/gmusicapi/issues/60">https://github.com/simon-weber/gmusicapi/issues/60</a>
 Google Play Music の Settings のページに以下が書いてあり、</p>
-
 <blockquote>
 <p>Listen to your music from any computer as well as up to ten devices. Uploading or downloading music using Music Manager or Google Play Music for Chrome counts towards your device limit. You can deauthorize four devices per year.</p>
 </blockquote>
-
 <p>random にしているとこの制限にひっかかることから明示的に外から MAC Address を渡せるようにしたようだ。とりあえず自分のローカルの PC の MAC Address を渡すようにした (別のデバイスとしては認識されるが)
 あとは nohup で実行して問題なくインポートできてる。時間はそれなりにかかるとは思うが、Subsonic には今までとてもお世話になったので感謝しつつサーバを解約できるので嬉しい。</p>
 
           </div>
         </div>
-      </div>
 
-      <div class="sixteen columns">
-        <div class="pagination">
-          
-          <a href="/2015/01/17/1" rel="next">« earlier</a>
-          
-
-          
-          <a href="/2019/06/28/1">later »</a>
-          
+        <div>
+          <div class="pagination">
+            
+            <a href="/2015/01/18/1" rel="next">« earlier</a>
+             
+            <a href="/2019/06/28/1">later »</a>
+            
+          </div>
         </div>
+
+        <div class="autopagerize_insert_before"></div>
       </div>
-    </div>
-    <div class="autopagerize_insert_before"></div>
-  </div>
-</body>
+    </main>
+  </body>
 </html>
